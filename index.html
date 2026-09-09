@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="iF1p0fA9FRpP949joEEYYo">
+<head data-page-node-id="ZPpduaGV6RCld8ZfKUjlV1">
+<meta charset="UTF-8" data-page-node-id="Cvjys6Zpj2squzLfXtRnSo">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="9SBmejHhtDo3WQ9UzKrSNV">
+<title>小红帽 · 薪资结算后台</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+  --bg:#0d1220; --side:#101728; --panel:#161e30; --panel2:#1c2740; --line:#283552;
+  --text:#e8edf7; --text2:#9aa7c2; --text3:#66739a;
+  --red:#ef5350; --green:#26c281; --orange:#f5a623; --blue:#4c8dff; --purple:#8b5cf6;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;line-height:1.5;display:flex;min-height:100vh}
+aside{width:200px;background:var(--side);border-right:1px solid var(--line);padding:18px 12px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.logo{font-size:15px;font-weight:700;padding:0 10px 16px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.logo .hat{color:var(--red)}
+.nav-label{font-size:10px;color:var(--text3);padding:10px 10px 4px;letter-spacing:1px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:8px;color:var(--text2);cursor:pointer;margin-bottom:2px;font-size:13px;transition:background .15s,color .15s}
+.nav-item:hover{background:var(--panel2);color:var(--text)}
+.nav-item.on{background:#22335e;color:#fff;font-weight:600}
+.nav-item .ic{width:16px;text-align:center;color:var(--text3)}
+.nav-item.on .ic{color:var(--blue)}
+main{flex:1;padding:20px 24px;min-width:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.topbar h1{font-size:17px;font-weight:700}
+.topbar h1 small{font-size:12px;color:var(--text3);font-weight:400;margin-left:8px}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;color:var(--text2)}
+.tools input{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:6px 8px;font-size:13px;outline:none;cursor:pointer}
+.tools input:focus{border-color:var(--blue)}
+.tools input.num{width:74px;text-align:center}
+.btn{background:var(--blue);border:none;color:#fff!important;padding:7px 14px;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;line-height:1.4}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text2)!important}
+.btn.green{background:var(--green);color:#fff!important}
+.btn.sm{padding:4px 10px;font-size:12px}
+.btn{transition:filter .15s,background .15s}
+.btn:hover{filter:brightness(1.12)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+.card h3{font-size:14px;font-weight:700;margin-bottom:4px}
+.card h3 .tag{font-size:11px;font-weight:400;color:var(--text3);margin-left:8px}
+.card .desc{font-size:11px;color:var(--text3);margin-bottom:12px;line-height:1.6}
+.page{display:none}.page.on{display:block}
+.hint{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.7}
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;transition:transform .15s,border-color .15s}
+.kpi:hover{transform:translateY(-2px);border-color:var(--blue)}
+.kpi span{font-size:11px;color:var(--text2)}
+.kpi b{display:block;font-size:18px;font-weight:800;margin-top:2px}
+.tbl-box{overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;max-height:calc(100vh - 210px)}
+table{width:100%;min-width:2500px;border-collapse:collapse;font-size:12px}
+th{position:sticky;top:0;background:#1a2234;color:var(--text2);font-weight:600;padding:8px 6px;border-bottom:2px solid var(--line);text-align:right;white-space:nowrap;z-index:2}
+th.g-sal{color:#5DCAA5;background:#182823}th.g-inc{color:#AFA9EC;background:#1e2038}th.g-prof{color:#F7C1C1;background:#2a1e24}
+th:nth-child(1),th:nth-child(2),td:nth-child(1),td:nth-child(2){text-align:left}
+th:nth-child(1),td:nth-child(1){position:sticky;left:0;width:92px;min-width:92px;background:#1a2234;z-index:1}
+th:nth-child(2),td:nth-child(2){position:sticky;left:92px;width:150px;min-width:150px;background:#1a2234;z-index:1;border-right:1px solid var(--line)}
+th:nth-child(1){z-index:4}th:nth-child(2){z-index:4}
+td{padding:5px 6px;border-bottom:1px solid #202a42;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+td:nth-child(1),td:nth-child(2){background:#161e30}
+tbody tr:nth-child(even) td{background:#131b2c}
+tbody tr:nth-child(even) td:nth-child(1),tbody tr:nth-child(even) td:nth-child(2){background:#111828}
+tbody tr:hover td{background:#1b2438}
+tbody tr:hover td:nth-child(1),tbody tr:hover td:nth-child(2){background:#1d2740}
+td input,td select{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:3px 5px;font-size:12px;width:70px;text-align:right;outline:none;cursor:pointer}
+td input:focus,td select:focus{border-color:var(--blue)}
+td select{width:78px;text-align:left}
+.mini{font-size:10px;color:var(--text3);display:block}
+.red{color:var(--red)}.green{color:var(--green)}.orange{color:var(--orange)}.bl{color:var(--blue)}.pu{color:var(--purple)}
+td.main-cell{font-weight:800;font-size:12.5px}
+.warn-cell{max-width:180px;white-space:normal;text-align:left;font-size:11px;color:var(--orange)}
+.warn-cell.err{color:#ff9b9b}
+.empty{padding:40px;text-align:center;color:var(--text3)}
+
+/* ===== 配置页样式 ===== */
+.rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.rule-item{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px}
+.rule-item label{display:block;font-size:11px;color:var(--text2);margin-bottom:6px}
+.rule-item input{background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:6px 8px;font-size:13px;width:100%;outline:none;cursor:pointer}
+.rule-item input:focus{border-color:var(--blue)}
+.rule-item .num{width:70px}
+.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.tabs button{background:var(--panel2);border:1px solid var(--line);color:var(--text2);padding:7px 18px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600}
+.tabs button.on{background:#22335e;border-color:var(--blue);color:#fff}
+.cfg-table{width:100%;min-width:0;border-collapse:collapse}
+.cfg-table th{position:static;background:#1a2234;color:var(--text2);font-weight:600;padding:8px 10px;border-bottom:2px solid var(--line);text-align:center;white-space:nowrap}
+.cfg-table td{padding:5px 6px;border-bottom:1px solid #202a42;text-align:center;white-space:nowrap}
+.cfg-table input{background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:5px 7px;font-size:12px;width:88px;text-align:center;outline:none;cursor:pointer}
+.cfg-table input:focus{border-color:var(--blue)}
+.cfg-table .w-lvl{width:60px}.cfg-table .w-b{width:90px}.cfg-table .w-m{width:70px}
+.cfg-table tr.step-row{background:#1f1a2e}
+.cfg-table .ro{color:var(--text3)}
+.cfg-table .sum-col{color:var(--orange);font-weight:700}
+.icon-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:2px 6px}
+.icon-btn:hover{color:var(--red)}
+.ver-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-left:8px}
+.ver-new{background:#16281f;color:#8fe6bd;border:1px solid #2a5a43}
+.ver-old{background:#2a1a1a;color:#ff9b9b;border:1px solid #6b3232}
+.mask{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:50}
+.md{background:var(--panel);border:1px solid var(--line);border-radius:12px;width:380px;overflow:hidden}
+.md-head{padding:12px 16px;border-bottom:1px solid var(--line);font-weight:700;display:flex;align-items:center;gap:8px}
+.md-body{padding:16px;display:flex;flex-direction:column;gap:10px}
+.md-body label{font-size:12px;color:var(--text2)}
+.md-body input{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:8px 10px;font-size:13px;outline:none;cursor:pointer;width:100%}
+.md-body input:focus{border-color:var(--blue)}
+.md-foot{padding:12px 16px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:space-between}
+.seg-btn{padding:8px 12px;border-radius:7px;border:1px solid var(--line);background:var(--panel2);color:var(--text);cursor:pointer;font-size:12px;text-align:center;flex:1}
+.seg-btn.on{background:#22335e;border-color:var(--blue);color:#fff;font-weight:600}
+.seg-btns{display:flex;gap:6px}
+@media print{aside,#btnExport,#fileBox,#fileTopup,.sum .hint,#searchBox,#importMsg,.nav-label,.toolbar-print-hide{display:none!important}body{background:#fff!important;color:#000!important;font-size:11pt}main{padding:0!important}.kpi{background:#f5f5f5!important;color:#000!important;border:1px solid #ccc!important}th{background:#ddd!important;color:#000!important}.tbl-box{max-height:none!important;overflow:visible!important;border:none!important}td{background:transparent!important;color:#000!important;border-bottom:1px solid #ccc!important}#page-settle{display:block!important}#expMask,#excMask{display:none!important}}
+</style>
+</head>
+<body data-page-node-id="DifjkKwegzfDRNFpSVaq7L">
+<aside data-page-node-id="uxLgH2Nkz4LTkAHiRUYlAn">
+  <div class="logo" data-page-node-id="B11MFrTco5izNhcLc32wOm"><span class="hat" data-page-node-id="IjVHBCR3RfiUFwA3BDebBj">🔴</span> 小红帽结算后台</div>
+  <div class="nav-label" data-page-node-id="gR5E6t46H4IgUG7oYNHlE0">结算</div>
+  <div class="nav-item on" data-page="settle" data-page-node-id="iou4w3FrPFaG2apFd2rECC"><span class="ic" data-page-node-id="wC3FASkBHGmNg4ykvrmcuI">▣</span> 主播薪资结算</div>
+  <div class="nav-label" data-page-node-id="gfpFx3oG07rZ54D7DpeqA2">政策配置</div>
+  <div class="nav-item" data-page="salary" data-page-node-id="7A9Ka5sFJDiF2tsQN7LeOM"><span class="ic" data-page-node-id="IP1BVZrTOZgmknzMwrGImQ">¥</span> 主播政策</div>
+  <div class="nav-item" data-page="platform" data-page-node-id="H0oAmDdHAw9uBIA8I9ZCNs"><span class="ic" data-page-node-id="BmHpiTD9j507FWNXri4TCO">$</span> 平台政策</div>
+</aside>
+<main data-page-node-id="ciC7falHLezXBeaTiESuED">
+  <div class="topbar" data-page-node-id="E7aecS9bNxkIj9TSw7UHCG">
+    <h1 id="pageTitle" data-page-node-id="F75yFXSeB9oyrsgs580xyt">主播薪资结算<small data-page-node-id="NBMgCBpT3WkObAA7LpOmep">导入官方月数据 · 自动核算 · 政策配置为准 · 就地核对官方</small></h1>
+    <div class="tools" data-page-node-id="OQC3wzA6gBgkDHI50ySFcY">
+      汇率 <input class="num" id="fx" type="number" step="0.01" value="6.5" data-page-node-id="82U8B4uAVursrA2umAmoLv">
+      统计截止 <input class="num" id="periodEnd" type="date" value="2026-08-31" style="width:130px" data-page-node-id="h5Ya25JnQaAPGDaJ9uoQbl">
+    </div>
+  </div>
+
+  <div class="page on" id="page-settle" data-page-node-id="76RTFNcYZgW0Y6hbAwOQPc">
+    <div class="sum" id="sumBox" data-page-node-id="9JMO1PvIR9K4RiOuorDx4m"></div>
+    <div class="card" data-page-node-id="KPbb8aGZNsOznq3z0c8sPv">
+      <h3 data-page-node-id="jLV7DIV0sE7iLH6HhdVGYl">📥 导入官方月数据 <span class="tag" data-page-node-id="nts5mpupTGXCJcZAh3aRIe">xlsx / csv，自动识别列</span></h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center" data-page-node-id="MDtCB7Oy002eR7BMgbrCyT">
+        <button class="btn" id="btnPickFile" data-page-node-id="zMAi4pn1T2HVut574aWDhu">选择 xlsx / csv 文件</button>
+        <input type="file" id="fileBox" accept=".xlsx,.xls,.csv" style="display:none" data-page-node-id="IxBqDunER6ESWkhDgvrFB1">
+        <button class="btn" id="btnPickTopup" data-page-node-id="ZpKtnQWiRVBJw4yQWVC1x5">导入补豆记录</button>
+        <input type="file" id="fileTopup" accept=".xlsx,.xls,.csv" style="display:none" data-page-node-id="XhTayqdWpeTFtGTnMPZC5K">
+        <button class="btn ghost" id="btnClearTu" data-page-node-id="00rAg3sZNJ4o32KhZNfFni">清空补豆记录</button>
+        <button class="btn ghost" id="btnClearData" data-page-node-id="Q52ucd6uOr4CvxLWiwwUL7">清空全部</button>
+        <button class="btn ghost sm" id="btnTplOfficial" title="下载官方表导入模板" data-page-node-id="iGK3he8lssHIoaTQS6rgWx">官方表模板</button>
+        <button class="btn ghost sm" id="btnTplTopup" title="下载补豆记录导入模板" data-page-node-id="c1IKCjnpZ9zqkOnMyh1PEm">补豆模板</button>
+        <button class="btn green" id="btnExport" data-page-node-id="9K7EQi3AIZ8CccblnkIJAw">📑 导出结算单</button>
+        <span class="hint" style="margin:0" id="importMsg" data-page-node-id="BmHILvEuixJcsiTFro3boq"></span>
+      </div>
+      <div class="hint" data-page-node-id="mXKqfUbgAJIQ59d8kIJTQP">导入官方月数据 xlsx 即可。核对金额$ = 政策佣金 + 总金豆÷提现率 + 奖励金豆$，与官方结算$对比得差额≈0 即对上。违规下拉选违规类型，补豆数、例外¥可直接填。</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap" data-page-node-id="IjjLCRbQ9FFZNvuzIV5NKE">
+      <input id="searchBox" type="text" placeholder="🔍 搜索主播名称 / uid / BIGO ID" style="background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 12px;font-size:13px;width:280px;outline:none;cursor:pointer" data-page-node-id="LRojk93WC0NuPfkQiUleki">
+      <span class="hint" style="margin:0" id="searchCount" data-page-node-id="T9KLC7wp4ToKOPDHhoFOkS"></span>
+    </div>
+    <div class="tbl-box" data-page-node-id="IZhIdbjn5Cd9iVoewIPQnF">
+      <table id="settleTable" data-page-node-id="FrOZo40400HUQskdrelazt">
+        <thead data-page-node-id="bFFFzUtzMSE3OVjKWbRStJ"><tr data-page-node-id="iLULPSkDMSMaJ5Swarr4Ec">
+          <th data-page-node-id="vJrmQBGQyE6g9lgEoRot8E">uid</th><th data-page-node-id="BAr3BynigveIPc6XIGmsck">名称</th><th data-page-node-id="qtcAut43dwsj78Gl3rwPPY">政策</th><th data-page-node-id="Ex0TKxDExxHu9oFHiKANmA">档位</th><th data-page-node-id="Y6QFhA0nRsddbOqpLIBmlX">天</th><th data-page-node-id="KAkEFMsx2r91lT6ywoQeav">时长h</th><th data-page-node-id="IptcM6tWRbdKa4EN57yAhH">总金豆</th><th data-page-node-id="LAqyZkH3I23rRDCg1Lmdr4">海外豆%</th>
+          <th class="g-inc" data-page-node-id="rF3Y8uYhpl9G6M3cU1VbRi">核对金额$</th><th class="g-inc" data-page-node-id="o5SH8BvZULsXQeagaiBu4e">官方结算$</th><th class="g-inc" data-page-node-id="Otl4VqxY34vxZFZqNNG3sh">差额$</th>
+          <th class="g-sal" data-page-node-id="n1WHkvOn2q18lFujCG6KuB">档位薪资¥</th><th class="g-sal" data-page-node-id="nk44p2vAyvidgjkY0eUoEn">全勤¥</th><th class="g-sal" data-page-node-id="egUPLCpjG4iANw9nvDT37I">无效豆¥</th><th class="g-sal" data-page-node-id="P18sAjIT4WX1hV21DMn2H3">主播薪资¥</th>
+          <th data-page-node-id="BSpR7qq968h0rQhCCeYC96">补豆数</th><th data-page-node-id="tHGsXRfpWv8awG58dHPNZt">补豆成本¥</th><th data-page-node-id="gAvlaXAfvC9qg82ZrS2k47">补豆收益¥</th>
+          <th class="g-prof" data-page-node-id="gGOFp8AOsBLfc38vjG3BWy">盈利¥</th>
+          <th data-page-node-id="gMp3l5r792KWnayBhtISu8">人工例外</th><th data-page-node-id="dUjwGJ8Ie506eWCB2v5RJZ">预警</th>
+        </tr></thead>
+        <tbody id="settleBody" data-page-node-id="qDutFMJHlDjM5l19Myt8vW"></tbody>
+      </table>
+    </div>
+    <div class="hint" data-page-node-id="k03UmEXsyiq6SMbrMISU89">口径：核对金额$ = 政策佣金 + 总金豆÷提现率 + 奖励金豆$（官方结算$已含补豆后的档位佣金与补豆提现）。主播薪资¥ = 档位薪资(有补豆按补豆前金豆判档) + 全勤 + 无效豆。盈利¥ = 官方结算$ × 汇率 − 主播薪资¥ − 补豆成本¥。补豆收益¥ = 升档佣金增量×汇率 + 补豆提现×汇率 − 补豆成本（补豆这笔完整净盈亏，参考）。盈利/补豆收益正绿负红。</div>
+  </div>
+
+  <div class="page" id="page-salary" data-page-node-id="aoeDHszdeAMrEOuE8E8gli">
+    <div class="card" data-page-node-id="HsaErqZbeHplhBdt9pT6Ya">
+      <h3 data-page-node-id="rxanKLP0tzzLj6uoiEYAKK">⚙️ 通用规则 <span class="tag" data-page-node-id="GF443FWwgmww5MQucopqGF">改完即时生效并保存</span></h3>
+      <div class="rule-grid" data-page-node-id="qGfvsTGTGrgAZDBBvWQko5">
+        <div class="rule-item" data-page-node-id="zJprPRnaH5VKwoo1FirLaA"><label data-page-node-id="8FDSaVCd87dMThQmSc8AER">无效豆比例（%）</label><input class="cfg-in num" data-cfg="invPct" type="number" step="0.1" data-page-node-id="vyVypZa5Cl100KBgFmVZSm"></div>
+        <div class="rule-item" data-page-node-id="bRbHLmdNcJWgZsczHL6Y58"><label data-page-node-id="hOp1ZFYPCdW3QQ1ZwzSl4t">提现率（豆÷）</label><input class="cfg-in num" data-cfg="withdraw" type="number" data-page-node-id="neR8mJWKSODraTk7akdhZh"></div>
+        <div class="rule-item" data-page-node-id="EfwCxmafgwGo6nfHPR4VfG"><label data-page-node-id="T7KjBqMfvCWXty2XEvALnD">补豆单价（1元= 豆）</label><input class="cfg-in num" data-cfg="beansPerYuan" type="number" step="0.01" data-page-node-id="ZBUo5uhXSEqzCBQwxrqhoG"></div>
+      </div>
+      <div class="hint" data-page-node-id="gBWxDD5bKHQrMGl0BbL9b9">无效豆 = 总金豆超出档位门槛部分 ÷ 提现率 × 比例% × 汇率。补豆成本 = 补豆数 ÷ 补豆单价（可为负）。</div>
+      <button class="btn ghost sm" id="btnResetCfg" style="margin-top:8px" data-page-node-id="gx6YFGIHQ2FHiMOuLtnCiN">恢复默认配置</button>
+    </div>
+    <div class="card" data-page-node-id="vk12nspdRlniDlgsgxMO3T">
+      <h3 data-page-node-id="JeAZAemKYtZxFGGIsyeGek">💰 档位薪资表 <span class="tag" data-page-node-id="Cad2m9uv5HkERmQU3H7me0">主播达到档位后发给他的固定薪资</span></h3>
+      <div class="tabs" id="salTabs" data-page-node-id="lKBkEcn4Pwrg8o7XVl4TxR"></div>
+      <div id="salEditor" data-page-node-id="zDN2xfVkePzmd5Vasz0bf1"></div>
+    </div>
+  </div>
+
+  <div class="page" id="page-platform" data-page-node-id="EStECWOSf5nr3kn7ubx1h8">
+    <div class="card" data-page-node-id="IBmGKXDjuBIFaNHWMYXFbT">
+      <h3 data-page-node-id="FHfD8lPjGIhtnqpn2seWo0">🏛️ 平台佣金表 <span class="tag" data-page-node-id="YhBL5z6338S2LPPROD3deJ">官方固定规则，公会不可改</span></h3>
+      <div class="rule-grid" style="margin-bottom:14px" data-page-node-id="yHwkfqMHTladdEZCSEz3kS">
+        <div class="rule-item" data-page-node-id="yCGu9vSlLmdu1a4Jv8Jkp2"><label data-page-node-id="5zr1TnLhdbz8jX6m87VkKp">政策A 新主播月数</label><input class="cfg-in num" data-cfg="newMonths.A" type="number" data-page-node-id="hRhnpqkIeDScUHB4VXe7ms"></div>
+        <div class="rule-item" data-page-node-id="pFPAb0nEleIytSEBQ4ThhC"><label data-page-node-id="ltHbPb6N5mSzNz2QGl0VHI">政策F 新主播月数</label><input class="cfg-in num" data-cfg="newMonths.F" type="number" data-page-node-id="iwv164Lfnmt4uHNFOVfWrT"></div>
+        <div class="rule-item" data-page-node-id="nyIY2yFYhwr74LMj27z68H"><label data-page-node-id="O0HhmwIhg6l2DYrKiiEt77">私信扣佣系数</label><input class="cfg-in num" data-cfg="pmFactor" type="number" step="0.0001" data-page-node-id="SqLMAi5UMkEzLXhlcZWx0p"></div>
+      </div>
+      <div class="tabs" id="platTabs" data-page-node-id="PDvBk8o92Lh4CPTIrhKCow"></div>
+      <div id="platEditor" data-page-node-id="cAlmhICKTsNqhaD77e9oA7"></div>
+      <div class="hint" data-page-node-id="FsNyjx4XruiqbvTuAlzzKY">平台佣金表为官方 HY-BP041（政策A）/ HY-BP042（政策F）固定规则，仅用于核对官方结算。「递增」行 = 超过最高档后每增加 100 万金豆的增量。档位判定优先用官方档位列，缺失时按 金豆+时长+天数 自动判档。</div>
+      <button class="btn ghost sm" id="btnResetCfg2" style="margin-top:8px" data-page-node-id="eQ6TWb1sJAhnvdtTjigHpT">恢复默认配置</button>
+    </div>
+  </div>
+
+  <div class="mask" id="excMask" style="display:none" data-page-node-id="PqLu1GTiXEi8PEoErWfPD2">
+    <div class="md" data-page-node-id="sj1cHLUnxHMdaM20WJFMmv">
+      <div class="md-head" data-page-node-id="GC8TUMatTAaFgiKw77Szxj">人工例外 <b id="excName" style="color:var(--blue)" data-page-node-id="mEnxHEgJENGnVRjE5lCOhn"></b><button class="icon-btn" id="excClose" style="margin-left:auto" data-page-node-id="gz8SAfdDFlXmRefXzTX8ib">✕</button></div>
+      <div class="md-body" data-page-node-id="tlHKqFKq9GHJDxxbbTEuRO">
+        <div class="seg-btns" data-page-node-id="EewyE61RsV9sRWHm4acimS">
+          <div class="seg-btn" id="segViol" data-page-node-id="rqsUy6Ki3ZsxLDlTT0fivN">🚫 违规（佣金+薪资清零，仅无效豆）</div>
+          <div class="seg-btn" id="segOld" data-page-node-id="qwI35xARDskpbuqhX8pqRo">📜 老政策（用老政策表）</div>
+        </div>
+        <div data-page-node-id="iHNKXnGtZsSxL1Spl3523l"><label data-page-node-id="x3PjCRVkjEH6M7vgHkFxyM">固定金额（¥）</label><input id="excAmtIn" type="number" step="0.01" placeholder="留空 = 不用固定金额" data-page-node-id="QZzo1keGLyhYaGfNTAXEvZ"></div>
+        <div data-page-node-id="Q8qDDZjvx5BupvX8cxd5qc"><label data-page-node-id="ZSKf4JVNjsbcSghyHXpeC5">固定比例（%，= 官方结算$ × 汇率 × 比例）</label><input id="excPctIn" type="number" step="0.1" placeholder="留空 = 不用固定比例" data-page-node-id="g9xMLV4HFYqA68lQVWPZJo"></div>
+        <div class="hint" data-page-node-id="DwHYXJ0bT7f7ai5eYKWrEM">点「违规」/「老政策」切换启用。填金额或比例直接覆盖主播薪资。优先级：固定金额 > 固定比例 > 自动算薪。</div>
+      </div>
+      <div class="md-foot" data-page-node-id="1wuN6H7yhTXjWa21wUy2X1">
+        <button class="btn ghost" id="excClear" data-page-node-id="RTjeYMF276szKZBHhjqXuT">清除例外</button>
+        <button class="btn" id="excSave" data-page-node-id="WHweJyPdRiZ79PoFKBharE">保存</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+'use strict';
+function $(id){ return document.getElementById(id); }
+function n(v){ var x=parseFloat(v); return isNaN(x)?0:x; }
+function fmt(v,d){ if(v===null||v===undefined||isNaN(v))v=0; d=(d===undefined)?2:d; return Number(v).toLocaleString('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function fx(){ return n($('fx').value)||1; }
+function has(v){ return v!==null && v!==undefined && String(v).trim()!==''; }
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function monthsBetween(from,to){
+  if(!from) return 99;
+  var a=String(from).substring(0,10).split('-'), b=String(to).substring(0,10).split('-');
+  if(a.length<3||b.length<3||isNaN(Number(a[0]))) return 99;
+  return (Number(b[0])-Number(a[0]))*12 + (Number(b[1])-Number(a[1]));
+}
+function getCfg(path){ return path.split('.').reduce(function(o,k){ return o?o[k]:undefined; }, CFG); }
+function setCfg(path,v){ var ks=path.split('.'), o=CFG; for(var i=0;i<ks.length-1;i++) o=o[ks[i]]; o[ks[ks.length-1]]=v; saveCfg(); }
+function saveCfg(){ localStorage.setItem('xhm_settle_v4', JSON.stringify(CFG)); }
+
+var DEFAULT_CFG = {
+  fx:6.5, invPct:20, withdraw:210, beansPerYuan:8.43, pmFactor:0.9678,
+  fullNew:{days:25, hours:75, bonus:300},
+  fullOld:{days:20, hours:60},
+  newMonths:{A:3, F:2},
+  salPol:'A', salOld:false, platPol:'A',
+  salary:{
+    A:[{lvl:'D',b:15000,s:1000},{lvl:'C',b:35000,s:2200},{lvl:'B',b:65000,s:4000},{lvl:'A',b:100000,s:6000},
+       {lvl:'S',b:200000,s:11500},{lvl:'S1',b:350000,s:18000},{lvl:'S2',b:500000,s:26000},{lvl:'S3',b:750000,s:39000},
+       {lvl:'S4',b:1000000,s:53000},{lvl:'S5',b:1500000,s:75000},{lvl:'S6',b:2000000,s:108000}],
+    F:[{lvl:'D',b:15000,s:900},{lvl:'C',b:35000,s:2050},{lvl:'B',b:65000,s:3800},{lvl:'A',b:100000,s:5000},
+       {lvl:'S',b:150000,s:8000},{lvl:'S1',b:200000,s:10000},{lvl:'S2',b:275000,s:15000},{lvl:'S3',b:350000,s:19000},
+       {lvl:'S4',b:425000,s:29000},{lvl:'S5',b:500000,s:43000},{lvl:'S6',b:625000,s:58000},{lvl:'S7',b:750000,s:75000},
+       {lvl:'S8',b:875000,s:100000},{lvl:'S9',b:1000000,s:120000},{lvl:'S10',b:1500000,s:160000},{lvl:'S11',b:2000000,s:200000}]
+  },
+  salaryOld:{
+    A:[{lvl:'D',b:15000,s:900,full:150},{lvl:'C',b:35000,s:2300,full:200},{lvl:'B',b:65000,s:4200,full:300},
+       {lvl:'A',b:100000,s:6500,full:500},{lvl:'S',b:200000,s:11000,full:1000},{lvl:'S1',b:350000,s:18000,full:1500},
+       {lvl:'S2',b:500000,s:26000,full:2000},{lvl:'S3',b:750000,s:40000,full:3000},{lvl:'S4',b:1000000,s:56000,full:4000},
+       {lvl:'S5',b:2000000,s:111000,full:5000}],
+    F:[{lvl:'D',b:15000,s:750,full:100},{lvl:'C',b:35000,s:1750,full:300},{lvl:'B',b:65000,s:3300,full:600},
+       {lvl:'A',b:100000,s:5500,full:700},{lvl:'S',b:150000,s:8000,full:1000},{lvl:'S1',b:200000,s:11000,full:1000},
+       {lvl:'S2',b:275000,s:15200,full:1000},{lvl:'S3',b:350000,s:19600,full:1000},{lvl:'S4',b:425000,s:23000,full:2000},
+       {lvl:'S5',b:500000,s:27000,full:2000},{lvl:'S6',b:625000,s:34000,full:2000},{lvl:'S7',b:750000,s:41000,full:2000},
+       {lvl:'S8',b:875000,s:48000,full:2000},{lvl:'S9',b:1000000,s:55000,full:3000},{lvl:'S10',b:2000000,s:117000,full:3000}]
+  },
+  platform:{
+    A:[
+      {lvl:'D',b:15000,h:10,d:5,base:55,agent:25,bonus:0,newB:0},
+      {lvl:'C',b:35000,h:10,d:5,base:126,agent:60,bonus:0,newB:0},
+      {lvl:'B',b:65000,h:10,d:5,base:240,agent:110,bonus:0,newB:0},
+      {lvl:'A',b:100000,h:10,d:5,base:360,agent:165,bonus:0,newB:0},
+      {lvl:'S',b:200000,h:10,d:5,base:720,agent:330,bonus:0,newB:0},
+      {lvl:'S1',b:350000,h:10,d:5,base:1260,agent:580,bonus:0,newB:0},
+      {lvl:'S2',b:500000,h:10,d:5,base:1800,agent:820,bonus:0,newB:0},
+      {lvl:'S3',b:750000,h:10,d:5,base:2750,agent:1200,bonus:0,newB:0},
+      {lvl:'S4',b:1000000,h:10,d:5,base:3650,agent:1600,bonus:0,newB:0},
+      {lvl:'S5',b:1500000,h:10,d:5,base:5150,agent:2350,bonus:0,newB:0},
+      {lvl:'S6',b:2000000,h:10,d:5,base:6650,agent:3100,bonus:0,newB:0},
+      {lvl:'S7',b:1000000,h:10,d:5,base:3000,agent:1500,bonus:0,newB:0,step:true},
+      {lvl:'D-1',b:15000,h:20,d:10,base:75,agent:30,bonus:0,newB:0},
+      {lvl:'C-1',b:35000,h:20,d:10,base:175,agent:70,bonus:0,newB:0},
+      {lvl:'B-1',b:65000,h:20,d:10,base:320,agent:130,bonus:0,newB:0},
+      {lvl:'A-1',b:100000,h:20,d:10,base:450,agent:200,bonus:0,newB:0},
+      {lvl:'S-1',b:200000,h:20,d:10,base:850,agent:350,bonus:0,newB:0},
+      {lvl:'S1-1',b:350000,h:20,d:10,base:1450,agent:650,bonus:0,newB:0},
+      {lvl:'S2-1',b:500000,h:20,d:10,base:2100,agent:900,bonus:0,newB:0},
+      {lvl:'S3-1',b:750000,h:20,d:10,base:3200,agent:1350,bonus:0,newB:0},
+      {lvl:'S4-1',b:1000000,h:20,d:10,base:4300,agent:1800,bonus:0,newB:0},
+      {lvl:'S5-1',b:1500000,h:20,d:10,base:6300,agent:2800,bonus:0,newB:0},
+      {lvl:'S6-1',b:2000000,h:20,d:10,base:8300,agent:3800,bonus:0,newB:0},
+      {lvl:'S7-1',b:1000000,h:20,d:10,base:4000,agent:2000,bonus:0,newB:0,step:true},
+      {lvl:'D-2',b:15000,h:30,d:15,base:90,agent:40,bonus:0,newB:10},
+      {lvl:'C-2',b:35000,h:30,d:15,base:220,agent:85,bonus:0,newB:25},
+      {lvl:'B-2',b:65000,h:30,d:15,base:410,agent:150,bonus:0,newB:50},
+      {lvl:'A-2',b:100000,h:30,d:15,base:550,agent:250,bonus:100,newB:55},
+      {lvl:'S-2',b:200000,h:30,d:15,base:1000,agent:420,bonus:100,newB:300},
+      {lvl:'S1-2',b:350000,h:30,d:15,base:1700,agent:650,bonus:100,newB:400},
+      {lvl:'S2-2',b:500000,h:30,d:15,base:2400,agent:1000,bonus:100,newB:500},
+      {lvl:'S3-2',b:750000,h:30,d:15,base:3700,agent:1400,bonus:100,newB:800},
+      {lvl:'S4-2',b:1000000,h:30,d:15,base:5000,agent:1800,bonus:100,newB:1000},
+      {lvl:'S5-2',b:1500000,h:30,d:15,base:7000,agent:2800,bonus:100,newB:1750},
+      {lvl:'S6-2',b:2000000,h:30,d:15,base:9000,agent:3800,bonus:100,newB:2500},
+      {lvl:'S7-2',b:1000000,h:30,d:15,base:4000,agent:2000,bonus:100,newB:1500,step:true}
+    ],
+    F:[
+      {lvl:'C',b:35000,h:10,d:5,base:185,agent:166,bonus:0,newB:0},
+      {lvl:'B',b:65000,h:10,d:5,base:341,agent:309,bonus:0,newB:0},
+      {lvl:'A',b:100000,h:10,d:5,base:520,agent:476,bonus:0,newB:0},
+      {lvl:'S',b:150000,h:10,d:5,base:775,agent:714,bonus:0,newB:0},
+      {lvl:'S1',b:200000,h:10,d:5,base:1024,agent:952,bonus:0,newB:0},
+      {lvl:'S2',b:275000,h:10,d:5,base:1397,agent:1309,bonus:0,newB:0},
+      {lvl:'S3',b:350000,h:10,d:5,base:1764,agent:1666,bonus:0,newB:0},
+      {lvl:'S4',b:425000,h:10,d:5,base:2124,agent:2023,bonus:0,newB:0},
+      {lvl:'S5',b:500000,h:10,d:5,base:2458,agent:2380,bonus:0,newB:0},
+      {lvl:'S6',b:625000,h:10,d:5,base:3020,agent:2976,bonus:0,newB:0},
+      {lvl:'S7',b:750000,h:10,d:5,base:3562,agent:3571,bonus:0,newB:0},
+      {lvl:'S8',b:875000,h:10,d:5,base:4083,agent:4166,bonus:0,newB:0},
+      {lvl:'S9',b:1000000,h:10,d:5,base:4583,agent:4761,bonus:0,newB:0},
+      {lvl:'S10',b:1500000,h:10,d:5,base:6791,agent:7142,bonus:0,newB:0},
+      {lvl:'S11',b:2000000,h:10,d:5,base:8999,agent:9523,bonus:0,newB:0},
+      {lvl:'S11+',b:1000000,h:10,d:5,base:4000,agent:0,bonus:0,newB:0,step:true},
+      {lvl:'D-1',b:15000,h:20,d:10,base:92,agent:71,bonus:0,newB:0},
+      {lvl:'C-1',b:35000,h:20,d:10,base:214,agent:166,bonus:0,newB:0},
+      {lvl:'B-1',b:65000,h:20,d:10,base:395,agent:309,bonus:0,newB:0},
+      {lvl:'A-1',b:100000,h:20,d:10,base:603,agent:476,bonus:0,newB:0},
+      {lvl:'S-1',b:150000,h:20,d:10,base:900,agent:714,bonus:0,newB:0},
+      {lvl:'S1-1',b:200000,h:20,d:10,base:1191,agent:952,bonus:0,newB:0},
+      {lvl:'S2-1',b:275000,h:20,d:10,base:1626,agent:1309,bonus:0,newB:0},
+      {lvl:'S3-1',b:350000,h:20,d:10,base:2056,agent:1666,bonus:0,newB:0},
+      {lvl:'S4-1',b:425000,h:20,d:10,base:2479,agent:2023,bonus:0,newB:0},
+      {lvl:'S5-1',b:500000,h:20,d:10,base:2874,agent:2380,bonus:0,newB:0},
+      {lvl:'S6-1',b:625000,h:20,d:10,base:3541,agent:2976,bonus:0,newB:0},
+      {lvl:'S7-1',b:750000,h:20,d:10,base:4187,agent:3571,bonus:0,newB:0},
+      {lvl:'S8-1',b:875000,h:20,d:10,base:4812,agent:4166,bonus:0,newB:0},
+      {lvl:'S9-1',b:1000000,h:20,d:10,base:5416,agent:4761,bonus:0,newB:0},
+      {lvl:'S10-1',b:1500000,h:20,d:10,base:8041,agent:7142,bonus:0,newB:0},
+      {lvl:'S11-1',b:2000000,h:20,d:10,base:10666,agent:9523,bonus:0,newB:0},
+      {lvl:'S11-1+',b:1000000,h:20,d:10,base:5000,agent:0,bonus:0,newB:0,step:true},
+      {lvl:'D-2',b:15000,h:30,d:15,base:92,agent:71,bonus:0,newB:0},
+      {lvl:'C-2',b:35000,h:30,d:15,base:243,agent:166,bonus:0,newB:0},
+      {lvl:'B-2',b:65000,h:30,d:15,base:449,agent:309,bonus:21,newB:0},
+      {lvl:'A-2',b:100000,h:30,d:15,base:687,agent:476,bonus:33,newB:0},
+      {lvl:'S-2',b:150000,h:30,d:15,base:1025,agent:714,bonus:50,newB:0},
+      {lvl:'S1-2',b:200000,h:30,d:15,base:1358,agent:952,bonus:66,newB:0},
+      {lvl:'S2-2',b:275000,h:30,d:15,base:1856,agent:1309,bonus:91,newB:0},
+      {lvl:'S3-2',b:350000,h:30,d:15,base:2347,agent:1666,bonus:116,newB:0},
+      {lvl:'S4-2',b:425000,h:30,d:15,base:2833,agent:2023,bonus:141,newB:0},
+      {lvl:'S5-2',b:500000,h:30,d:15,base:3291,agent:2380,bonus:166,newB:0},
+      {lvl:'S6-2',b:625000,h:30,d:15,base:4062,agent:2976,bonus:208,newB:0},
+      {lvl:'S7-2',b:750000,h:30,d:15,base:4812,agent:3571,bonus:250,newB:0},
+      {lvl:'S8-2',b:875000,h:30,d:15,base:5541,agent:4166,bonus:291,newB:0},
+      {lvl:'S9-2',b:1000000,h:30,d:15,base:6249,agent:4761,bonus:333,newB:0},
+      {lvl:'S10-2',b:1500000,h:30,d:15,base:9291,agent:7142,bonus:500,newB:0},
+      {lvl:'S11-2',b:2000000,h:30,d:15,base:12333,agent:9523,bonus:666,newB:0},
+      {lvl:'S11-2+',b:1000000,h:30,d:15,base:5500,agent:0,bonus:300,newB:0,step:true},
+      {lvl:'D-3',b:15000,h:40,d:17,base:92,agent:71,bonus:0,newB:0},
+      {lvl:'C-3',b:35000,h:40,d:17,base:243,agent:166,bonus:0,newB:0},
+      {lvl:'B-3',b:65000,h:40,d:17,base:498,agent:309,bonus:43,newB:0},
+      {lvl:'A-3',b:100000,h:40,d:17,base:783,agent:476,bonus:58,newB:0},
+      {lvl:'S-3',b:150000,h:40,d:17,base:1112,agent:714,bonus:75,newB:0},
+      {lvl:'S1-3',b:200000,h:40,d:17,base:1466,agent:952,bonus:99,newB:0},
+      {lvl:'S2-3',b:275000,h:40,d:17,base:1993,agent:1309,bonus:137,newB:0},
+      {lvl:'S3-3',b:350000,h:40,d:17,base:2508,agent:1666,bonus:174,newB:0},
+      {lvl:'S4-3',b:425000,h:40,d:17,base:3010,agent:2023,bonus:212,newB:0},
+      {lvl:'S5-3',b:500000,h:40,d:17,base:3499,agent:2380,bonus:249,newB:0},
+      {lvl:'S6-3',b:625000,h:40,d:17,base:4322,agent:2976,bonus:312,newB:0},
+      {lvl:'S7-3',b:750000,h:40,d:17,base:5125,agent:3571,bonus:375,newB:0},
+      {lvl:'S8-3',b:875000,h:40,d:17,base:5906,agent:4166,bonus:437,newB:0},
+      {lvl:'S9-3',b:1000000,h:40,d:17,base:6666,agent:4761,bonus:499,newB:0},
+      {lvl:'S10-3',b:1500000,h:40,d:17,base:9916,agent:7142,bonus:749,newB:0},
+      {lvl:'S11-3',b:2000000,h:40,d:17,base:13166,agent:9523,bonus:999,newB:0},
+      {lvl:'S11-3+',b:1000000,h:40,d:17,base:6000,agent:0,bonus:600,newB:0,step:true}
+    ]
+  }
+};
+function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
+var CFG;
+try{ CFG = JSON.parse(localStorage.getItem('xhm_settle_v4')) || deepClone(DEFAULT_CFG); }
+catch(e){ CFG = deepClone(DEFAULT_CFG); }
+
+function platFactor(r){
+  var f=1;
+  var ovAbs=n(r.ovPct)/100;
+  if(String(r.ovDeduct||'').trim()==='是'){ f*=Math.max(0,1-(ovAbs-0.20)); }
+  return f;
+}
+function computeCommission(r, beans){
+  var pol=r.policy||'A';
+  var pRows=CFG.platform[pol]||[];
+  var hours=n(r.hours), days=n(r.days);
+  var suf=(String(r.level||'').match(/-\d+$/)||[''])[0];
+  var tier=null, computed=false;
+  if(n(beans)===n(r.tickets) && pRows.filter(function(x){ return !x.step && x.lvl===r.level; }).length){
+    tier=pRows.filter(function(x){ return !x.step && x.lvl===r.level; })[0];
+  }
+  if(!tier){
+    var cand=pRows.filter(function(x){ return !x.step && x.b<=beans && x.h<=hours && x.d<=days && (!suf || x.lvl.slice(-suf.length)===suf); });
+    cand.sort(function(a,b){ return b.b-a.b; });
+    tier=cand[0]||null; computed=true;
+  }
+  var step=pRows.filter(function(x){ return x.step && (!suf || x.lvl.slice(-suf.length)===suf); })[0];
+  var stepN=0;
+  if(step){
+    var sameTrack=pRows.filter(function(x){ return !x.step && (!suf || x.lvl.slice(-suf.length)===suf); });
+    sameTrack.sort(function(a,b){ return b.b-a.b; });
+    if(sameTrack[0] && beans>sameTrack[0].b) stepN=Math.floor((beans-sameTrack[0].b)/(n(step.b)||1000000));
+  }
+  var base=0, agentC=0, agBonus=0, newB=0, platTier='-';
+  if(tier){
+    base=n(tier.base)+stepN*n(step&&step.base);
+    agentC=n(tier.agent)+stepN*n(step&&step.agent);
+    agBonus=n(tier.bonus)+stepN*n(step&&step.bonus);
+    platTier=tier.lvl+(stepN>0?' +递增×'+stepN:'');
+    var isNew=monthsBetween(r.sign, $('periodEnd').value) < n(getCfg('newMonths.'+pol)||0);
+    if(isNew){ newB=n(tier.newB)+stepN*n(step&&step.newB); }
+  }
+  return {base:base, agentC:agentC, agBonus:agBonus, newB:newB, platTier:platTier, computed:computed};
+}
+function calcRow(r){
+  var fxv=fx(), pol=r.policy||'A', warns=[];
+  var beans=n(r.tickets), days=n(r.days), hours=n(r.hours), ov=n(r.ovPct);
+  var useOld=!!r.excOld;
+  var cc=computeCommission(r, beans);
+  var base=cc.base, agentC=cc.agentC, agBonus=cc.agBonus, newB=cc.newB, platTier=cc.platTier;
+  var sal = useOld ? (CFG.salaryOld[pol]||[]) : (CFG.salary[pol]||[]);
+  if(cc.computed && platTier!=='-') warns.push('官方档位未匹配，自动判为 '+platTier);
+  if(platTier==='-' && beans>0) warns.push('未达档位/考核，佣金为 0');
+
+  var factor=platFactor(r);
+  var commission=(base+agentC+agBonus+newB)*factor;
+  if(factor<1) warns.push('海外豆扣佣 ×'+fmt(factor,4));
+  if(String(r.pmDeduct||'').trim()==='是'){
+    commission*=n(getCfg('pmFactor'))||1;
+    warns.push('私信礼物扣佣 ×'+fmt(n(getCfg('pmFactor'))||1,4));
+  }
+  var clearComm=!!r.excViol, clearSalary=!!r.excViol;
+  if(clearComm){ commission=0; warns.push('违规：佣金+薪资清零，仅无效豆'); }
+
+  var checkAmt=commission + beans/n(getCfg('withdraw')) + n(r.awardD);
+  var official=n(r.payUSD)>0?n(r.payUSD):0;
+  var diff=official>0?checkAmt-official:null;
+
+  /* 主播薪资：按补豆前金豆判档（原档发） */
+  var beansBefore=Math.max(0, beans - n(r.tuBeans));
+  var sTier=null;
+  if(sal.length){
+    var sc=sal.slice().sort(function(a,b){ return b.b-a.b; }).filter(function(x){ return x.b<=beansBefore; });
+    sTier=sc[0]||null;
+  }
+  var salY=0, fullY=0, invY=0, tierB=0, invBeans=0;
+  if(sTier){
+    tierB=n(sTier.b); salY=n(sTier.s);
+    invBeans=Math.max(0, beansBefore-tierB);
+  }else if(beansBefore>0){
+    invBeans=beansBefore;
+    warns.push('金豆未达最低档('+(sal.length?fmt(n(sal[0].b),0):'?')+')，无档位薪资，全部按无效豆结算');
+  }
+  if(invBeans>0) invY=invBeans/n(getCfg('withdraw'))*(n(getCfg('invPct'))/100)*fxv;
+
+  /* 全勤：新政策固定300(25天/75h)；老政策随档位(20天/60h+达标) */
+  if(useOld){
+    var fo=getCfg('fullOld');
+    if(days>=n(fo.days) && hours>=n(fo.hours) && sTier) fullY=n(sTier.full)||0;
+  }else{
+    var fn=getCfg('fullNew');
+    if(days>=n(fn.days) && hours>=n(fn.hours)) fullY=n(fn.bonus)||0;
+  }
+  if(clearSalary){ salY=0; fullY=0; }
+  var payY=salY+fullY+invY;
+  var exc=false, excMode='';
+  var payFinal=payY;
+  if(has(r.excAmt)){ payFinal=n(r.excAmt); exc=true; excMode='固定¥'; }
+  else if(has(r.excPct)){ payFinal=(official>0?official:checkAmt)*fxv*n(r.excPct)/100; exc=true; excMode='比例'+n(r.excPct)+'%'; }
+
+  var tuCostY=n(r.tuBeans)/n(getCfg('beansPerYuan'));
+  var tuGainY=0;
+  if(n(r.tuBeans)>0){
+    var before=computeCommission(r, beansBefore);
+    var gainGross=((base+agentC+agBonus+newB) - (before.base+before.agentC+before.agBonus+before.newB))*fxv;
+    var tuWithdraw=n(r.tuBeans)/n(getCfg('withdraw'))*fxv; /* 补豆提现，官方打回公会 */
+    tuGainY=gainGross + tuWithdraw - tuCostY; /* 净盈亏 = 升档增量 + 补豆提现 − 补豆成本 */
+  }
+  var profitC=(official>0?official:checkAmt)*fxv - payFinal - tuCostY;
+
+  if(ov>20) warns.push('海外豆 '+ov.toFixed(2)+'% 超 20%');
+  return {checkAmt:checkAmt, commission:commission, official:official, diff:diff, excMode:excMode,
+    platTier:platTier, computed:cc.computed, factor:factor, newB:newB, useOld:useOld,
+    salY:salY, fullY:fullY, invY:invY, payY:payFinal, payAuto:payY, exc:exc,
+    tuCostY:tuCostY, tuGainY:tuGainY, profitC:profitC, warns:warns};
+}
+
+var rows=[];
+var searchKey='';
+function saveRows(){ try{ localStorage.setItem('xhm_settle_rows', JSON.stringify(rows)); }catch(e){} }
+function loadRows(){ try{ var d=JSON.parse(localStorage.getItem('xhm_settle_rows')); if(Array.isArray(d) && d.length){ rows=d; } }catch(e){} }
+function matchRow(r){
+  if(!searchKey) return true;
+  var k=String(searchKey).toLowerCase();
+  return String(r.name||'').toLowerCase().indexOf(k)>=0 || String(r.uid||'').toLowerCase().indexOf(k)>=0 || String(r.bigo||'').toLowerCase().indexOf(k)>=0;
+}
+function blankRow(){ return {uid:'',name:'',bigo:'',sign:'',policy:'A',level:'',days:'',hours:'',tickets:'',ovPct:'',awardD:'',tuBeans:'',excAmt:'',excPct:'',payUSD:'',ovDeduct:'',pmDeduct:'',pmPct:'',excViol:false,excOld:false}; }
+
+function excBtn(i){
+  var r=rows[i], amt=has(r.excAmt), pct=has(r.excPct), v=!!r.excViol, o=!!r.excOld;
+  var parts=[];
+  if(v) parts.push('违规');
+  if(o) parts.push('老政策');
+  if(amt) parts.push('¥'+fmt(n(r.excAmt),0));
+  else if(pct) parts.push(n(r.excPct)+'%');
+  var lbl=parts.length?parts.join('+'):'例外';
+  return '<button class="btn sm '+(amt||pct||v||o?'green':'ghost')+'" data-exc="'+i+'">'+lbl+'</button>';
+}
+function renderSettle(){
+  var h='';
+  var shown=0;
+  rows.forEach(function(r,i){
+    if(!matchRow(r)) return;
+    shown++;
+    var c=calcRow(r);
+    var isNew=c.newB>0;
+    h+='<tr data-i="'+i+'">'
+      +'<td>'+esc(r.uid)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.policy)+'</td>'
+      +'<td class="'+(c.computed?'orange':'pu')+'">'+esc(r.level||c.platTier)+(c.useOld?'<span class="mini orange">老</span>':'')+(isNew?'<span class="mini bl">新+$'+fmt(c.newB,0)+'</span>':'')+'</td>'
+      +'<td>'+fmt(n(r.days),0)+'</td><td>'+fmt(n(r.hours),1)+'</td><td>'+fmt(n(r.tickets),0)+'</td>'
+      +'<td class="'+(n(r.ovPct)>20?'red':(n(r.ovPct)>15?'orange':''))+'">'+fmt(n(r.ovPct),2)+'</td>'
+      +'<td class="main-cell bl" id="c-chk-'+i+'">$'+fmt(c.checkAmt)+'</td>'
+      +'<td id="c-off-'+i+'">'+(c.official>0?fmt(c.official):'<span class="mini">无官方数</span>')+'</td>'
+      +'<td class="'+(c.diff===null?'':(Math.abs(c.diff)<=0.5?'green':'red'))+'" id="c-diff-'+i+'">'+(c.diff===null?'—':fmt(c.diff))+'</td>'
+      +'<td id="c-sal-'+i+'">'+fmt(c.salY,0)+'</td>'
+      +'<td id="c-full-'+i+'">'+(c.fullY>0?'<span class="green">'+fmt(c.fullY,0)+'</span>':'—')+'</td>'
+      +'<td id="c-inv-'+i+'">'+fmt(c.invY)+'</td>'
+      +'<td class="main-cell" id="c-pay-'+i+'">'+fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'')+'</td>'
+      +'<td id="c-tub-'+i+'" data-tu="'+i+'" style="cursor:pointer" title="点击修改补豆数">'+(n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—')+'</td>'
+      +'<td id="c-tu-'+i+'">'+(c.tuCostY!==0?fmt(c.tuCostY):'—')+'</td>'
+      +'<td class="'+(c.tuGainY>0?'green':(c.tuGainY<0?'red':''))+'" id="c-tug-'+i+'">'+(n(r.tuBeans)>0?fmt(c.tuGainY):'—')+'</td>'
+      +'<td class="main-cell '+(c.profitC>=0?'green':'red')+'" id="c-pc-'+i+'">¥'+fmt(c.profitC,0)+'</td>'
+      +'<td id="c-exc-'+i+'">'+excBtn(i)+'</td>'
+      +'<td class="warn-cell'+(c.warns.some(function(w){return w.indexOf('超 20%')>=0||w.indexOf('清零')>=0;})?' err':'')+'" id="row-warn-'+i+'">'+c.warns.map(function(w){return '⚠ '+w;}).join('<br>')+'</td>'
+      +'</tr>';
+  });
+  if(!h) h=rows.length?'<tr><td class="empty" colspan="22">无匹配主播 —— 换个关键词试试</td></tr>':'<tr><td class="empty" colspan="22">暂无数据 —— 点上方「选择 xlsx / csv 文件」导入官方月数据</td></tr>';
+  $('settleBody').innerHTML=h;
+  var sc=$('searchCount'); if(sc) sc.textContent=rows.length?('显示 '+shown+' / '+rows.length+' 人'):'';
+  renderSum();
+  saveRows();
+}
+function renderSum(){
+  if(!rows.length){ $('sumBox').innerHTML=''; return; }
+  var T={chk:0,off:0,offCnt:0,pay:0,tu:0,tug:0,pc:0};
+  rows.forEach(function(r){ var c=calcRow(r); T.chk+=c.checkAmt; T.off+=c.official; if(c.official>0)T.offCnt++; T.pay+=c.payY; T.tu+=c.tuCostY; T.tug+=c.tuGainY; T.pc+=c.profitC; });
+  $('sumBox').innerHTML=
+    kpi('主播人数',rows.length+' 人','')+
+    kpi('核对金额合计','$'+fmt(T.chk),'bl')+
+    kpi('官方结算合计','$'+fmt(T.off),'',T.offCnt+' 人已核对')+
+    kpi('差额合计','$'+fmt(T.chk-T.off),'orange')+
+    kpi('主播薪资合计','¥'+fmt(T.pay,0),'')+
+    kpi('补豆成本合计','¥'+fmt(T.tu,0),T.tu>0?'orange':'')+
+    kpi('补豆收益合计','¥'+fmt(T.tug,0),'bl')+
+    kpi('总盈利','¥'+fmt(T.pc,0),T.pc>=0?'green':'red');
+  function kpi(t,v,cls){ return '<div class="kpi"><span>'+t+'</span><b class="'+cls+'">'+v+'</b></div>'; }
+}
+
+var COLMAP={
+  uid:['uid','UID','uid号'], name:['名称','昵称','主播','主播昵称'], bigo:['BIGO ID','bigo id','BIGO_ID'],
+  sign:['首簽月份','首签月份','首签','首簽'], hours:['valid_hour','时长','有效时长','有效直播时长'],
+  days:['valid_day','天数','有效天数','有效直播天数'], tickets:['tickets','金豆收益','总金豆','金豆'],
+  level:['ticket_level','等级'], policy:['政策','公会政策'],
+  ovBeans:['海外金豆','海外豆'], ovPct:['海外金豆占比','海外豆占比','海外豆%'],
+  awardD:['獎勵金豆$','奖励金豆$'], award:['獎勵金豆','奖励金豆'],
+  payUSD:['代理实收','代理實收'],
+  ovDeduct:['海外豆是否扣除佣金'], pmDeduct:['私信禮物是否扣除佣金','私信礼物是否扣除佣金'], pmPct:['私信禮物金豆佔比','私信礼物金豆占比']
+};
+function parseAOA(aoa){
+  if(!aoa.length) return 0;
+  var head=aoa[0].map(function(x){ return String(x==null?'':x).trim().toLowerCase(); });
+  var map={};
+  head.forEach(function(hh,i){
+    Object.keys(COLMAP).forEach(function(k){
+      if(map[k]===undefined && COLMAP[k].some(function(a){ return a.toLowerCase()===hh; })) map[k]=i;
+    });
+  });
+  var cnt=0;
+  aoa.slice(1).forEach(function(cols){
+    if(!cols || !cols.join('')) return;
+    var r=blankRow();
+    Object.keys(map).forEach(function(k){ r[k]=cols[map[k]]; });
+    if(!r.uid && !r.name && !r.tickets) return;
+    r.uid=r.uid==null?'':String(r.uid); r.name=r.name==null?'':String(r.name).trim();
+    r.level=r.level==null?'':String(r.level).trim();
+    var pv=String(r.policy||'').toUpperCase();
+    r.policy = pv.indexOf('042')>=0 || pv.indexOf('政策F')>=0 ? 'F' : 'A';
+    r.sign=normSign(r.sign);
+    r.ovPct = n(r.ovPct)<=1 ? n(r.ovPct)*100 : n(r.ovPct);
+    r.pmPct = n(r.pmPct)<=1 ? n(r.pmPct)*100 : n(r.pmPct);
+    rows.push(r); cnt++;
+  });
+  rows.sort(function(a,b){ return (n(b.tickets)-n(a.tickets)) || (n(b.hours)-n(a.hours)); });
+  return cnt;
+}
+function normSign(v){
+  if(v==null) return '';
+  if(typeof v==='number'){ var d=new Date(Math.round((v-25569)*86400000)); return d.toISOString().substring(0,10); }
+  var s=String(v).trim();
+  if(/^\d{4}[-/]\d{1,2}/.test(s)) return s.replace(/\//g,'-').substring(0,10);
+  return '';
+}
+function parseTopup(aoa){
+  if(!aoa||!aoa.length) return 0;
+  var head=aoa[0].map(function(x){ return String(x==null?'':x).trim().toLowerCase(); });
+  var IDALIAS=['id','主播id','bigo id','bigo_id','uid','uid号','账号id','主播编号'];
+  var BEANALIAS=['合计','总计','补豆合计','总补豆','补豆数','补豆金豆','投放金豆','补豆','补豆数量'];
+  var idCol=-1, beanCol=-1;
+  head.forEach(function(h,i){
+    if(idCol<0 && IDALIAS.indexOf(h)>=0) idCol=i;
+    if(beanCol<0 && BEANALIAS.indexOf(h)>=0) beanCol=i;
+  });
+  if(idCol<0){ idCol=0; }
+  if(beanCol<0){ beanCol=1; }
+  var map={};
+  aoa.slice(1).forEach(function(cols){
+    var id=String(cols[idCol]==null?'':cols[idCol]).trim();
+    var b=cols[beanCol];
+    if(id && b!=null && String(b).trim()!=='' && !isNaN(parseFloat(b))) map[id]=parseFloat(b);
+  });
+  var matched=0;
+  rows.forEach(function(r){
+    var keys=[String(r.bigo||'').trim(), String(r.uid||'').trim()];
+    for(var k=0;k<keys.length;k++){ if(keys[k] && map[keys[k]]!=null){ r.tuBeans=map[keys[k]]; matched++; break; } }
+  });
+  return matched;
+}
+$('btnPickFile').onclick=function(){ $('fileBox').click(); };
+$('fileBox').onchange=function(e){
+  var f=e.target.files[0]; if(!f) return;
+  if(typeof XLSX==='undefined'){ $('importMsg').textContent='表格解析库未加载（需联网）'; return; }
+  var fr=new FileReader();
+  fr.onload=function(){
+    try{
+      var wb=XLSX.read(new Uint8Array(fr.result),{type:'array'});
+      var ws=wb.Sheets[wb.SheetNames[0]];
+      var aoa=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:null});
+      var cnt=parseAOA(aoa);
+      $('importMsg').textContent='已导入 '+cnt+' 名主播（'+wb.SheetNames[0]+'）';
+      renderSettle();
+    }catch(ex){ $('importMsg').textContent='解析失败：'+ex.message; }
+  };
+  fr.readAsArrayBuffer(f); e.target.value='';
+};
+$('btnPickTopup').onclick=function(){ $('fileTopup').click(); };
+$('fileTopup').onchange=function(e){
+  var f=e.target.files[0]; if(!f) return;
+  if(typeof XLSX==='undefined'){ $('importMsg').textContent='表格解析库未加载'; return; }
+  var fr=new FileReader();
+  fr.onload=function(){
+    try{
+      var wb=XLSX.read(new Uint8Array(fr.result),{type:'array'});
+      var ws=wb.Sheets[wb.SheetNames[0]];
+      var aoa=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:null});
+      var m=parseTopup(aoa);
+      $('importMsg').textContent='补豆记录匹配 '+m+' 名主播';
+      renderSettle();
+    }catch(ex){ $('importMsg').textContent='补豆解析失败：'+ex.message; }
+  };
+  fr.readAsArrayBuffer(f); e.target.value='';
+};
+$('btnClearData').onclick=function(){ if(confirm('确定清空全部数据？（政策配置不受影响）')){ rows=[]; renderSettle(); $('importMsg').textContent=''; } };
+function downloadCSV(name,text){
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['\ufeff'+text],{type:'text/csv;charset=utf-8'}));
+  a.download=name; a.click(); URL.revokeObjectURL(a.href);
+}
+$('btnTplOfficial').onclick=function(){ downloadCSV('官方表导入模板.csv','uid,名称,BIGO ID,首簽月份,valid_hour,valid_day,tickets,ticket_level,政策,海外金豆占比,獎勵金豆$,扣除后主播佣金$,扣除后代理佣金$,代理实收\n894038063,示例主播,1124167976,2026-06-01,78,28,362480,S1-2,政策A,0.0146,26.14,2100,750,4602.23'); };
+$('btnTplTopup').onclick=function(){ downloadCSV('补豆记录导入模板.csv','ID,合计\n1124167976,150000\n1128118939,50000'); };
+function resetCfg(){
+  if(!confirm('确定恢复全部政策配置为默认值？（已导入的主播数据不受影响）')) return;
+  CFG=deepClone(DEFAULT_CFG); saveCfg();
+  document.querySelectorAll('.cfg-in').forEach(function(inp){ var v=getCfg(inp.getAttribute('data-cfg')); if(v!==undefined) inp.value=v; });
+  renderSettle(); renderSalTabs(); renderPlatTabs();
+}
+$('btnResetCfg').onclick=resetCfg;
+$('btnResetCfg2').onclick=resetCfg;
+$('btnClearTu').onclick=function(){ if(!rows.length){ alert('暂无数据'); return; } if(confirm('确定清空所有主播的补豆数？（官方表数据保留）')){ rows.forEach(function(r){ r.tuBeans=''; }); renderSettle(); $('importMsg').textContent='已清空补豆记录'; } };
+$('btnExport').onclick=function(){
+  if(!rows.length){ alert('暂无数据'); return; }
+  var head=['uid','名称','政策','档位薪资¥','全勤¥','无效豆¥','补豆数','补豆成本¥','补豆收益¥','盈利¥','例外¥','例外%','违规清零','老政策'];
+  var colW=[80,150,60,95,80,95,80,95,95,95,85,75,80,85];
+  function num(v,fmt,redNeg){
+    var neg=(typeof v==='number' && v<0);
+    var color=(redNeg&&neg)?';color:#C00000;font-weight:bold':'';
+    return '<td style="mso-number-format:\''+fmt+'\';text-align:center;padding:8px 12px;font-size:13pt'+color+'">'+(v===''||v===null?'':v)+'</td>';
+  }
+  function txt(v,align){
+    return '<td style="text-align:'+align+';padding:8px 12px;font-size:13pt;white-space:nowrap">'+esc(String(v==null?'':v))+'</td>';
+  }
+  function tierColor(lvl){
+    var b=String(lvl||'').replace(/-\d+$/,'');
+    if(b.indexOf('S')===0) return '#FCE8E6';
+    if(b==='A') return '#FEF7E0';
+    if(b==='B') return '#E6F4EA';
+    if(b==='C') return '#E8F0FE';
+    if(b==='D') return '#F3F4F6';
+    return '#FFFFFF';
+  }
+  var html='<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body><table border="1" cellspacing="0" style="border-collapse:collapse"><colgroup>'+colW.map(function(w){return '<col style="width:'+w+'px">';}).join('')+'</colgroup>';
+  html+='<tr height="30">'+head.map(function(h){return '<td style="background:#4472C4;color:#ffffff;font-weight:bold;text-align:center;padding:8px 12px;font-size:13pt;white-space:nowrap">'+h+'</td>';}).join('')+'</tr>';
+  rows.forEach(function(r){
+    var c=calcRow(r);
+    html+='<tr style="background:'+tierColor(r.level)+';height:28">'
+      +txt(r.uid,'center')
+      +txt(r.name||'','left')
+      +txt(r.policy,'center')
+      +num(c.salY,'#,##0',false)
+      +num(c.fullY,'#,##0',false)
+      +num(c.invY,'#,##0.00',false)
+      +num(n(r.tuBeans),'#,##0',false)
+      +num(c.tuCostY,'#,##0.00',false)
+      +num(c.tuGainY,'#,##0.00',true)
+      +num(c.profitC,'#,##0.00',true)
+      +num(has(r.excAmt)?n(r.excAmt):'','#,##0.00',false)
+      +num(has(r.excPct)?n(r.excPct):'','0.00',false)
+      +txt(!!r.excViol?'是':'','center')
+      +txt(!!r.excOld?'是':'','center')
+      +'</tr>';
+  });
+  var sum=rows.reduce(function(s,r){return s+calcRow(r).profitC;},0);
+  var sumNeg=sum<0;
+  html+='<tr height="28">'
+    +'<td colspan="9" style="font-weight:bold;text-align:right;padding:8px 12px;font-size:13pt">合计</td>'
+    +'<td style="font-weight:bold;text-align:center;padding:8px 12px;font-size:13pt;mso-number-format:\'#,##0.00\';'+(sumNeg?'color:#C00000;':'')+'">'+sum+'</td>'
+    +'<td colspan="4"></td>'
+    +'</tr>';
+  html+='</table></body></html>';
+  var d=new Date();
+  var ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([html],{type:'application/vnd.ms-excel;charset=utf-8'}));
+  a.download='小红帽结算单_'+ds+'.xls'; a.click(); URL.revokeObjectURL(a.href);
+};
+
+function updateRow(i){
+  var r=rows[i], c=calcRow(r);
+  $('c-chk-'+i).textContent='$'+fmt(c.checkAmt);
+  $('c-off-'+i).innerHTML=c.official>0?fmt(c.official):'<span class="mini">无官方数</span>';
+  $('c-diff-'+i).className=c.diff===null?'':(Math.abs(c.diff)<=0.5?'green':'red');
+  $('c-diff-'+i).textContent=c.diff===null?'—':fmt(c.diff);
+  $('c-sal-'+i).textContent=fmt(c.salY,0);
+  $('c-full-'+i).innerHTML=c.fullY>0?'<span class="green">'+fmt(c.fullY,0)+'</span>':'—';
+  $('c-inv-'+i).textContent=fmt(c.invY);
+  $('c-pay-'+i).innerHTML=fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'');
+  $('c-tub-'+i).textContent=n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—';
+  $('c-tu-'+i).textContent=c.tuCostY!==0?fmt(c.tuCostY):'—';
+  $('c-tug-'+i).textContent=n(r.tuBeans)>0?fmt(c.tuGainY):'—';
+  $('c-tug-'+i).className=c.tuGainY>0?'green':(c.tuGainY<0?'red':'');
+  $('c-pc-'+i).textContent='¥'+fmt(c.profitC,0);
+  $('c-pc-'+i).className='main-cell '+(c.profitC>=0?'green':'red');
+  $('c-exc-'+i).innerHTML=excBtn(i);
+  var wc=$('row-warn-'+i); if(wc) wc.innerHTML=c.warns.map(function(w){return '⚠ '+w;}).join('<br>');
+  renderSum();
+}
+$('settleBody').addEventListener('input',function(e){
+  var t=e.target, i=parseInt(t.getAttribute('data-i'),10), k=t.getAttribute('data-k');
+  if(isNaN(i)||!k) return;
+  rows[i][k]=t.value; updateRow(i);
+});
+$('settleBody').addEventListener('change',function(e){
+  var t=e.target, i=parseInt(t.getAttribute('data-i'),10), k=t.getAttribute('data-k');
+  if(isNaN(i)||!k) return;
+  rows[i][k]=t.value; updateRow(i);
+});
+$('settleBody').addEventListener('click',function(e){
+  var t=e.target;
+  if(t.getAttribute && t.getAttribute('data-tu')!==null){
+    var ti=parseInt(t.getAttribute('data-tu'),10);
+    var tv=prompt('修改补豆数（留空=清除）', rows[ti].tuBeans||'');
+    if(tv===null) return;
+    rows[ti].tuBeans=tv.trim();
+    updateRow(ti); return;
+  }
+  while(t && t!==this && !(t.getAttribute && t.getAttribute('data-exc')!==null)) t=t.parentElement;
+  if(t && t.getAttribute && t.getAttribute('data-exc')!==null) openExc(parseInt(t.getAttribute('data-exc'),10));
+});
+
+var excRowIdx=null;
+function openExc(i){
+  excRowIdx=i; var r=rows[i];
+  $('excName').textContent=(r.name||r.uid||'主播');
+  $('excAmtIn').value=r.excAmt||'';
+  $('excPctIn').value=r.excPct||'';
+  $('segViol').classList.toggle('on',!!r.excViol);
+  $('segOld').classList.toggle('on',!!r.excOld);
+  $('excMask').style.display='flex';
+}
+function closeExc(){ $('excMask').style.display='none'; excRowIdx=null; }
+$('excClose').onclick=closeExc;
+$('excMask').addEventListener('click',function(e){ if(e.target===$('excMask')) closeExc(); });
+$('segViol').onclick=function(){
+  if(excRowIdx===null) return;
+  rows[excRowIdx].excViol=!rows[excRowIdx].excViol;
+  $('segViol').classList.toggle('on',!!rows[excRowIdx].excViol);
+  updateRow(excRowIdx);
+};
+$('segOld').onclick=function(){
+  if(excRowIdx===null) return;
+  rows[excRowIdx].excOld=!rows[excRowIdx].excOld;
+  $('segOld').classList.toggle('on',!!rows[excRowIdx].excOld);
+  updateRow(excRowIdx);
+};
+$('excSave').onclick=function(){
+  if(excRowIdx===null) return;
+  rows[excRowIdx].excAmt=$('excAmtIn').value.trim();
+  rows[excRowIdx].excPct=$('excPctIn').value.trim();
+  updateRow(excRowIdx); closeExc();
+};
+$('excClear').onclick=function(){
+  if(excRowIdx===null) return;
+  rows[excRowIdx].excAmt=''; rows[excRowIdx].excPct='';
+  rows[excRowIdx].excViol=false; rows[excRowIdx].excOld=false;
+  updateRow(excRowIdx); closeExc();
+};
+
+/* ================= 主播政策 ================= */
+var salTab='A';
+function renderSalTabs(){
+  $('salTabs').innerHTML=
+    '<button class="'+(salTab==='A'?'on':'')+'" data-p="A">政策 A</button>'
+    +'<button class="'+(salTab==='F'?'on':'')+'" data-p="F">政策 F</button>'
+    +'<span style="width:1px;height:20px;background:var(--line);margin:0 4px"></span>'
+    +'<button class="'+(CFG.salOld?'':'on')+'" data-ver="new">新政策<span class="ver-badge ver-new" style="margin-left:6px">全勤 300 固定</span></button>'
+    +'<button class="'+(CFG.salOld?'on':'')+'" data-ver="old">老政策<span class="ver-badge ver-old" style="margin-left:6px">全勤随档位</span></button>';
+  var useOld=CFG.salOld;
+  var arr=getCfg((useOld?'salaryOld':'salary')+'.'+salTab)||[];
+  var h='';
+  if(useOld){
+    h+='<table class="cfg-table"><thead><tr><th>档位</th><th>金豆任务</th><th>提成 ¥</th><th>全勤奖励 ¥</th><th>总收益 ¥</th><th>操作</th></tr></thead><tbody>';
+    arr.forEach(function(row,i){
+      h+='<tr><td><input class="w-lvl" data-i="'+i+'" data-k="lvl" value="'+(row.lvl||'')+'"></td>'
+        +'<td><input class="w-b" data-i="'+i+'" data-k="b" value="'+(row.b==null?'':row.b)+'"></td>'
+        +'<td><input class="w-m" data-i="'+i+'" data-k="s" value="'+(row.s==null?'':row.s)+'"></td>'
+        +'<td><input class="w-m" data-i="'+i+'" data-k="full" value="'+(row.full==null?'':row.full)+'"></td>'
+        +'<td class="sum-col">'+fmt(n(row.s)+n(row.full),0)+'</td>'
+        +'<td><button class="icon-btn" data-del="'+i+'">✕</button></td></tr>';
+    });
+    h+='</tbody></table><div class="hint">老政策全勤：月播 ≥20 天、累计 ≥60 小时、且达到档位，即可拿「全勤奖励」列对应金额（随档位变化）。</div>';
+  }else{
+    h+='<table class="cfg-table"><thead><tr><th>档位</th><th>金豆任务</th><th>档位薪资 ¥</th><th>操作</th></tr></thead><tbody>';
+    arr.forEach(function(row,i){
+      h+='<tr><td><input class="w-lvl" data-i="'+i+'" data-k="lvl" value="'+(row.lvl||'')+'"></td>'
+        +'<td><input class="w-b" data-i="'+i+'" data-k="b" value="'+(row.b==null?'':row.b)+'"></td>'
+        +'<td><input class="w-m" data-i="'+i+'" data-k="s" value="'+(row.s==null?'':row.s)+'"></td>'
+        +'<td><button class="icon-btn" data-del="'+i+'">✕</button></td></tr>';
+    });
+    h+='</tbody></table><div class="hint">新政策全勤：月播 ≥25 天、累计 ≥75 小时，固定奖励 ¥300（见上方通用规则）。</div>';
+  }
+  h+='<button class="btn ghost sm" data-add="1" style="margin-top:8px">+ 加一行</button>';
+  $('salEditor').innerHTML=h;
+  bindSal();
+}
+function bindSal(){
+  var root=$('salEditor');
+  root.querySelectorAll('input').forEach(function(inp){
+    inp.addEventListener('input',function(){
+      var i=parseInt(inp.getAttribute('data-i'),10), k=inp.getAttribute('data-k');
+      if(isNaN(i)||!k) return;
+      var key=(CFG.salOld?'salaryOld':'salary')+'.'+salTab;
+      var arr=getCfg(key); if(!arr) return;
+      if(k==='lvl'){ arr[i][k]=inp.value; }
+      else{ arr[i][k]=isNaN(parseFloat(inp.value))?inp.value:parseFloat(inp.value); }
+      saveCfg(); renderSettle(); renderSalTabs();
+    });
+  });
+  root.querySelectorAll('[data-del]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var key=(CFG.salOld?'salaryOld':'salary')+'.'+salTab;
+      getCfg(key).splice(parseInt(btn.getAttribute('data-del'),10),1);
+      saveCfg(); renderSalTabs(); renderSettle();
+    });
+  });
+  var add=root.querySelector('[data-add]');
+  if(add) add.addEventListener('click',function(){
+    var key=(CFG.salOld?'salaryOld':'salary')+'.'+salTab;
+    var arr=getCfg(key)||[];
+    arr.push(CFG.salOld?{lvl:'',b:0,s:0,full:0}:{lvl:'',b:0,s:0});
+    setCfg(key,arr); saveCfg(); renderSalTabs();
+  });
+}
+$('salTabs').addEventListener('click',function(e){
+  var p=e.target.getAttribute('data-p');
+  if(p){ salTab=p; renderSalTabs(); return; }
+  var v=e.target.getAttribute('data-ver');
+  if(v){ CFG.salOld=(v==='old'); saveCfg(); renderSalTabs(); renderSettle(); return; }
+});
+
+/* ================= 平台政策（固定） ================= */
+var platTab='A';
+function renderPlatTabs(){
+  $('platTabs').innerHTML=
+    '<button class="'+(platTab==='A'?'on':'')+'" data-p="A">政策 A · HY-BP041</button>'
+    +'<button class="'+(platTab==='F'?'on':'')+'" data-p="F">政策 F · HY-BP042</button>';
+  var arr=getCfg('platform.'+platTab)||[];
+  var heads=['档位','金豆门槛','时长h','天数','基本佣金$','代理佣金$','代理奖励$','新主播奖励$','递增'];
+  var keys=['lvl','b','h','d','base','agent','bonus','newB'];
+  var h='<table class="cfg-table"><thead><tr>'+heads.map(function(x){return '<th>'+x+'</th>';}).join('')+'<th>操作</th></tr></thead><tbody>';
+  arr.forEach(function(row,i){
+    h+='<tr'+(row.step?' class="step-row"':'')+'>'
+      +keys.map(function(k){ return '<td><input class="w-m" data-i="'+i+'" data-k="'+k+'" value="'+(row[k]==null?'':row[k])+'"></td>'; }).join('')
+      +'<td><input type="checkbox" data-i="'+i+'" data-k="step" '+(row.step?'checked':'')+'></td>'
+      +'<td><button class="icon-btn" data-del="'+i+'">✕</button></td></tr>';
+  });
+  h+='</tbody></table><button class="btn ghost sm" data-add="1" style="margin-top:8px">+ 加一行</button>';
+  $('platEditor').innerHTML=h;
+  bindPlat();
+}
+function bindPlat(){
+  var root=$('platEditor');
+  root.querySelectorAll('input').forEach(function(inp){
+    inp.addEventListener('input',function(){
+      var i=parseInt(inp.getAttribute('data-i'),10), k=inp.getAttribute('data-k');
+      if(isNaN(i)||!k) return;
+      var arr=getCfg('platform.'+platTab); if(!arr) return;
+      if(k==='step'){ arr[i].step=inp.checked; }
+      else if(k==='lvl'){ arr[i].lvl=inp.value; }
+      else{ arr[i][k]=isNaN(parseFloat(inp.value))?inp.value:parseFloat(inp.value); }
+      saveCfg(); renderSettle();
+    });
+  });
+  root.querySelectorAll('[data-del]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      getCfg('platform.'+platTab).splice(parseInt(btn.getAttribute('data-del'),10),1);
+      saveCfg(); renderPlatTabs(); renderSettle();
+    });
+  });
+  var add=root.querySelector('[data-add]');
+  if(add) add.addEventListener('click',function(){
+    getCfg('platform.'+platTab).push({lvl:'',b:0,h:10,d:5,base:0,agent:0,bonus:0,newB:0,step:false});
+    saveCfg(); renderPlatTabs();
+  });
+}
+$('platTabs').addEventListener('click',function(e){
+  var p=e.target.getAttribute('data-p');
+  if(p){ platTab=p; renderPlatTabs(); }
+});
+
+/* ================= 通用规则 ================= */
+document.querySelectorAll('.cfg-in').forEach(function(inp){
+  var path=inp.getAttribute('data-cfg');
+  inp.addEventListener('input',function(){
+    var v=parseFloat(inp.value); setCfg(path,isNaN(v)?inp.value:v); renderSettle();
+  });
+});
+
+/* ================= 搜索 ================= */
+$('searchBox').addEventListener('input',function(){ searchKey=this.value; renderSettle(); });
+
+/* ================= 导航 ================= */
+var TITLES={
+  settle:['主播薪资结算','导入官方月数据 · 自动核算 · 就地核对官方'],
+  salary:['主播政策','给主播多少钱：档位薪资 + 全勤 + 无效豆'],
+  platform:['平台政策','官方固定佣金表（HY-BP041/042）']
+};
+document.querySelectorAll('.nav-item').forEach(function(item){
+  item.addEventListener('click',function(){
+    document.querySelectorAll('.nav-item').forEach(function(x){ x.classList.remove('on'); });
+    item.classList.add('on');
+    var p=item.getAttribute('data-page');
+    document.querySelectorAll('.page').forEach(function(x){ x.classList.remove('on'); });
+    $('page-'+p).classList.add('on');
+    $('pageTitle').innerHTML=TITLES[p][0]+'<small>'+TITLES[p][1]+'</small>';
+  });
+});
+
+document.querySelectorAll('.cfg-in').forEach(function(inp){
+  var v=getCfg(inp.getAttribute('data-cfg'));
+  if(v!==undefined) inp.value=v;
+});
+$('fx').addEventListener('input',renderSettle);
+$('periodEnd').addEventListener('input',renderSettle);
+loadRows();
+renderSettle(); renderSalTabs(); renderPlatTabs();
+</script>
+</body>
+</html>
