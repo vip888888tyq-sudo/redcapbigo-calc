@@ -42,20 +42,20 @@ main{flex:1;padding:16px 20px;min-width:0}
 .card .desc{font-size:11px;color:var(--text3);margin-bottom:12px;line-height:1.6}
 .page{display:none}.page.on{display:block}
 .hint{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.7}
-.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px}
-.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;transition:transform .15s,border-color .15s}
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px;margin-bottom:12px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;transition:transform .15s,border-color .15s}
 .kpi:hover{transform:translateY(-2px);border-color:var(--blue)}
-.kpi span{font-size:11px;color:var(--text2)}
-.kpi b{display:block;font-size:18px;font-weight:800;margin-top:2px}
+.kpi span{font-size:10.5px;color:var(--text2);letter-spacing:0.3px}
+.kpi b{display:block;font-size:16px;font-weight:800;margin-top:1px}
 .tbl-box{overflow-x:auto;overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;max-height:calc(100vh - 180px);min-width:0}
-table{width:1078px;max-width:100%;table-layout:fixed;border-collapse:collapse;font-size:12.5px;margin:0 auto}
+table{width:1070px;max-width:100%;table-layout:fixed;border-collapse:collapse;font-size:12.5px;margin:0 auto}
 th{position:sticky;top:0;background:#1a2234;color:var(--text2);font-weight:700;padding:10px 6px;border-bottom:2px solid var(--line);text-align:right;white-space:nowrap;z-index:2;font-size:11.5px;letter-spacing:0.1px;line-height:1.3}
 th.g-sal{color:#5DCAA5;background:#172420}
 th.g-inc{color:#AFA9EC;background:#1c1d34}
 th.g-prof{color:#F7C1C1;background:#2a1e24}
 th:nth-child(1),th:nth-child(2),td:nth-child(1),td:nth-child(2){text-align:left}
-th:nth-child(1),td:nth-child(1){position:sticky;left:0;width:50px;min-width:50px;background:#1a2234;z-index:1}
-th:nth-child(2),td:nth-child(2){position:sticky;left:50px;width:75px;min-width:75px;background:#1a2234;z-index:1;border-right:1px solid var(--line)}
+th:nth-child(1),td:nth-child(1){position:sticky;left:0;width:55px;min-width:55px;background:#1a2234;z-index:1}
+th:nth-child(2),td:nth-child(2){position:sticky;left:55px;width:80px;min-width:80px;background:#1a2234;z-index:1;border-right:1px solid var(--line)}
 th:nth-child(1){z-index:4}th:nth-child(2){z-index:4}
 td{padding:8px 5px;border-bottom:1px solid #202a42;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:12.5px;vertical-align:middle;line-height:1.35}
 td:nth-child(1),td:nth-child(2){background:#161e30;font-size:12px}
@@ -72,9 +72,15 @@ td select{width:78px;text-align:left}
 .dim{font-size:10px;color:var(--text3);opacity:.55}
 .sub{font-size:10px;color:var(--text3);display:block;line-height:1.4;margin-top:2px}
 
-/* === 薪资明细列：单行紧凑显示 === */
-td.sal-cell{font-size:11.5px;letter-spacing:-0.3px;white-space:nowrap;text-align:right;padding:8px 4px}
-td.sal-cell .slash{color:var(--text3);margin:0 1px;opacity:.7}
+/* === 薪资明细列：3 行垂直分组卡片布局（最稳定，不会跳行） === */
+td.sal-cell{padding:7px 6px;text-align:right;vertical-align:middle;white-space:normal}
+td.sal-cell .wage-row{display:flex;justify-content:space-between;align-items:baseline;gap:6px;font-size:11.5px;line-height:1.6;font-variant-numeric:tabular-nums}
+td.sal-cell .wage-row .lbl{color:var(--text3);font-size:10px;letter-spacing:0.5px;opacity:.85}
+td.sal-cell .wage-row .val{font-weight:700}
+td.sal-cell .wage-row .val.zero{opacity:.35;font-weight:400}
+td.sal-cell .wage-row .val.neg{opacity:.9}
+td.sal-cell .wage-row.divider{border-top:1px solid #202a42;margin-top:2px;padding-top:3px}
+td.sal-cell .wage-row:first-child.divider{border-top:none;margin-top:0;padding-top:0}
 
 .red{color:var(--red)}.green{color:var(--green)}.orange{color:var(--orange)}.bl{color:var(--blue)}.pu{color:var(--purple)}
 td.main-cell{font-weight:800;font-size:13.5px;background:rgba(93,202,165,0.08)}
@@ -186,11 +192,11 @@ th.left,td.left{text-align:left}
     <div class="tbl-box" data-page-node-id="IZhIdbjn5Cd9iVoewIPQnF">
       <table id="settleTable" data-page-node-id="FrOZo40400HUQskdrelazt">
         <colgroup>
-          <col style="width:50px"><col style="width:75px"><col style="width:35px"><col style="width:58px">
-          <col style="width:75px"><col style="width:75px"><col style="width:140px">
-          <col style="width:170px"><col style="width:45px">
-          <col style="width:60px"><col style="width:70px"><col style="width:50px">
-          <col style="width:50px"><col style="width:125px">
+          <col style="width:55px"><col style="width:80px"><col style="width:35px"><col style="width:62px">
+          <col style="width:78px"><col style="width:78px"><col style="width:138px">
+          <col style="width:128px"><col style="width:50px">
+          <col style="width:62px"><col style="width:72px"><col style="width:52px">
+          <col style="width:55px"><col style="width:125px">
         </colgroup>
         <thead data-page-node-id="bFFFzUtzMSE3OVjKWbRStJ"><tr data-page-node-id="iLULPSkDMSMaJ5Swarr4Ec">
           <th data-page-node-id="vJrmQBGQyE6g9lgEoRot8E">uid</th><th data-page-node-id="BAr3BynigveIPc6XIGmsck">名称</th><th data-page-node-id="qtcAut43dwsj78Gl3rwPPY">政策</th><th data-page-node-id="Ex0TKxDExxHu9oFHiKANmA">档位</th>
@@ -572,7 +578,11 @@ function renderSettle(){
       +'<td class="main-cell" id="c-pay-'+i+'">'+fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'')+'</td>'
       +'<td class="main-cell profit '+(c.profitC>=0?'green':'red')+'" id="c-pc-'+i+'">¥'+fmt(c.profitC,0)+'</td>'
       +'<td class="main-cell check left '+(c.diff===null?'bl':(Math.abs(c.diff)<=0.5?'bl':'red'))+'" id="c-chk-'+i+'" title="'+(c.diff!==null?'差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff):'无官方结算数据')+'">$'+fmt(c.checkAmt)+' / '+(c.official>0?'$'+fmt(c.official):'<span class="mini">无</span>')+(c.diff!==null && Math.abs(c.diff)>0.5?' <span class="err-badge" title="差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠ '+(c.diff>0?'+':'')+fmt(c.diff)+'</span>':'')+'</td>'
-      +'<td class="sal-cell" id="c-sal-'+i+'"><span class="bl">'+fmt(c.salY,0)+'</span><span class="slash">/</span><span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'dim'))+'">'+fmt(c.fullY,0)+'</span><span class="slash">/</span><span class="'+(c.invY>0?'orange':'dim')+'">'+fmt(c.invY,1)+'</span></td>'
+      +'<td class="sal-cell" id="c-sal-'+i+'">'
+        +'<div class="wage-row"><span class="lbl">档位</span><span class="val bl">'+(c.salY>0?fmt(c.salY,0):'—')+'</span></div>'
+        +'<div class="wage-row"><span class="lbl">全勤</span><span class="val '+(c.fullY>0?'green':(c.fullY<0?'red neg':'zero'))+'">'+fmt(c.fullY,0)+'</span></div>'
+        +'<div class="wage-row"><span class="lbl">无效</span><span class="val '+(c.invY>0?'orange':'zero')+'">'+fmt(c.invY,1)+'</span></div>'
+        +'</td>'
       +'<td id="c-tub-'+i+'" data-tu="'+i+'" style="cursor:pointer" title="点击修改补豆数">'+(n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—')+'</td>'
       +'<td>'+fmt(n(r.days),0)+'/'+fmt(n(r.hours),1)+'</td><td>'+fmt(n(r.tickets),0)+'</td>'
       +'<td class="'+(n(r.ovPct)>20?'red':(n(r.ovPct)>15?'orange':''))+'">'+fmt(n(r.ovPct),2)+'</td>'
@@ -784,7 +794,7 @@ function updateRow(i){
   var errBadge=c.diff!==null && Math.abs(c.diff)>0.5?' <span class="err-badge" title="差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠ '+(c.diff>0?'+':'')+fmt(c.diff)+'</span>':'';
   $('c-chk-'+i).innerHTML='$'+fmt(c.checkAmt)+' / '+(c.official>0?'$'+fmt(c.official):'<span class="mini">无</span>')+errBadge;
   $('c-chk-'+i).className='main-cell check left '+errCls;
-  $('c-sal-'+i).innerHTML='<span class="bl">'+fmt(c.salY,0)+'</span><span class="slash">/</span><span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'dim'))+'">'+fmt(c.fullY,0)+'</span><span class="slash">/</span><span class="'+(c.invY>0?'orange':'dim')+'">'+fmt(c.invY,1)+'</span>';
+  $('c-sal-'+i).innerHTML='<div class="wage-row"><span class="lbl">档位</span><span class="val bl">'+(c.salY>0?fmt(c.salY,0):'—')+'</span></div><div class="wage-row"><span class="lbl">全勤</span><span class="val '+(c.fullY>0?'green':(c.fullY<0?'red neg':'zero'))+'">'+fmt(c.fullY,0)+'</span></div><div class="wage-row"><span class="lbl">无效</span><span class="val '+(c.invY>0?'orange':'zero')+'">'+fmt(c.invY,1)+'</span></div>';
   $('c-sal-'+i).className='sal-cell';
   $('c-pay-'+i).innerHTML=fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'');
   $('c-tub-'+i).textContent=n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—';
