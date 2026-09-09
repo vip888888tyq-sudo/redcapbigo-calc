@@ -55,7 +55,6 @@ th{position:sticky;top:0;background:#1a2234;color:var(--text2);font-weight:700;p
 th.g-sal{color:#5DCAA5}
 th.g-inc{color:#AFA9EC}
 th.g-prof{color:#F7C1C1}
-td:nth-child(1),td:nth-child(2){text-align:left}
 
 /* sticky 左列：列宽与 left 采用与 min-width 1160px 对应的固定像素偏移，避免横向滚动时按容器百分比计算导致错位 */
 th:nth-child(1){position:sticky;left:0;width:7.5%;background:#1a2234;z-index:4}
@@ -63,9 +62,12 @@ th:nth-child(2){position:sticky;left:87px;width:11.5%;background:#1a2234;z-index
 td:nth-child(1){position:sticky;left:0;width:7.5%;background:#161e30;z-index:1}
 td:nth-child(2){position:sticky;left:87px;width:11.5%;background:#161e30;z-index:1;border-right:1px solid var(--line)}
 
-/* 表体：统一底色 */
-td{padding:8px 8px;border-bottom:1px solid #202a42;border-right:1px solid var(--line);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:12.5px;vertical-align:middle;line-height:1.35;background:#161e30}
+/* 表体：统一底色，内容全部居中 */
+td{padding:8px 8px;border-bottom:1px solid #202a42;border-right:1px solid var(--line);text-align:center;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:12.5px;vertical-align:middle;line-height:1.35;background:#161e30}
 td:nth-child(1),td:nth-child(2){font-size:12px}
+
+/* 未达最低档位的主播：上下间距缩小展示 */
+tr.no-lvl td{padding-top:3px;padding-bottom:3px}
 
 /* 斑马纹：仅作用于可滚动列，sticky 列保持固定色 */
 tbody tr:nth-child(even) td{background:#192234}
@@ -75,19 +77,18 @@ tbody tr:nth-child(even) td:nth-child(1),tbody tr:nth-child(even) td:nth-child(2
 tbody tr:hover td{background:#1b2438}
 tbody tr:hover td:nth-child(1),tbody tr:hover td:nth-child(2){background:#161e30}
 
-td input,td select{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:3px 5px;font-size:12px;width:70px;text-align:right;outline:none;cursor:pointer}
+td input,td select{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:3px 5px;font-size:12px;width:70px;text-align:center;outline:none;cursor:pointer}
 td input:focus,td select:focus{border-color:var(--blue)}
-td select{width:78px;text-align:left}
+td select{width:78px}
 
 /* === 关键修复：移除 display:block，防止 0 值时 span 跳行 === */
 .mini{display:block;font-size:10px;color:var(--text3);margin-top:2px}
 .dim{font-size:10px;color:var(--text3);opacity:.55}
 .sub{font-size:10px;color:var(--text3);display:block;line-height:1.4;margin-top:2px}
 
-/* === 薪资明细列：等宽列内横排两段（档位薪资/全勤）+ 无效豆第二行 === */
-td.sal-cell{white-space:nowrap;font-size:11.5px;letter-spacing:-0.3px;text-align:right;padding:8px 4px;font-weight:600}
+/* === 薪资明细列：横排紧凑显示（档位/全勤/无效） === */
+td.sal-cell{white-space:nowrap;font-size:11.5px;letter-spacing:-0.3px;text-align:center;padding:8px 4px;font-weight:600}
 td.sal-cell .sep{color:var(--text3);margin:0 2px;opacity:.5;font-weight:400}
-td.sal-cell .sal-sub{display:block;font-size:10px;margin-top:2px;font-weight:600}
 
 .red{color:var(--red)}.green{color:var(--green)}.orange{color:var(--orange)}.bl{color:var(--blue)}.pu{color:var(--purple)}
 /* 关键数据列：仅用加粗+文字颜色突出，去掉半透明背景 */
@@ -98,7 +99,7 @@ td.main-cell.check .off-amt{opacity:.65;font-weight:600}
 /* 补豆数列（第9列）：数字和"—"居中 */
 th:nth-child(9),td:nth-child(9){text-align:center}
 /* 预警列：彩色感叹号，hover 显示文字 */
-.warn-cell{text-align:left;padding:7px 6px;white-space:normal}
+.warn-cell{text-align:center;padding:7px 6px;white-space:normal}
 th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(12),td:nth-child(12),th:nth-child(13),td:nth-child(13){text-align:center}
 .warn-ico{display:inline-block;font-size:16px;margin-right:5px;cursor:pointer;line-height:1;vertical-align:middle;position:relative}
 .warn-ico.red{color:var(--red)}
@@ -147,12 +148,10 @@ th.left,td.left{text-align:left}
 @media (min-width:1366px){
   th{font-size:11px;padding:10px 6px}
   td{font-size:13px}
-  td.sal-cell{font-size:12px}
 }
 @media (min-width:1600px){
   th{font-size:11.5px}
   td{font-size:13.5px}
-  td.sal-cell{font-size:12.5px}
 }
 
 /* ===== 配置页样式 ===== */
@@ -238,10 +237,10 @@ th.left,td.left{text-align:left}
       <table id="settleTable" data-page-node-id="FrOZo40400HUQskdrelazt">
         <colgroup>
           <col style="width:7.5%"><col style="width:11.5%"><col style="width:4.5%"><col style="width:5.6%">
-          <col style="width:7.4%"><col style="width:7.4%"><col style="width:7.4%">
-          <col style="width:7.4%"><col style="width:7.4%">
-          <col style="width:7.4%"><col style="width:7.4%"><col style="width:7.4%">
-          <col style="width:7.4%"><col style="width:4.3%">
+          <col style="width:7.5%"><col style="width:6.5%"><col style="width:8%">
+          <col style="width:12%"><col style="width:6.5%">
+          <col style="width:6.5%"><col style="width:7.5%"><col style="width:5.6%">
+          <col style="width:6.5%"><col style="width:4.3%">
         </colgroup>
         <thead data-page-node-id="bFFFzUtzMSE3OVjKWbRStJ"><tr data-page-node-id="iLULPSkDMSMaJ5Swarr4Ec">
           <th data-page-node-id="vJrmQBGQyE6g9lgEoRot8E">uid</th><th data-page-node-id="BAr3BynigveIPc6XIGmsck">名称</th><th data-page-node-id="qtcAut43dwsj78Gl3rwPPY">政策</th><th data-page-node-id="Ex0TKxDExxHu9oFHiKANmA">档位</th>
@@ -635,9 +634,10 @@ function renderSettle(){
     }else{
       chkHtml='$'+fmt(c.checkAmt)+' <span class="warn-ico gray" data-tip="无官方结算数据，仅显示核对金额">⚠</span>';
     }
-    var salHtml='<span class="bl">'+fmt(c.salY,0)+'</span><span class="sep">/</span><span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'dim'))+'">'+fmt(c.fullY,0)+'</span><span class="sal-sub '+(c.invY>0?'orange':'dim')+'">'+fmt(c.invY,1)+'</span>';
+    var salHtml='<span class="bl">'+fmt(c.salY,0)+'</span><span class="sep">/</span><span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'dim'))+'">'+fmt(c.fullY,0)+'</span><span class="sep">/</span><span class="'+(c.invY>0?'orange':'dim')+'">'+fmt(c.invY,1)+'</span>';
     var warnHtml=c.warns.map(function(w){ return '<span class="warn-ico '+warnColor(w)+'" data-tip="'+esc(w)+'">⚠</span>'; }).join('');
-    h+='<tr data-i="'+i+'">'
+    var noLvl=c.warns.some(function(w){ return w.indexOf('金豆未达最低档')>=0; });
+    h+='<tr data-i="'+i+'"'+(noLvl?' class="no-lvl"':'')+'>'
       +'<td>'+esc(r.uid)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.policy)+'</td>'
       +'<td class="'+(c.computed?'orange':'pu')+'">'+esc(r.level||c.platTier)+(c.useOld?'<span class="sub orange">老政策</span>':'')+(isNew?'<span class="sub bl">新+$'+fmt(c.newB,0)+'</span>':'')+'</td>'
       +'<td class="main-cell" id="c-pay-'+i+'">'+fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'')+'</td>'
@@ -851,6 +851,9 @@ $('btnExport').onclick=function(){
 
 function updateRow(i){
   var r=rows[i], c=calcRow(r);
+  var noLvl=c.warns.some(function(w){ return w.indexOf('金豆未达最低档')>=0; });
+  var tr=document.querySelector('#settleBody tr[data-i="'+i+'"]');
+  if(tr) tr.classList.toggle('no-lvl',noLvl);
   var chkErr=(c.diff!==null && Math.abs(c.diff)>0.5);
   var chkHtml;
   if(chkErr){
@@ -862,7 +865,7 @@ function updateRow(i){
   }
   $('c-chk-'+i).innerHTML=chkHtml;
   $('c-chk-'+i).className='main-cell check '+(chkErr?'red':'bl');
-  $('c-sal-'+i).innerHTML='<span class="bl">'+fmt(c.salY,0)+'</span><span class="sep">/</span><span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'dim'))+'">'+fmt(c.fullY,0)+'</span><span class="sal-sub '+(c.invY>0?'orange':'dim')+'">'+fmt(c.invY,1)+'</span>';
+  $('c-sal-'+i).innerHTML='<span class="bl">'+fmt(c.salY,0)+'</span><span class="sep">/</span><span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'dim'))+'">'+fmt(c.fullY,0)+'</span><span class="sep">/</span><span class="'+(c.invY>0?'orange':'dim')+'">'+fmt(c.invY,1)+'</span>';
   $('c-sal-'+i).className='sal-cell';
   $('c-pay-'+i).innerHTML=fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'');
   $('c-tub-'+i).textContent=n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—';
