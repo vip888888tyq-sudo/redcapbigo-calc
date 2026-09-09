@@ -532,7 +532,7 @@ function renderSettle(){
       +'<td>'+fmt(n(r.days),0)+'/'+fmt(n(r.hours),1)+'</td><td>'+fmt(n(r.tickets),0)+'</td>'
       +'<td class="'+(n(r.ovPct)>20?'red':(n(r.ovPct)>15?'orange':''))+'">'+fmt(n(r.ovPct),2)+'</td>'
       +'<td class="main-cell left '+(c.diff===null?'bl':(Math.abs(c.diff)<=0.5?'bl':'red'))+'" id="c-chk-'+i+'" title="'+(c.diff!==null?'差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff):'无官方结算数据')+'">$'+fmt(c.checkAmt)+' / '+(c.official>0?'$'+fmt(c.official):'<span class="mini">无</span>')+(c.diff!==null && Math.abs(c.diff)>0.5?' <span class="err-badge" title="差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠ '+(c.diff>0?'+':'')+fmt(c.diff)+'</span>':'')+'</td>'
-      +'<td id="c-sal-'+i+'">'+fmt(c.salY,0)+'/'+(c.fullY>0?fmt(c.fullY,0):'—')+'/'+fmt(c.invY,1)+'</td>'
+      +'<td id="c-sal-'+i+'"><span class="bl">'+fmt(c.salY,0)+'</span>/<span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'mini'))+'">'+(c.fullY>0?fmt(c.fullY,0):'—')+'</span>/<span class="'+(c.invY>0?'orange':'mini')+'">'+fmt(c.invY,1)+'</span></td>'
       +'<td class="main-cell" id="c-pay-'+i+'">'+fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'')+'</td>'
       +'<td id="c-tub-'+i+'" data-tu="'+i+'" style="cursor:pointer" title="点击修改补豆数">'+(n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—')+'</td>'
       +'<td class="main-cell '+(c.profitC>=0?'green':'red')+'" id="c-pc-'+i+'">¥'+fmt(c.profitC,0)+'</td>'
@@ -682,8 +682,8 @@ $('btnResetCfg2').onclick=resetCfg;
 $('btnClearTu').onclick=function(){ if(!rows.length){ alert('暂无数据'); return; } if(confirm('确定清空所有主播的补豆数？（官方表数据保留）')){ rows.forEach(function(r){ r.tuBeans=''; }); renderSettle(); $('importMsg').textContent='已清空补豆记录'; } };
 $('btnExport').onclick=function(){
   if(!rows.length){ alert('暂无数据'); return; }
-  var head=['uid','名称','政策','档位薪资¥','全勤¥','无效豆¥','补豆数','补豆成本¥','补豆收益¥','盈利¥','例外¥','例外%','违规清零','老政策'];
-  var colW=[80,150,60,95,80,95,80,95,95,95,85,75,80,85];
+  var head=['uid','名称','政策','档位薪资¥','全勤¥','无效豆¥','主播薪资¥','补豆数','补豆成本¥','补豆收益¥','盈利¥','例外¥','例外%','违规清零','老政策'];
+  var colW=[60,140,55,80,70,80,90,70,85,85,95,75,70,70,70];
   function num(v,fmt,redNeg){
     var neg=(typeof v==='number' && v<0);
     var color=(redNeg&&neg)?';color:#C00000;font-weight:bold':'';
@@ -712,6 +712,7 @@ $('btnExport').onclick=function(){
       +num(c.salY,'#,##0',false)
       +num(c.fullY,'#,##0',false)
       +num(c.invY,'#,##0.00',false)
+      +num(c.payFinal||c.payY,'#,##0.00',true)
       +num(n(r.tuBeans),'#,##0',false)
       +num(c.tuCostY,'#,##0.00',false)
       +num(c.tuGainY,'#,##0.00',true)
@@ -725,7 +726,7 @@ $('btnExport').onclick=function(){
   var sum=rows.reduce(function(s,r){return s+calcRow(r).profitC;},0);
   var sumNeg=sum<0;
   html+='<tr height="28">'
-    +'<td colspan="9" style="font-weight:bold;text-align:right;padding:8px 12px;font-size:13pt">合计</td>'
+    +'<td colspan="10" style="font-weight:bold;text-align:right;padding:8px 12px;font-size:13pt">合计</td>'
     +'<td style="font-weight:bold;text-align:center;padding:8px 12px;font-size:13pt;mso-number-format:\'#,##0.00\';'+(sumNeg?'color:#C00000;':'')+'">'+sum+'</td>'
     +'<td colspan="4"></td>'
     +'</tr>';
@@ -743,7 +744,7 @@ function updateRow(i){
   var errBadge=c.diff!==null && Math.abs(c.diff)>0.5?' <span class="err-badge" title="差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠ '+(c.diff>0?'+':'')+fmt(c.diff)+'</span>':'';
   $('c-chk-'+i).innerHTML='$'+fmt(c.checkAmt)+' / '+(c.official>0?'$'+fmt(c.official):'<span class="mini">无</span>')+errBadge;
   $('c-chk-'+i).className='main-cell left '+errCls;
-  $('c-sal-'+i).textContent=fmt(c.salY,0)+'/'+(c.fullY>0?fmt(c.fullY,0):'—')+'/'+fmt(c.invY,1);
+  $('c-sal-'+i).innerHTML='<span class="bl">'+fmt(c.salY,0)+'</span>/<span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'mini'))+'">'+(c.fullY>0?fmt(c.fullY,0):'—')+'</span>/<span class="'+(c.invY>0?'orange':'mini')+'">'+fmt(c.invY,1)+'</span>';
   $('c-pay-'+i).innerHTML=fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'');
   $('c-tub-'+i).textContent=n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—';
   $('c-pc-'+i).textContent='¥'+fmt(c.profitC,0);
