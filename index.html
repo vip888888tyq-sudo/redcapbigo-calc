@@ -58,10 +58,10 @@ th.g-prof{color:#F7C1C1}
 th:nth-child(1),th:nth-child(2),td:nth-child(1),td:nth-child(2){text-align:left}
 
 /* sticky 左列：表头与表体颜色统一，背景固定不随奇偶行/hover 变化（消除"变色龙闪烁"） */
-th:nth-child(1){position:sticky;left:0;width:5%;background:#1a2234;z-index:4}
-th:nth-child(2){position:sticky;left:5%;width:7.5%;background:#1a2234;z-index:4;border-right:1px solid var(--line)}
-td:nth-child(1){position:sticky;left:0;width:5%;background:#161e30;z-index:1}
-td:nth-child(2){position:sticky;left:5%;width:7.5%;background:#161e30;z-index:1;border-right:1px solid var(--line)}
+th:nth-child(1){position:sticky;left:0;width:5.5%;background:#1a2234;z-index:4}
+th:nth-child(2){position:sticky;left:5.5%;width:9.5%;background:#1a2234;z-index:4;border-right:1px solid var(--line)}
+td:nth-child(1){position:sticky;left:0;width:5.5%;background:#161e30;z-index:1}
+td:nth-child(2){position:sticky;left:5.5%;width:9.5%;background:#161e30;z-index:1;border-right:1px solid var(--line)}
 
 /* 表体：统一底色 */
 td{padding:8px 5px;border-bottom:1px solid #202a42;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:12.5px;vertical-align:middle;line-height:1.35;background:#161e30}
@@ -91,6 +91,9 @@ td.sal-cell .sep{color:var(--text3);margin:0 2px;opacity:.5;font-weight:400}
 .red{color:var(--red)}.green{color:var(--green)}.orange{color:var(--orange)}.bl{color:var(--blue)}.pu{color:var(--purple)}
 /* 关键数据列：仅用加粗+文字颜色突出，去掉半透明背景 */
 td.main-cell{font-weight:800;font-size:13.5px}
+/* 核对列：差额红字（块级显示在下方）+ 官方金额淡化 */
+td.main-cell.check .diff-line{display:block;font-size:10.5px;color:var(--red);font-weight:700;margin-top:2px;letter-spacing:0}
+td.main-cell.check .off-amt{opacity:.65;font-weight:600}
 /* 补豆数列（第9列）：数字和"—"居中 */
 td:nth-child(9){text-align:center}
 /* 预警列：彩色感叹号，hover 显示文字 */
@@ -232,11 +235,11 @@ th.left,td.left{text-align:left}
     <div class="tbl-box" data-page-node-id="IZhIdbjn5Cd9iVoewIPQnF">
       <table id="settleTable" data-page-node-id="FrOZo40400HUQskdrelazt">
         <colgroup>
-          <col style="width:5%"><col style="width:7.5%"><col style="width:3%"><col style="width:5.5%">
-          <col style="width:7.5%"><col style="width:7.5%"><col style="width:13%">
-          <col style="width:12%"><col style="width:4.5%">
-          <col style="width:6%"><col style="width:6.5%"><col style="width:5%">
-          <col style="width:5%"><col style="width:12%">
+          <col style="width:5.5%"><col style="width:9.5%"><col style="width:2.5%"><col style="width:5.5%">
+          <col style="width:7%"><col style="width:7%"><col style="width:15%">
+          <col style="width:13%"><col style="width:3.5%">
+          <col style="width:6%"><col style="width:7%"><col style="width:5%">
+          <col style="width:5%"><col style="width:8.5%">
         </colgroup>
         <thead data-page-node-id="bFFFzUtzMSE3OVjKWbRStJ"><tr data-page-node-id="iLULPSkDMSMaJ5Swarr4Ec">
           <th data-page-node-id="vJrmQBGQyE6g9lgEoRot8E">uid</th><th data-page-node-id="BAr3BynigveIPc6XIGmsck">名称</th><th data-page-node-id="qtcAut43dwsj78Gl3rwPPY">政策</th><th data-page-node-id="Ex0TKxDExxHu9oFHiKANmA">档位</th>
@@ -614,10 +617,14 @@ function renderSettle(){
     var c=calcRow(r);
     var isNew=c.newB>0;
     var chkErr=(c.diff!==null && Math.abs(c.diff)>0.5);
-    var chkAmtMain=c.official>0?c.official:c.checkAmt;
-    var chkHtml='$'+fmt(chkAmtMain);
-    if(chkErr){ chkHtml+=' <span class="err-ico" data-tip="差额 = 核对 $'+fmt(c.checkAmt)+' − 官方 $'+fmt(c.official)+' = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠</span>'; }
-    else if(c.official<=0){ chkHtml+=' <span class="warn-ico gray" data-tip="无官方结算数据，仅显示核对金额">⚠</span>'; }
+    var chkHtml;
+    if(chkErr){
+      chkHtml='$'+fmt(c.checkAmt)+' / <span class="off-amt">$'+fmt(c.official)+'</span><span class="diff-line">差额 '+(c.diff>0?'+':'')+fmt(c.diff)+'</span>';
+    }else if(c.official>0){
+      chkHtml='$'+fmt(c.official);
+    }else{
+      chkHtml='$'+fmt(c.checkAmt)+' <span class="warn-ico gray" data-tip="无官方结算数据，仅显示核对金额">⚠</span>';
+    }
     var salHtml='<span class="bl">'+fmt(c.salY,0)+'</span><span class="sep">/</span><span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'dim'))+'">'+fmt(c.fullY,0)+'</span><span class="sep">/</span><span class="'+(c.invY>0?'orange':'dim')+'">'+fmt(c.invY,1)+'</span>';
     var warnHtml=c.warns.map(function(w){ return '<span class="warn-ico '+warnColor(w)+'" data-tip="'+esc(w)+'">⚠</span>'; }).join('');
     h+='<tr data-i="'+i+'">'
@@ -835,10 +842,14 @@ $('btnExport').onclick=function(){
 function updateRow(i){
   var r=rows[i], c=calcRow(r);
   var chkErr=(c.diff!==null && Math.abs(c.diff)>0.5);
-  var chkAmtMain=c.official>0?c.official:c.checkAmt;
-  var chkHtml='$'+fmt(chkAmtMain);
-  if(chkErr){ chkHtml+=' <span class="err-ico" data-tip="差额 = 核对 $'+fmt(c.checkAmt)+' − 官方 $'+fmt(c.official)+' = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠</span>'; }
-  else if(c.official<=0){ chkHtml+=' <span class="warn-ico gray" data-tip="无官方结算数据，仅显示核对金额">⚠</span>'; }
+  var chkHtml;
+  if(chkErr){
+    chkHtml='$'+fmt(c.checkAmt)+' / <span class="off-amt">$'+fmt(c.official)+'</span><span class="diff-line">差额 '+(c.diff>0?'+':'')+fmt(c.diff)+'</span>';
+  }else if(c.official>0){
+    chkHtml='$'+fmt(c.official);
+  }else{
+    chkHtml='$'+fmt(c.checkAmt)+' <span class="warn-ico gray" data-tip="无官方结算数据，仅显示核对金额">⚠</span>';
+  }
   $('c-chk-'+i).innerHTML=chkHtml;
   $('c-chk-'+i).className='main-cell check left '+(chkErr?'red':'bl');
   $('c-sal-'+i).innerHTML='<span class="bl">'+fmt(c.salY,0)+'</span><span class="sep">/</span><span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'dim'))+'">'+fmt(c.fullY,0)+'</span><span class="sep">/</span><span class="'+(c.invY>0?'orange':'dim')+'">'+fmt(c.invY,1)+'</span>';
