@@ -473,7 +473,10 @@ catch(e){ CFG = deepClone(DEFAULT_CFG); }
 function platFactor(r){
   var f=1;
   var ovAbs=n(r.ovPct)/100;
-  if(String(r.ovDeduct||'').trim()==='是'){ f*=Math.max(0,1-(ovAbs-0.50)); }
+  if(String(r.ovDeduct||'').trim()==='是'){ 
+    var excess=Math.max(0, ovAbs-0.50);
+    f*=Math.max(0, 1-excess);
+  }
   return f;
 }
 function computeCommission(r, beans){
