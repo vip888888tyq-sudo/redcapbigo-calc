@@ -58,10 +58,10 @@ th.g-prof{color:#F7C1C1}
 th:nth-child(1),th:nth-child(2),td:nth-child(1),td:nth-child(2){text-align:left}
 
 /* sticky 左列：表头与表体颜色统一，背景固定不随奇偶行/hover 变化（消除"变色龙闪烁"） */
-th:nth-child(1){position:sticky;left:0;width:5.5%;background:#1a2234;z-index:4}
-th:nth-child(2){position:sticky;left:5.5%;width:9.5%;background:#1a2234;z-index:4;border-right:1px solid var(--line)}
-td:nth-child(1){position:sticky;left:0;width:5.5%;background:#161e30;z-index:1}
-td:nth-child(2){position:sticky;left:5.5%;width:9.5%;background:#161e30;z-index:1;border-right:1px solid var(--line)}
+th:nth-child(1){position:sticky;left:0;width:6%;background:#1a2234;z-index:4}
+th:nth-child(2){position:sticky;left:6%;width:10.5%;background:#1a2234;z-index:4;border-right:1px solid var(--line)}
+td:nth-child(1){position:sticky;left:0;width:6%;background:#161e30;z-index:1}
+td:nth-child(2){position:sticky;left:6%;width:10.5%;background:#161e30;z-index:1;border-right:1px solid var(--line)}
 
 /* 表体：统一底色 */
 td{padding:8px 5px;border-bottom:1px solid #202a42;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:12.5px;vertical-align:middle;line-height:1.35;background:#161e30}
@@ -95,9 +95,10 @@ td.main-cell{font-weight:800;font-size:13.5px}
 td.main-cell.check .diff-line{display:block;font-size:10.5px;color:var(--red);font-weight:700;margin-top:2px;letter-spacing:0}
 td.main-cell.check .off-amt{opacity:.65;font-weight:600}
 /* 补豆数列（第9列）：数字和"—"居中 */
-td:nth-child(9){text-align:center}
+th:nth-child(9),td:nth-child(9){text-align:center}
 /* 预警列：彩色感叹号，hover 显示文字 */
 .warn-cell{text-align:left;padding:7px 6px;white-space:normal}
+th:nth-child(14){text-align:left}
 .warn-ico{display:inline-block;font-size:16px;margin-right:5px;cursor:pointer;line-height:1;vertical-align:middle;position:relative}
 .warn-ico.red{color:var(--red)}
 .warn-ico.orange{color:var(--orange)}
@@ -235,17 +236,17 @@ th.left,td.left{text-align:left}
     <div class="tbl-box" data-page-node-id="IZhIdbjn5Cd9iVoewIPQnF">
       <table id="settleTable" data-page-node-id="FrOZo40400HUQskdrelazt">
         <colgroup>
-          <col style="width:5.5%"><col style="width:9.5%"><col style="width:2.5%"><col style="width:5.5%">
-          <col style="width:7%"><col style="width:7%"><col style="width:15%">
+          <col style="width:6%"><col style="width:10.5%"><col style="width:2.5%"><col style="width:5.5%">
+          <col style="width:7.5%"><col style="width:7.5%"><col style="width:13%">
           <col style="width:13%"><col style="width:3.5%">
-          <col style="width:6%"><col style="width:7%"><col style="width:5%">
-          <col style="width:5%"><col style="width:8.5%">
+          <col style="width:6.5%"><col style="width:7.5%"><col style="width:5.5%">
+          <col style="width:5.5%"><col style="width:6%">
         </colgroup>
         <thead data-page-node-id="bFFFzUtzMSE3OVjKWbRStJ"><tr data-page-node-id="iLULPSkDMSMaJ5Swarr4Ec">
           <th data-page-node-id="vJrmQBGQyE6g9lgEoRot8E">uid</th><th data-page-node-id="BAr3BynigveIPc6XIGmsck">名称</th><th data-page-node-id="qtcAut43dwsj78Gl3rwPPY">政策</th><th data-page-node-id="Ex0TKxDExxHu9oFHiKANmA">档位</th>
           <th class="g-sal" data-page-node-id="P18sAjIT4WX1hV21DMn2H3">主播薪资¥</th>
           <th class="g-prof" data-page-node-id="gGOFp8AOsBLfc38vjG3BWy">盈利¥</th>
-          <th class="g-inc left" data-page-node-id="rF3Y8uYhpl9G6M3cU1VbRi">核对/官方$</th>
+          <th class="g-inc" data-page-node-id="rF3Y8uYhpl9G6M3cU1VbRi">核对/官方$</th>
           <th class="g-sal" data-page-node-id="n1WHkvOn2q18lFujCG6KuB">档位薪资/全勤/无效</th>
           <th data-page-node-id="BSpR7qq968h0rQhCCeYC96">补豆数</th>
           <th data-page-node-id="Y6QFhA0nRsddbOqpLIBmlX">天/时长</th><th data-page-node-id="IptcM6tWRbdKa4EN57yAhH">总金豆</th><th data-page-node-id="LAqyZkH3I23rRDCg1Lmdr4">海外豆%</th>
@@ -640,7 +641,7 @@ function renderSettle(){
       +'<td class="'+(c.computed?'orange':'pu')+'">'+esc(r.level||c.platTier)+(c.useOld?'<span class="sub orange">老政策</span>':'')+(isNew?'<span class="sub bl">新+$'+fmt(c.newB,0)+'</span>':'')+'</td>'
       +'<td class="main-cell" id="c-pay-'+i+'">'+fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'')+'</td>'
       +'<td class="main-cell profit '+(c.profitC>=0?'green':'red')+'" id="c-pc-'+i+'">¥'+fmt(c.profitC,0)+'</td>'
-      +'<td class="main-cell check left '+(chkErr?'red':'bl')+'" id="c-chk-'+i+'">'+chkHtml+'</td>'
+      +'<td class="main-cell check '+(chkErr?'red':'bl')+'" id="c-chk-'+i+'">'+chkHtml+'</td>'
       +'<td class="sal-cell" id="c-sal-'+i+'">'+salHtml+'</td>'
       +'<td id="c-tub-'+i+'" data-tu="'+i+'" style="cursor:pointer" title="点击修改补豆数">'+(n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—')+'</td>'
       +'<td>'+fmt(n(r.days),0)+'/'+fmt(n(r.hours),1)+'</td><td>'+fmt(n(r.tickets),0)+'</td>'
@@ -859,7 +860,7 @@ function updateRow(i){
     chkHtml='$'+fmt(c.checkAmt)+' <span class="warn-ico gray" data-tip="无官方结算数据，仅显示核对金额">⚠</span>';
   }
   $('c-chk-'+i).innerHTML=chkHtml;
-  $('c-chk-'+i).className='main-cell check left '+(chkErr?'red':'bl');
+  $('c-chk-'+i).className='main-cell check '+(chkErr?'red':'bl');
   $('c-sal-'+i).innerHTML='<span class="bl">'+fmt(c.salY,0)+'</span><span class="sep">/</span><span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'dim'))+'">'+fmt(c.fullY,0)+'</span><span class="sep">/</span><span class="'+(c.invY>0?'orange':'dim')+'">'+fmt(c.invY,1)+'</span>';
   $('c-sal-'+i).className='sal-cell';
   $('c-pay-'+i).innerHTML=fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'');
