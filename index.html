@@ -122,7 +122,7 @@ th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(12)
   font-size:12px;
   line-height:1.5;
   font-weight:400;
-  white-space:normal;
+  white-space:pre-line;
   max-width:280px;
   width:max-content;
   z-index:999;
@@ -247,7 +247,7 @@ th.left,td.left{text-align:left}
           <th class="g-sal" data-page-node-id="P18sAjIT4WX1hV21DMn2H3">主播薪资¥</th>
           <th class="g-prof" data-page-node-id="gGOFp8AOsBLfc38vjG3BWy">盈利¥</th>
           <th class="g-inc" data-page-node-id="rF3Y8uYhpl9G6M3cU1VbRi">核对/官方$</th>
-          <th class="g-sal" data-page-node-id="n1WHkvOn2q18lFujCG6KuB">档位薪资/<br>全勤/无效</th>
+          <th class="g-sal" data-page-node-id="n1WHkvOn2q18lFujCG6KuB">档位薪资/全勤/无效</th>
           <th data-page-node-id="BSpR7qq968h0rQhCCeYC96">补豆数</th>
           <th data-page-node-id="Y6QFhA0nRsddbOqpLIBmlX">天/时长</th><th data-page-node-id="IptcM6tWRbdKa4EN57yAhH">总金豆</th><th data-page-node-id="LAqyZkH3I23rRDCg1Lmdr4">海外豆%</th>
           <th data-page-node-id="gMp3l5r792KWnayBhtISu8">人工例外</th><th data-page-node-id="dUjwGJ8Ie506eWCB2v5RJZ">预警</th>
@@ -320,6 +320,14 @@ function fx(){ return n($('fx').value)||1; }
 function has(v){ return v!==null && v!==undefined && String(v).trim()!==''; }
 function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 function warnColor(w){ if(w.indexOf('违规')>=0||w.indexOf('清零')>=0||w.indexOf('超 20%')>=0) return 'red'; if(w.indexOf('扣')>=0||w.indexOf('未达')>=0||w.indexOf('未匹配')>=0) return 'orange'; return 'gray'; }
+/* 同色警告合并为一个图标，tip 悬浮显示全部内容 */
+function warnIcons(warns){
+  var order=['red','orange','gray'], by={};
+  warns.forEach(function(w){ var c=warnColor(w); (by[c]=by[c]||[]).push(w); });
+  var h='';
+  order.forEach(function(c){ if(by[c]) h+='<span class="warn-ico '+c+'" data-tip="'+esc(by[c].join('\n'))+'">⚠</span>'; });
+  return h;
+}
 function monthsBetween(from,to){
   if(!from) return 99;
   var a=String(from).substring(0,10).split('-'), b=String(to).substring(0,10).split('-');
@@ -635,7 +643,7 @@ function renderSettle(){
       chkHtml='$'+fmt(c.checkAmt)+' <span class="warn-ico gray" data-tip="无官方结算数据，仅显示核对金额">⚠</span>';
     }
     var salHtml='<span class="bl">'+fmt(c.salY,0)+'</span><span class="sep">/</span><span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'dim'))+'">'+fmt(c.fullY,0)+'</span><span class="sep">/</span><span class="'+(c.invY>0?'orange':'dim')+'">'+fmt(c.invY,1)+'</span>';
-    var warnHtml=c.warns.map(function(w){ return '<span class="warn-ico '+warnColor(w)+'" data-tip="'+esc(w)+'">⚠</span>'; }).join('');
+    var warnHtml=warnIcons(c.warns);
     var noLvl=c.warns.some(function(w){ return w.indexOf('金豆未达最低档')>=0; });
     h+='<tr data-i="'+i+'"'+(noLvl?' class="no-lvl"':'')+'>'
       +'<td>'+esc(r.uid)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.policy)+'</td>'
@@ -872,7 +880,7 @@ function updateRow(i){
   $('c-pc-'+i).textContent='¥'+fmt(c.profitC,0);
   $('c-pc-'+i).className='main-cell profit '+(c.profitC>=0?'green':'red');
   $('c-exc-'+i).innerHTML=excBtn(i);
-  var wc=$('row-warn-'+i); if(wc) wc.innerHTML=c.warns.map(function(w){return '<span class="warn-ico '+warnColor(w)+'" data-tip="'+esc(w)+'">⚠</span>';}).join('');
+  var wc=$('row-warn-'+i); if(wc) wc.innerHTML=warnIcons(c.warns);
   renderSum();
 }
 $('settleBody').addEventListener('input',function(e){
