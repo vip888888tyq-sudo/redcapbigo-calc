@@ -13,7 +13,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;line-height:1.5;display:flex;min-height:100vh}
-aside{width:200px;background:var(--side);border-right:1px solid var(--line);padding:18px 12px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
+aside{width:160px;background:var(--side);border-right:1px solid var(--line);padding:18px 10px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
 .logo{font-size:15px;font-weight:700;padding:0 10px 16px;border-bottom:1px solid var(--line);margin-bottom:14px}
 .logo .hat{color:var(--red)}
 .nav-label{font-size:10px;color:var(--text3);padding:10px 10px 4px;letter-spacing:1px}
@@ -22,7 +22,7 @@ aside{width:200px;background:var(--side);border-right:1px solid var(--line);padd
 .nav-item.on{background:#22335e;color:#fff;font-weight:600}
 .nav-item .ic{width:16px;text-align:center;color:var(--text3)}
 .nav-item.on .ic{color:var(--blue)}
-main{flex:1;padding:20px 24px;min-width:0}
+main{flex:1;padding:16px 20px;min-width:0}
 .topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px}
 .topbar h1{font-size:17px;font-weight:700}
 .topbar h1 small{font-size:12px;color:var(--text3);font-weight:400;margin-left:8px}
@@ -47,15 +47,15 @@ main{flex:1;padding:20px 24px;min-width:0}
 .kpi:hover{transform:translateY(-2px);border-color:var(--blue)}
 .kpi span{font-size:11px;color:var(--text2)}
 .kpi b{display:block;font-size:18px;font-weight:800;margin-top:2px}
-.tbl-box{overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;max-height:calc(100vh - 210px)}
-table{width:100%;min-width:2150px;border-collapse:collapse;font-size:12px}
-th{position:sticky;top:0;background:#1a2234;color:var(--text2);font-weight:600;padding:8px 6px;border-bottom:2px solid var(--line);text-align:right;white-space:nowrap;z-index:2}
+.tbl-box{overflow-x:auto;overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;max-height:calc(100vh - 180px);min-width:0}
+table{width:1147px;max-width:100%;table-layout:fixed;border-collapse:collapse;font-size:12.5px;margin:0 auto}
+th{position:sticky;top:0;background:#1a2234;color:var(--text2);font-weight:600;padding:11px 8px;border-bottom:2px solid var(--line);text-align:right;white-space:nowrap;z-index:2;font-size:12px;letter-spacing:0.2px}
 th.g-sal{color:#5DCAA5;background:#182823}th.g-inc{color:#AFA9EC;background:#1e2038}th.g-prof{color:#F7C1C1;background:#2a1e24}
 th:nth-child(1),th:nth-child(2),td:nth-child(1),td:nth-child(2){text-align:left}
-th:nth-child(1),td:nth-child(1){position:sticky;left:0;width:92px;min-width:92px;background:#1a2234;z-index:1}
-th:nth-child(2),td:nth-child(2){position:sticky;left:92px;width:150px;min-width:150px;background:#1a2234;z-index:1;border-right:1px solid var(--line)}
+th:nth-child(1),td:nth-child(1){position:sticky;left:0;width:60px;min-width:60px;background:#1a2234;z-index:1}
+th:nth-child(2),td:nth-child(2){position:sticky;left:60px;width:100px;min-width:100px;background:#1a2234;z-index:1;border-right:1px solid var(--line)}
 th:nth-child(1){z-index:4}th:nth-child(2){z-index:4}
-td{padding:3px 4px;border-bottom:1px solid #202a42;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+td{padding:9px 6px;border-bottom:1px solid #202a42;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:12.5px;vertical-align:middle}
 td:nth-child(1),td:nth-child(2){background:#161e30}
 tbody tr:nth-child(even) td{background:#131b2c}
 tbody tr:nth-child(even) td:nth-child(1),tbody tr:nth-child(even) td:nth-child(2){background:#111828}
@@ -66,8 +66,10 @@ td input:focus,td select:focus{border-color:var(--blue)}
 td select{width:78px;text-align:left}
 .mini{font-size:10px;color:var(--text3);display:block}
 .red{color:var(--red)}.green{color:var(--green)}.orange{color:var(--orange)}.bl{color:var(--blue)}.pu{color:var(--purple)}
-td.main-cell{font-weight:800;font-size:12.5px}
-.warn-cell{max-width:180px;white-space:normal;text-align:left;font-size:11px;color:var(--orange)}
+td.main-cell{font-weight:800;font-size:13.5px;background:rgba(93,202,165,0.08)}
+td.main-cell.profit{background:rgba(247,193,193,0.08)}
+td.main-cell.check{background:rgba(175,169,236,0.08)}
+.warn-cell{max-width:140px;white-space:normal;text-align:left;font-size:11px;color:var(--orange);line-height:1.5;padding:6px 8px}
 .warn-cell.err{color:#ff9b9b}
 .empty{padding:40px;text-align:center;color:var(--text3)}
 .err-badge{display:inline-block;background:var(--red);color:#fff;font-size:10px;font-weight:bold;padding:1px 6px;border-radius:8px;margin-left:4px;vertical-align:middle;letter-spacing:-0.5px;cursor:help}
@@ -154,12 +156,21 @@ th.left,td.left{text-align:left}
     </div>
     <div class="tbl-box" data-page-node-id="IZhIdbjn5Cd9iVoewIPQnF">
       <table id="settleTable" data-page-node-id="FrOZo40400HUQskdrelazt">
+        <colgroup>
+          <col style="width:60px"><col style="width:100px"><col style="width:42px"><col style="width:60px">
+          <col style="width:95px"><col style="width:95px"><col style="width:130px">
+          <col style="width:155px"><col style="width:60px">
+          <col style="width:72px"><col style="width:82px"><col style="width:66px">
+          <col style="width:64px"><col style="width:106px">
+        </colgroup>
         <thead data-page-node-id="bFFFzUtzMSE3OVjKWbRStJ"><tr data-page-node-id="iLULPSkDMSMaJ5Swarr4Ec">
-          <th data-page-node-id="vJrmQBGQyE6g9lgEoRot8E">uid</th><th data-page-node-id="BAr3BynigveIPc6XIGmsck">名称</th><th data-page-node-id="qtcAut43dwsj78Gl3rwPPY">政策</th><th data-page-node-id="Ex0TKxDExxHu9oFHiKANmA">档位</th><th class="g-sal" data-page-node-id="P18sAjIT4WX1hV21DMn2H3">主播薪资¥</th><th class="g-sal" data-page-node-id="n1WHkvOn2q18lFujCG6KuB">薪资明细</th>
+          <th data-page-node-id="vJrmQBGQyE6g9lgEoRot8E">uid</th><th data-page-node-id="BAr3BynigveIPc6XIGmsck">名称</th><th data-page-node-id="qtcAut43dwsj78Gl3rwPPY">政策</th><th data-page-node-id="Ex0TKxDExxHu9oFHiKANmA">档位</th>
+          <th class="g-sal" data-page-node-id="P18sAjIT4WX1hV21DMn2H3">主播薪资¥</th>
           <th class="g-prof" data-page-node-id="gGOFp8AOsBLfc38vjG3BWy">盈利¥</th>
-          <th data-page-node-id="Y6QFhA0nRsddbOqpLIBmlX">天/时长</th><th data-page-node-id="IptcM6tWRbdKa4EN57yAhH">总金豆</th><th data-page-node-id="LAqyZkH3I23rRDCg1Lmdr4">海外豆%</th>
           <th class="g-inc left" data-page-node-id="rF3Y8uYhpl9G6M3cU1VbRi">核对/官方$</th>
+          <th class="g-sal" data-page-node-id="n1WHkvOn2q18lFujCG6KuB">薪资明细(档位/全勤/无效)</th>
           <th data-page-node-id="BSpR7qq968h0rQhCCeYC96">补豆数</th>
+          <th data-page-node-id="Y6QFhA0nRsddbOqpLIBmlX">天/时长</th><th data-page-node-id="IptcM6tWRbdKa4EN57yAhH">总金豆</th><th data-page-node-id="LAqyZkH3I23rRDCg1Lmdr4">海外豆%</th>
           <th data-page-node-id="gMp3l5r792KWnayBhtISu8">人工例外</th><th data-page-node-id="dUjwGJ8Ie506eWCB2v5RJZ">预警</th>
         </tr></thead>
         <tbody id="settleBody" data-page-node-id="qDutFMJHlDjM5l19Myt8vW"></tbody>
@@ -530,12 +541,12 @@ function renderSettle(){
       +'<td>'+esc(r.uid)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.policy)+'</td>'
       +'<td class="'+(c.computed?'orange':'pu')+'">'+esc(r.level||c.platTier)+(c.useOld?'<span class="mini orange">老</span>':'')+(isNew?'<span class="mini bl">新+$'+fmt(c.newB,0)+'</span>':'')+'</td>'
       +'<td class="main-cell" id="c-pay-'+i+'">'+fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'')+'</td>'
-      +'<td id="c-sal-'+i+'"><span class="bl">'+fmt(c.salY,0)+'</span>/<span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'mini'))+'">'+(c.fullY>0?fmt(c.fullY,0):'—')+'</span>/<span class="'+(c.invY>0?'orange':'mini')+'">'+fmt(c.invY,1)+'</span></td>'
-      +'<td class="main-cell '+(c.profitC>=0?'green':'red')+'" id="c-pc-'+i+'">¥'+fmt(c.profitC,0)+'</td>'
+      +'<td class="main-cell profit '+(c.profitC>=0?'green':'red')+'" id="c-pc-'+i+'">¥'+fmt(c.profitC,0)+'</td>'
+      +'<td class="main-cell check left '+(c.diff===null?'bl':(Math.abs(c.diff)<=0.5?'bl':'red'))+'" id="c-chk-'+i+'" title="'+(c.diff!==null?'差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff):'无官方结算数据')+'">$'+fmt(c.checkAmt)+' / '+(c.official>0?'$'+fmt(c.official):'<span class="mini">无</span>')+(c.diff!==null && Math.abs(c.diff)>0.5?' <span class="err-badge" title="差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠ '+(c.diff>0?'+':'')+fmt(c.diff)+'</span>':'')+'</td>'
+      +'<td id="c-sal-'+i+'"><span class="bl">'+fmt(c.salY,0)+'</span>/<span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'mini'))+'">'+fmt(c.fullY,0)+'</span>/<span class="'+(c.invY>0?'orange':'mini')+'">'+fmt(c.invY,1)+'</span></td>'
+      +'<td id="c-tub-'+i+'" data-tu="'+i+'" style="cursor:pointer" title="点击修改补豆数">'+(n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—')+'</td>'
       +'<td>'+fmt(n(r.days),0)+'/'+fmt(n(r.hours),1)+'</td><td>'+fmt(n(r.tickets),0)+'</td>'
       +'<td class="'+(n(r.ovPct)>20?'red':(n(r.ovPct)>15?'orange':''))+'">'+fmt(n(r.ovPct),2)+'</td>'
-      +'<td class="main-cell left '+(c.diff===null?'bl':(Math.abs(c.diff)<=0.5?'bl':'red'))+'" id="c-chk-'+i+'" title="'+(c.diff!==null?'差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff):'无官方结算数据')+'">$'+fmt(c.checkAmt)+' / '+(c.official>0?'$'+fmt(c.official):'<span class="mini">无</span>')+(c.diff!==null && Math.abs(c.diff)>0.5?' <span class="err-badge" title="差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠ '+(c.diff>0?'+':'')+fmt(c.diff)+'</span>':'')+'</td>'
-      +'<td id="c-tub-'+i+'" data-tu="'+i+'" style="cursor:pointer" title="点击修改补豆数">'+(n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—')+'</td>'
       +'<td id="c-exc-'+i+'">'+excBtn(i)+'</td>'
       +'<td class="warn-cell'+(c.warns.some(function(w){return w.indexOf('超 20%')>=0||w.indexOf('清零')>=0;})?' err':'')+'" id="row-warn-'+i+'">'+c.warns.map(function(w){return '⚠ '+w;}).join('<br>')+'</td>'
       +'</tr>';
@@ -743,12 +754,12 @@ function updateRow(i){
   var errCls=c.diff===null?'bl':(Math.abs(c.diff)<=0.5?'bl':'red');
   var errBadge=c.diff!==null && Math.abs(c.diff)>0.5?' <span class="err-badge" title="差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠ '+(c.diff>0?'+':'')+fmt(c.diff)+'</span>':'';
   $('c-chk-'+i).innerHTML='$'+fmt(c.checkAmt)+' / '+(c.official>0?'$'+fmt(c.official):'<span class="mini">无</span>')+errBadge;
-  $('c-chk-'+i).className='main-cell left '+errCls;
-  $('c-sal-'+i).innerHTML='<span class="bl">'+fmt(c.salY,0)+'</span>/<span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'mini'))+'">'+(c.fullY>0?fmt(c.fullY,0):'—')+'</span>/<span class="'+(c.invY>0?'orange':'mini')+'">'+fmt(c.invY,1)+'</span>';
+  $('c-chk-'+i).className='main-cell check left '+errCls;
+  $('c-sal-'+i).innerHTML='<span class="bl">'+fmt(c.salY,0)+'</span>/<span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'mini'))+'">'+fmt(c.fullY,0)+'</span>/<span class="'+(c.invY>0?'orange':'mini')+'">'+fmt(c.invY,1)+'</span>';
   $('c-pay-'+i).innerHTML=fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'');
   $('c-tub-'+i).textContent=n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—';
   $('c-pc-'+i).textContent='¥'+fmt(c.profitC,0);
-  $('c-pc-'+i).className='main-cell '+(c.profitC>=0?'green':'red');
+  $('c-pc-'+i).className='main-cell profit '+(c.profitC>=0?'green':'red');
   $('c-exc-'+i).innerHTML=excBtn(i);
   var wc=$('row-warn-'+i); if(wc) wc.innerHTML=c.warns.map(function(w){return '⚠ '+w;}).join('<br>');
   renderSum();
