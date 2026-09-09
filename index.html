@@ -58,10 +58,10 @@ th.g-prof{color:#F7C1C1}
 th:nth-child(1),th:nth-child(2),td:nth-child(1),td:nth-child(2){text-align:left}
 
 /* sticky 左列：表头与表体颜色统一，背景固定不随奇偶行/hover 变化（消除"变色龙闪烁"） */
-th:nth-child(1){position:sticky;left:0;width:55px;min-width:55px;background:#1a2234;z-index:4}
-th:nth-child(2){position:sticky;left:55px;width:80px;min-width:80px;background:#1a2234;z-index:4;border-right:1px solid var(--line)}
-td:nth-child(1){position:sticky;left:0;width:55px;min-width:55px;background:#161e30;z-index:1}
-td:nth-child(2){position:sticky;left:55px;width:80px;min-width:80px;background:#161e30;z-index:1;border-right:1px solid var(--line)}
+th:nth-child(1){position:sticky;left:0;width:5%;background:#1a2234;z-index:4}
+th:nth-child(2){position:sticky;left:5%;width:7.5%;background:#1a2234;z-index:4;border-right:1px solid var(--line)}
+td:nth-child(1){position:sticky;left:0;width:5%;background:#161e30;z-index:1}
+td:nth-child(2){position:sticky;left:5%;width:7.5%;background:#161e30;z-index:1;border-right:1px solid var(--line)}
 
 /* 表体：统一底色 */
 td{padding:8px 5px;border-bottom:1px solid #202a42;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:12.5px;vertical-align:middle;line-height:1.35;background:#161e30}
@@ -94,13 +94,47 @@ td.main-cell{font-weight:800;font-size:13.5px}
 /* 补豆数列（第9列）：数字和"—"居中 */
 td:nth-child(9){text-align:center}
 /* 预警列：彩色感叹号，hover 显示文字 */
-.warn-cell{text-align:left;padding:7px 6px;white-space:nowrap;overflow:hidden}
-.warn-ico{display:inline-block;font-size:13px;margin-right:3px;cursor:help;line-height:1;vertical-align:middle}
+.warn-cell{text-align:left;padding:7px 6px;white-space:normal}
+.warn-ico{display:inline-block;font-size:16px;margin-right:5px;cursor:pointer;line-height:1;vertical-align:middle;position:relative}
 .warn-ico.red{color:var(--red)}
 .warn-ico.orange{color:var(--orange)}
 .warn-ico.gray{color:var(--text3)}
 /* 差额提示感叹号（核对列用） */
-.err-ico{display:inline-block;font-size:12px;margin-left:3px;cursor:help;color:var(--red);vertical-align:middle;font-weight:700}
+.err-ico{display:inline-block;font-size:15px;margin-left:4px;cursor:pointer;color:var(--red);vertical-align:middle;font-weight:700;position:relative}
+/* 自定义 tooltip：比原生 title 更明显、更可控 */
+.warn-ico:hover::after,.err-ico:hover::after{
+  content:attr(data-tip);
+  position:absolute;
+  bottom:150%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#0d1220;
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:8px 12px;
+  border-radius:8px;
+  font-size:12px;
+  line-height:1.5;
+  font-weight:400;
+  white-space:normal;
+  max-width:280px;
+  width:max-content;
+  z-index:999;
+  box-shadow:0 6px 20px rgba(0,0,0,.55);
+  pointer-events:none;
+  letter-spacing:0;
+}
+.warn-ico:hover::before,.err-ico:hover::before{
+  content:'';
+  position:absolute;
+  bottom:150%;
+  left:50%;
+  transform:translateX(-50%) translateY(100%);
+  border:5px solid transparent;
+  border-top-color:var(--line);
+  z-index:999;
+  pointer-events:none;
+}
 .empty{padding:40px;text-align:center;color:var(--text3)}
 th.left,td.left{text-align:left}
 
@@ -198,11 +232,11 @@ th.left,td.left{text-align:left}
     <div class="tbl-box" data-page-node-id="IZhIdbjn5Cd9iVoewIPQnF">
       <table id="settleTable" data-page-node-id="FrOZo40400HUQskdrelazt">
         <colgroup>
-          <col style="width:55px"><col style="width:80px"><col style="width:35px"><col style="width:62px">
-          <col style="width:78px"><col style="width:78px"><col style="width:138px">
-          <col style="width:128px"><col style="width:50px">
-          <col style="width:62px"><col style="width:72px"><col style="width:52px">
-          <col style="width:55px"><col style="width:125px">
+          <col style="width:5%"><col style="width:7.5%"><col style="width:3%"><col style="width:5.5%">
+          <col style="width:7.5%"><col style="width:7.5%"><col style="width:13%">
+          <col style="width:12%"><col style="width:4.5%">
+          <col style="width:6%"><col style="width:6.5%"><col style="width:5%">
+          <col style="width:5%"><col style="width:12%">
         </colgroup>
         <thead data-page-node-id="bFFFzUtzMSE3OVjKWbRStJ"><tr data-page-node-id="iLULPSkDMSMaJ5Swarr4Ec">
           <th data-page-node-id="vJrmQBGQyE6g9lgEoRot8E">uid</th><th data-page-node-id="BAr3BynigveIPc6XIGmsck">名称</th><th data-page-node-id="qtcAut43dwsj78Gl3rwPPY">政策</th><th data-page-node-id="Ex0TKxDExxHu9oFHiKANmA">档位</th>
@@ -281,7 +315,7 @@ function fmt(v,d){ if(v===null||v===undefined||isNaN(v))v=0; d=(d===undefined)?2
 function fx(){ return n($('fx').value)||1; }
 function has(v){ return v!==null && v!==undefined && String(v).trim()!==''; }
 function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
-function warnColor(w){ if(w.indexOf('违规')>=0||w.indexOf('清零')>=0||w.indexOf('超 20%')>=0) return 'red'; if(w.indexOf('扣')>=0||w.indexOf('未达')>=0||w.indexOf('未匹配')>=0) return 'orange'; return 'gray'; }
+function warnColor(w){ if(w.indexOf('违规')>=0||w.indexOf('清零')>=0||w.indexOf('超 50%')>=0) return 'red'; if(w.indexOf('扣')>=0||w.indexOf('未达')>=0||w.indexOf('未匹配')>=0) return 'orange'; return 'gray'; }
 function monthsBetween(from,to){
   if(!from) return 99;
   var a=String(from).substring(0,10).split('-'), b=String(to).substring(0,10).split('-');
@@ -436,7 +470,7 @@ catch(e){ CFG = deepClone(DEFAULT_CFG); }
 function platFactor(r){
   var f=1;
   var ovAbs=n(r.ovPct)/100;
-  if(String(r.ovDeduct||'').trim()==='是'){ f*=Math.max(0,1-(ovAbs-0.20)); }
+  if(String(r.ovDeduct||'').trim()==='是'){ f*=Math.max(0,1-(ovAbs-0.50)); }
   return f;
 }
 function computeCommission(r, beans){
@@ -543,7 +577,7 @@ function calcRow(r){
   }
   var profitC=(official>0?official:checkAmt)*fxv - payFinal - tuCostY;
 
-  if(ov>20) warns.push('海外豆 '+ov.toFixed(2)+'% 超 20%');
+  if(ov>50) warns.push('海外豆 '+ov.toFixed(2)+'% 超 50%');
   return {checkAmt:checkAmt, commission:commission, official:official, diff:diff, excMode:excMode,
     platTier:platTier, computed:cc.computed, factor:factor, newB:newB, useOld:useOld,
     salY:salY, fullY:fullY, invY:invY, payY:payFinal, payAuto:payY, exc:exc,
@@ -582,10 +616,10 @@ function renderSettle(){
     var chkErr=(c.diff!==null && Math.abs(c.diff)>0.5);
     var chkAmtMain=c.official>0?c.official:c.checkAmt;
     var chkHtml='$'+fmt(chkAmtMain);
-    if(chkErr){ chkHtml+=' <span class="err-ico" title="差额 = 核对 $'+fmt(c.checkAmt)+' − 官方 $'+fmt(c.official)+' = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠</span>'; }
-    else if(c.official<=0){ chkHtml+=' <span class="warn-ico gray" title="无官方结算数据，仅显示核对金额">⚠</span>'; }
+    if(chkErr){ chkHtml+=' <span class="err-ico" data-tip="差额 = 核对 $'+fmt(c.checkAmt)+' − 官方 $'+fmt(c.official)+' = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠</span>'; }
+    else if(c.official<=0){ chkHtml+=' <span class="warn-ico gray" data-tip="无官方结算数据，仅显示核对金额">⚠</span>'; }
     var salHtml='<span class="bl">'+fmt(c.salY,0)+'</span><span class="sep">/</span><span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'dim'))+'">'+fmt(c.fullY,0)+'</span><span class="sep">/</span><span class="'+(c.invY>0?'orange':'dim')+'">'+fmt(c.invY,1)+'</span>';
-    var warnHtml=c.warns.map(function(w){ return '<span class="warn-ico '+warnColor(w)+'" title="'+esc(w)+'">⚠</span>'; }).join('');
+    var warnHtml=c.warns.map(function(w){ return '<span class="warn-ico '+warnColor(w)+'" data-tip="'+esc(w)+'">⚠</span>'; }).join('');
     h+='<tr data-i="'+i+'">'
       +'<td>'+esc(r.uid)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.policy)+'</td>'
       +'<td class="'+(c.computed?'orange':'pu')+'">'+esc(r.level||c.platTier)+(c.useOld?'<span class="sub orange">老政策</span>':'')+(isNew?'<span class="sub bl">新+$'+fmt(c.newB,0)+'</span>':'')+'</td>'
@@ -595,7 +629,7 @@ function renderSettle(){
       +'<td class="sal-cell" id="c-sal-'+i+'">'+salHtml+'</td>'
       +'<td id="c-tub-'+i+'" data-tu="'+i+'" style="cursor:pointer" title="点击修改补豆数">'+(n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—')+'</td>'
       +'<td>'+fmt(n(r.days),0)+'/'+fmt(n(r.hours),1)+'</td><td>'+fmt(n(r.tickets),0)+'</td>'
-      +'<td class="'+(n(r.ovPct)>20?'red':(n(r.ovPct)>15?'orange':''))+'">'+fmt(n(r.ovPct),2)+'</td>'
+      +'<td class="'+(n(r.ovPct)>50?'red':(n(r.ovPct)>35?'orange':''))+'">'+fmt(n(r.ovPct),2)+'</td>'
       +'<td id="c-exc-'+i+'">'+excBtn(i)+'</td>'
       +'<td class="warn-cell" id="row-warn-'+i+'">'+warnHtml+'</td>'
       +'</tr>';
@@ -803,8 +837,8 @@ function updateRow(i){
   var chkErr=(c.diff!==null && Math.abs(c.diff)>0.5);
   var chkAmtMain=c.official>0?c.official:c.checkAmt;
   var chkHtml='$'+fmt(chkAmtMain);
-  if(chkErr){ chkHtml+=' <span class="err-ico" title="差额 = 核对 $'+fmt(c.checkAmt)+' − 官方 $'+fmt(c.official)+' = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠</span>'; }
-  else if(c.official<=0){ chkHtml+=' <span class="warn-ico gray" title="无官方结算数据，仅显示核对金额">⚠</span>'; }
+  if(chkErr){ chkHtml+=' <span class="err-ico" data-tip="差额 = 核对 $'+fmt(c.checkAmt)+' − 官方 $'+fmt(c.official)+' = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠</span>'; }
+  else if(c.official<=0){ chkHtml+=' <span class="warn-ico gray" data-tip="无官方结算数据，仅显示核对金额">⚠</span>'; }
   $('c-chk-'+i).innerHTML=chkHtml;
   $('c-chk-'+i).className='main-cell check left '+(chkErr?'red':'bl');
   $('c-sal-'+i).innerHTML='<span class="bl">'+fmt(c.salY,0)+'</span><span class="sep">/</span><span class="'+(c.fullY>0?'green':(c.fullY<0?'red':'dim'))+'">'+fmt(c.fullY,0)+'</span><span class="sep">/</span><span class="'+(c.invY>0?'orange':'dim')+'">'+fmt(c.invY,1)+'</span>';
@@ -814,7 +848,7 @@ function updateRow(i){
   $('c-pc-'+i).textContent='¥'+fmt(c.profitC,0);
   $('c-pc-'+i).className='main-cell profit '+(c.profitC>=0?'green':'red');
   $('c-exc-'+i).innerHTML=excBtn(i);
-  var wc=$('row-warn-'+i); if(wc) wc.innerHTML=c.warns.map(function(w){return '<span class="warn-ico '+warnColor(w)+'" title="'+esc(w)+'">⚠</span>';}).join('');
+  var wc=$('row-warn-'+i); if(wc) wc.innerHTML=c.warns.map(function(w){return '<span class="warn-ico '+warnColor(w)+'" data-tip="'+esc(w)+'">⚠</span>';}).join('');
   renderSum();
 }
 $('settleBody').addEventListener('input',function(e){
