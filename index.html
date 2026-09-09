@@ -318,7 +318,7 @@ function fmt(v,d){ if(v===null||v===undefined||isNaN(v))v=0; d=(d===undefined)?2
 function fx(){ return n($('fx').value)||1; }
 function has(v){ return v!==null && v!==undefined && String(v).trim()!==''; }
 function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
-function warnColor(w){ if(w.indexOf('违规')>=0||w.indexOf('清零')>=0||w.indexOf('超 50%')>=0) return 'red'; if(w.indexOf('扣')>=0||w.indexOf('未达')>=0||w.indexOf('未匹配')>=0) return 'orange'; return 'gray'; }
+function warnColor(w){ if(w.indexOf('违规')>=0||w.indexOf('清零')>=0||w.indexOf('超 20%')>=0) return 'red'; if(w.indexOf('扣')>=0||w.indexOf('未达')>=0||w.indexOf('未匹配')>=0) return 'orange'; return 'gray'; }
 function monthsBetween(from,to){
   if(!from) return 99;
   var a=String(from).substring(0,10).split('-'), b=String(to).substring(0,10).split('-');
@@ -330,7 +330,7 @@ function setCfg(path,v){ var ks=path.split('.'), o=CFG; for(var i=0;i<ks.length-
 function saveCfg(){ localStorage.setItem('xhm_settle_v4', JSON.stringify(CFG)); }
 
 var DEFAULT_CFG = {
-  fx:6.5, invPct:20, withdraw:210, beansPerYuan:8.43, pmFactor:0.9678,
+  fx:6.5, invPct:50, withdraw:210, beansPerYuan:8.43, pmFactor:0.9678,
   fullNew:{days:25, hours:75, bonus:300},
   fullOld:{days:20, hours:60},
   newMonths:{A:3, F:2},
@@ -469,12 +469,17 @@ function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
 var CFG;
 try{ CFG = JSON.parse(localStorage.getItem('xhm_settle_v4')) || deepClone(DEFAULT_CFG); }
 catch(e){ CFG = deepClone(DEFAULT_CFG); }
+/* 迁移：无效豆比例业务规则 20% → 50% */
+if(CFG && n(CFG.invPct)===20 && CFG.cfgVersion!==2){
+  CFG.invPct=50; CFG.cfgVersion=2;
+  try{ localStorage.setItem('xhm_settle_v4', JSON.stringify(CFG)); }catch(e){}
+}
 
 function platFactor(r){
   var f=1;
   var ovAbs=n(r.ovPct)/100;
   if(String(r.ovDeduct||'').trim()==='是'){ 
-    var excess=Math.max(0, ovAbs-0.50);
+    var excess=Math.max(0, ovAbs-0.20);
     f*=Math.max(0, 1-excess);
   }
   return f;
@@ -583,7 +588,7 @@ function calcRow(r){
   }
   var profitC=(official>0?official:checkAmt)*fxv - payFinal - tuCostY;
 
-  if(ov>50) warns.push('海外豆 '+ov.toFixed(2)+'% 超 50%');
+  if(ov>20) warns.push('海外豆 '+ov.toFixed(2)+'% 超 20%');
   return {checkAmt:checkAmt, commission:commission, official:official, diff:diff, excMode:excMode,
     platTier:platTier, computed:cc.computed, factor:factor, newB:newB, useOld:useOld,
     salY:salY, fullY:fullY, invY:invY, payY:payFinal, payAuto:payY, exc:exc,
@@ -639,7 +644,7 @@ function renderSettle(){
       +'<td class="sal-cell" id="c-sal-'+i+'">'+salHtml+'</td>'
       +'<td id="c-tub-'+i+'" data-tu="'+i+'" style="cursor:pointer" title="点击修改补豆数">'+(n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—')+'</td>'
       +'<td>'+fmt(n(r.days),0)+'/'+fmt(n(r.hours),1)+'</td><td>'+fmt(n(r.tickets),0)+'</td>'
-      +'<td class="'+(n(r.ovPct)>50?'red':(n(r.ovPct)>35?'orange':''))+'">'+fmt(n(r.ovPct),2)+'</td>'
+      +'<td class="'+(n(r.ovPct)>20?'red':(n(r.ovPct)>15?'orange':''))+'">'+fmt(n(r.ovPct),2)+'</td>'
       +'<td id="c-exc-'+i+'">'+excBtn(i)+'</td>'
       +'<td class="warn-cell" id="row-warn-'+i+'">'+warnHtml+'</td>'
       +'</tr>';
