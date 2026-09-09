@@ -48,14 +48,14 @@ main{flex:1;padding:20px 24px;min-width:0}
 .kpi span{font-size:11px;color:var(--text2)}
 .kpi b{display:block;font-size:18px;font-weight:800;margin-top:2px}
 .tbl-box{overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;max-height:calc(100vh - 210px)}
-table{width:100%;min-width:2500px;border-collapse:collapse;font-size:12px}
+table{width:100%;min-width:2150px;border-collapse:collapse;font-size:12px}
 th{position:sticky;top:0;background:#1a2234;color:var(--text2);font-weight:600;padding:8px 6px;border-bottom:2px solid var(--line);text-align:right;white-space:nowrap;z-index:2}
 th.g-sal{color:#5DCAA5;background:#182823}th.g-inc{color:#AFA9EC;background:#1e2038}th.g-prof{color:#F7C1C1;background:#2a1e24}
 th:nth-child(1),th:nth-child(2),td:nth-child(1),td:nth-child(2){text-align:left}
 th:nth-child(1),td:nth-child(1){position:sticky;left:0;width:92px;min-width:92px;background:#1a2234;z-index:1}
 th:nth-child(2),td:nth-child(2){position:sticky;left:92px;width:150px;min-width:150px;background:#1a2234;z-index:1;border-right:1px solid var(--line)}
 th:nth-child(1){z-index:4}th:nth-child(2){z-index:4}
-td{padding:5px 6px;border-bottom:1px solid #202a42;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+td{padding:3px 4px;border-bottom:1px solid #202a42;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 td:nth-child(1),td:nth-child(2){background:#161e30}
 tbody tr:nth-child(even) td{background:#131b2c}
 tbody tr:nth-child(even) td:nth-child(1),tbody tr:nth-child(even) td:nth-child(2){background:#111828}
@@ -466,6 +466,12 @@ function calcRow(r){
   }
   if(clearSalary){ salY=0; fullY=0; }
   var payY=salY+fullY+invY;
+  /* 海外豆扣减：损失转由主播承担（公会不再垫付） */
+  if(factor<1 && !clearComm){
+    var ovLossY=(base+agentC+agBonus+newB)*(1-factor)*fxv;
+    payY-=ovLossY;
+    warns.push('海外豆扣减 ¥'+fmt(ovLossY,2)+' 转主播承担');
+  }
   var exc=false, excMode='';
   var payFinal=payY;
   if(has(r.excAmt)){ payFinal=n(r.excAmt); exc=true; excMode='固定¥'; }
