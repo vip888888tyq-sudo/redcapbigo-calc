@@ -71,7 +71,7 @@ td.main-cell{font-weight:800;font-size:12.5px}
 .warn-cell.err{color:#ff9b9b}
 .empty{padding:40px;text-align:center;color:var(--text3)}
 .err-badge{display:inline-block;background:var(--red);color:#fff;font-size:10px;font-weight:bold;padding:1px 6px;border-radius:8px;margin-left:4px;vertical-align:middle;letter-spacing:-0.5px;cursor:help}
-.check-cell{display:inline-block;white-space:nowrap}
+th.left,td.left{text-align:left}
 
 /* ===== 配置页样式 ===== */
 .rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
@@ -155,9 +155,9 @@ td.main-cell{font-weight:800;font-size:12.5px}
     <div class="tbl-box" data-page-node-id="IZhIdbjn5Cd9iVoewIPQnF">
       <table id="settleTable" data-page-node-id="FrOZo40400HUQskdrelazt">
         <thead data-page-node-id="bFFFzUtzMSE3OVjKWbRStJ"><tr data-page-node-id="iLULPSkDMSMaJ5Swarr4Ec">
-          <th data-page-node-id="vJrmQBGQyE6g9lgEoRot8E">uid</th><th data-page-node-id="BAr3BynigveIPc6XIGmsck">名称</th><th data-page-node-id="qtcAut43dwsj78Gl3rwPPY">政策</th><th data-page-node-id="Ex0TKxDExxHu9oFHiKANmA">档位</th><th data-page-node-id="Y6QFhA0nRsddbOqpLIBmlX">天</th><th data-page-node-id="KAkEFMsx2r91lT6ywoQeav">时长h</th><th data-page-node-id="IptcM6tWRbdKa4EN57yAhH">总金豆</th><th data-page-node-id="LAqyZkH3I23rRDCg1Lmdr4">海外豆%</th>
-          <th class="g-inc" data-page-node-id="rF3Y8uYhpl9G6M3cU1VbRi">核对 / 官方$</th>
-          <th class="g-sal" data-page-node-id="n1WHkvOn2q18lFujCG6KuB">档位薪资¥</th><th class="g-sal" data-page-node-id="nk44p2vAyvidgjkY0eUoEn">全勤¥</th><th class="g-sal" data-page-node-id="egUPLCpjG4iANw9nvDT37I">无效豆¥</th><th class="g-sal" data-page-node-id="P18sAjIT4WX1hV21DMn2H3">主播薪资¥</th>
+          <th data-page-node-id="vJrmQBGQyE6g9lgEoRot8E">uid</th><th data-page-node-id="BAr3BynigveIPc6XIGmsck">名称</th><th data-page-node-id="qtcAut43dwsj78Gl3rwPPY">政策</th><th data-page-node-id="Ex0TKxDExxHu9oFHiKANmA">档位</th><th data-page-node-id="Y6QFhA0nRsddbOqpLIBmlX">天/时长</th><th data-page-node-id="IptcM6tWRbdKa4EN57yAhH">总金豆</th><th data-page-node-id="LAqyZkH3I23rRDCg1Lmdr4">海外豆%</th>
+          <th class="g-inc left" data-page-node-id="rF3Y8uYhpl9G6M3cU1VbRi">核对/官方$</th>
+          <th class="g-sal" data-page-node-id="n1WHkvOn2q18lFujCG6KuB">薪资(档位/全勤/无效)</th><th class="g-sal" data-page-node-id="P18sAjIT4WX1hV21DMn2H3">主播薪资¥</th>
           <th data-page-node-id="BSpR7qq968h0rQhCCeYC96">补豆数</th>
           <th class="g-prof" data-page-node-id="gGOFp8AOsBLfc38vjG3BWy">盈利¥</th>
           <th data-page-node-id="gMp3l5r792KWnayBhtISu8">人工例外</th><th data-page-node-id="dUjwGJ8Ie506eWCB2v5RJZ">预警</th>
@@ -529,12 +529,10 @@ function renderSettle(){
     h+='<tr data-i="'+i+'">'
       +'<td>'+esc(r.uid)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.policy)+'</td>'
       +'<td class="'+(c.computed?'orange':'pu')+'">'+esc(r.level||c.platTier)+(c.useOld?'<span class="mini orange">老</span>':'')+(isNew?'<span class="mini bl">新+$'+fmt(c.newB,0)+'</span>':'')+'</td>'
-      +'<td>'+fmt(n(r.days),0)+'</td><td>'+fmt(n(r.hours),1)+'</td><td>'+fmt(n(r.tickets),0)+'</td>'
+      +'<td>'+fmt(n(r.days),0)+'/'+fmt(n(r.hours),1)+'</td><td>'+fmt(n(r.tickets),0)+'</td>'
       +'<td class="'+(n(r.ovPct)>20?'red':(n(r.ovPct)>15?'orange':''))+'">'+fmt(n(r.ovPct),2)+'</td>'
-      +'<td class="main-cell '+(c.diff===null?'bl':(Math.abs(c.diff)<=0.5?'bl':'red'))+'" id="c-chk-'+i+'" title="'+(c.diff!==null?'差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff):'无官方结算数据')+'"><span class="check-cell">$'+fmt(c.checkAmt)+' / '+(c.official>0?'$'+fmt(c.official):'<span class="mini">无</span>')+'</span>'+(c.diff!==null && Math.abs(c.diff)>0.5?' <span class="err-badge" title="差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠ '+(c.diff>0?'+':'')+fmt(c.diff)+'</span>':'')+'</td>'
-      +'<td id="c-sal-'+i+'">'+fmt(c.salY,0)+'</td>'
-      +'<td id="c-full-'+i+'">'+(c.fullY>0?'<span class="green">'+fmt(c.fullY,0)+'</span>':'—')+'</td>'
-      +'<td id="c-inv-'+i+'">'+fmt(c.invY)+'</td>'
+      +'<td class="main-cell left '+(c.diff===null?'bl':(Math.abs(c.diff)<=0.5?'bl':'red'))+'" id="c-chk-'+i+'" title="'+(c.diff!==null?'差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff):'无官方结算数据')+'">$'+fmt(c.checkAmt)+' / '+(c.official>0?'$'+fmt(c.official):'<span class="mini">无</span>')+(c.diff!==null && Math.abs(c.diff)>0.5?' <span class="err-badge" title="差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠ '+(c.diff>0?'+':'')+fmt(c.diff)+'</span>':'')+'</td>'
+      +'<td id="c-sal-'+i+'">'+fmt(c.salY,0)+'/'+(c.fullY>0?fmt(c.fullY,0):'—')+'/'+fmt(c.invY,1)+'</td>'
       +'<td class="main-cell" id="c-pay-'+i+'">'+fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'')+'</td>'
       +'<td id="c-tub-'+i+'" data-tu="'+i+'" style="cursor:pointer" title="点击修改补豆数">'+(n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—')+'</td>'
       +'<td class="main-cell '+(c.profitC>=0?'green':'red')+'" id="c-pc-'+i+'">¥'+fmt(c.profitC,0)+'</td>'
@@ -542,7 +540,7 @@ function renderSettle(){
       +'<td class="warn-cell'+(c.warns.some(function(w){return w.indexOf('超 20%')>=0||w.indexOf('清零')>=0;})?' err':'')+'" id="row-warn-'+i+'">'+c.warns.map(function(w){return '⚠ '+w;}).join('<br>')+'</td>'
       +'</tr>';
   });
-  if(!h) h=rows.length?'<tr><td class="empty" colspan="17">无匹配主播 —— 换个关键词试试</td></tr>':'<tr><td class="empty" colspan="17">暂无数据 —— 点上方「选择 xlsx / csv 文件」导入官方月数据</td></tr>';
+  if(!h) h=rows.length?'<tr><td class="empty" colspan="14">无匹配主播 —— 换个关键词试试</td></tr>':'<tr><td class="empty" colspan="14">暂无数据 —— 点上方「选择 xlsx / csv 文件」导入官方月数据</td></tr>';
   $('settleBody').innerHTML=h;
   var sc=$('searchCount'); if(sc) sc.textContent=rows.length?('显示 '+shown+' / '+rows.length+' 人'):'';
   renderSum();
@@ -743,11 +741,9 @@ function updateRow(i){
   var r=rows[i], c=calcRow(r);
   var errCls=c.diff===null?'bl':(Math.abs(c.diff)<=0.5?'bl':'red');
   var errBadge=c.diff!==null && Math.abs(c.diff)>0.5?' <span class="err-badge" title="差额 = 核对 − 官方 = '+(c.diff>0?'+':'')+fmt(c.diff)+'">⚠ '+(c.diff>0?'+':'')+fmt(c.diff)+'</span>':'';
-  $('c-chk-'+i).innerHTML='<span class="check-cell">$'+fmt(c.checkAmt)+' / '+(c.official>0?'$'+fmt(c.official):'<span class="mini">无</span>')+'</span>'+errBadge;
-  $('c-chk-'+i).className='main-cell '+errCls;
-  $('c-sal-'+i).textContent=fmt(c.salY,0);
-  $('c-full-'+i).innerHTML=c.fullY>0?'<span class="green">'+fmt(c.fullY,0)+'</span>':'—';
-  $('c-inv-'+i).textContent=fmt(c.invY);
+  $('c-chk-'+i).innerHTML='$'+fmt(c.checkAmt)+' / '+(c.official>0?'$'+fmt(c.official):'<span class="mini">无</span>')+errBadge;
+  $('c-chk-'+i).className='main-cell left '+errCls;
+  $('c-sal-'+i).textContent=fmt(c.salY,0)+'/'+(c.fullY>0?fmt(c.fullY,0):'—')+'/'+fmt(c.invY,1);
   $('c-pay-'+i).innerHTML=fmt(c.payY,0)+(c.exc?'<span class="mini orange">'+c.excMode+'</span>':'');
   $('c-tub-'+i).textContent=n(r.tuBeans)>0?fmt(n(r.tuBeans),0):'—';
   $('c-pc-'+i).textContent='¥'+fmt(c.profitC,0);
