@@ -51,6 +51,16 @@ main{flex:1;padding:16px 20px;min-width:0}
 /* 核对/官方结算合并卡片：占两列，字号略收 */
 .kpi-merge{grid-column:span 2}
 .kpi-merge b{font-size:14px}
+/* 数据看板：区块标题 */
+.board-sec{margin-bottom:16px}
+.board-sec:last-child{margin-bottom:4px}
+.board-t{display:block;font-size:10.5px;color:var(--text2);letter-spacing:1.5px;margin-bottom:8px;padding-left:10px;border-left:3px solid var(--blue);text-transform:uppercase}
+/* 主播总人数：大数字 */
+.kpi b.big{font-size:26px;color:#7FB4FF;line-height:1.1}
+/* 补豆数量/成本/收益 合并卡 */
+.kpi-tub b{font-size:12.5px;font-weight:700;letter-spacing:-0.2px}
+.kpi-tub .ksep{color:var(--text3);opacity:.5;margin:0 4px}
+.kpi-tub em{font-style:normal}
 .tbl-box{overflow-x:auto;overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;max-height:calc(100vh - 180px);min-width:0}
 table{width:100%;min-width:1160px;table-layout:fixed;border-collapse:collapse;font-size:12.5px}
 
@@ -247,7 +257,7 @@ th.left,td.left{text-align:left}
           <col style="width:6.5%"><col style="width:4.3%">
         </colgroup>
         <thead data-page-node-id="bFFFzUtzMSE3OVjKWbRStJ"><tr data-page-node-id="iLULPSkDMSMaJ5Swarr4Ec">
-          <th data-page-node-id="vJrmQBGQyE6g9lgEoRot8E">uid</th><th data-page-node-id="BAr3BynigveIPc6XIGmsck">名称</th><th data-page-node-id="qtcAut43dwsj78Gl3rwPPY">政策</th><th data-page-node-id="Ex0TKxDExxHu9oFHiKANmA">档位</th>
+          <th data-page-node-id="vJrmQBGQyE6g9lgEoRot8E">id</th><th data-page-node-id="BAr3BynigveIPc6XIGmsck">名称</th><th data-page-node-id="qtcAut43dwsj78Gl3rwPPY">政策</th><th data-page-node-id="Ex0TKxDExxHu9oFHiKANmA">档位</th>
           <th class="g-sal" data-page-node-id="P18sAjIT4WX1hV21DMn2H3">主播薪资¥</th>
           <th class="g-prof" data-page-node-id="gGOFp8AOsBLfc38vjG3BWy">盈利¥</th>
           <th class="g-inc" data-page-node-id="rF3Y8uYhpl9G6M3cU1VbRi">核对/官方$</th>
@@ -671,21 +681,36 @@ function renderSettle(){
 }
 function renderSum(){
   if(!rows.length){ $('sumBox').innerHTML=''; return; }
-  var T={chk:0,off:0,offCnt:0,pay:0,tu:0,tug:0,pc:0};
-  rows.forEach(function(r){ var c=calcRow(r); T.chk+=c.checkAmt; T.off+=c.official; if(c.official>0)T.offCnt++; T.pay+=c.payY; T.tu+=c.tuCostY; T.tug+=c.tuGainY; T.pc+=c.profitC; });
+  var T={chk:0,off:0,offCnt:0,pay:0,tu:0,tug:0,tub:0,pc:0};
+  var lvl=0, silent=0, nw=0, old=0;
+  rows.forEach(function(r){
+    var c=calcRow(r);
+    var pol=r.policy||'A';
+    T.chk+=c.checkAmt; T.off+=c.official; if(c.official>0)T.offCnt++; T.pay+=c.payY;
+    T.tu+=c.tuCostY; T.tug+=c.tuGainY; T.tub+=Math.max(0,n(r.tuBeans)); T.pc+=c.profitC;
+    var noLvl=c.warns.some(function(w){ return w.indexOf('金豆未达最低档')>=0; });
+    if(noLvl) silent++; else lvl++;
+    if(monthsBetween(r.sign, $('periodEnd').value) < n(getCfg('newMonths.'+pol)||0)) nw++; else old++;
+  });
   $('sumBox').innerHTML=
-    kpi('主播人数',rows.length+' 人','')+
-    kpi('核对金额/官方结算','$'+fmt(T.chk)+' / $'+fmt(T.off),'bl',T.offCnt+' 人已核对','kpi-merge')+
+    '<div class="board-sec"><span class="board-t">主播概览</span><div class="sum">'
+    +kpi('主播总人数',rows.length+' 人','big')+
+    kpi('档位主播',lvl+' 人','green')+
+    kpi('沉默主播(未达档位)',silent+' 人','orange')+
+    kpi('新主播/老主播',nw+' / '+old+' 人','',nw+' 新 · '+old+' 老')
+    +'</div></div>'
+    +'<div class="board-sec"><span class="board-t">资金汇总</span><div class="sum">'
+    +kpi('核对金额/官方结算','$'+fmt(T.chk)+' / $'+fmt(T.off),'bl',T.offCnt+' 人已核对','kpi-merge')+
     kpi('差额合计','$'+fmt(T.chk-T.off),'orange')+
     kpi('主播薪资合计','¥'+fmt(T.pay,0),'')+
-    kpi('补豆成本合计','¥'+fmt(T.tu,0),'orange')+
-    kpi('补豆收益合计','¥'+fmt(T.tug,0),T.tug>=0?'green':'red')+
-    kpi('总盈利','¥'+fmt(T.pc,0),T.pc>=0?'green':'red');
+    kpi('补豆数量/成本/收益','<span>数量 '+fmt(T.tub,0)+'</span><span class="ksep">/</span><span>成本 ¥'+fmt(T.tu,0)+'</span><span class="ksep">/</span><span>收益 <em class="'+(T.tug>=0?'green':'red')+'">¥'+fmt(T.tug,0)+'</em></span>','tub-b',null,'kpi-merge kpi-tub')+
+    kpi('总盈利','¥'+fmt(T.pc,0),T.pc>=0?'green':'red')
+    +'</div></div>';
   function kpi(t,v,cls,sub,extra){ return '<div class="kpi'+(extra?' '+extra:'')+'"><span>'+t+'</span><b class="'+cls+'">'+v+'</b>'+(sub?'<i>'+sub+'</i>':'')+'</div>'; }
 }
 
 var COLMAP={
-  uid:['uid','UID','uid号'], name:['名称','昵称','主播','主播昵称'], bigo:['BIGO ID','bigo id','BIGO_ID'],
+  uid:['id','ID','uid','UID','uid号'], name:['名称','昵称','主播','主播昵称'], bigo:['BIGO ID','bigo id','BIGO_ID'],
   sign:['首簽月份','首签月份','首签','首簽'], hours:['valid_hour','时长','有效时长','有效直播时长'],
   days:['valid_day','天数','有效天数','有效直播天数'], tickets:['tickets','金豆收益','总金豆','金豆'],
   level:['ticket_level','等级'], policy:['政策','公会政策'],
@@ -806,7 +831,7 @@ $('btnResetCfg2').onclick=resetCfg;
 $('btnClearTu').onclick=function(){ if(!rows.length){ alert('暂无数据'); return; } if(confirm('确定清空所有主播的补豆数？（官方表数据保留）')){ rows.forEach(function(r){ r.tuBeans=''; }); renderSettle(); $('importMsg').textContent='已清空补豆记录'; } };
 $('btnExport').onclick=function(){
   if(!rows.length){ alert('暂无数据'); return; }
-  var head=['uid','名称','政策','档位薪资¥','全勤¥','无效豆¥','主播薪资¥','补豆数','补豆成本¥','补豆收益¥','盈利¥','例外¥','例外%','违规清零','老政策'];
+  var head=['id','名称','政策','档位薪资¥','全勤¥','无效豆¥','主播薪资¥','补豆数','补豆成本¥','补豆收益¥','盈利¥','例外¥','例外%','违规清零','老政策'];
   var colW=[60,140,55,80,70,80,90,70,85,85,95,75,70,70,70];
   function num(v,fmt,redNeg){
     var neg=(typeof v==='number' && v<0);
