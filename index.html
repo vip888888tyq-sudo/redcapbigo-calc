@@ -47,6 +47,10 @@ main{flex:1;padding:16px 20px;min-width:0}
 .kpi:hover{transform:translateY(-2px);border-color:var(--blue)}
 .kpi span{font-size:10.5px;color:var(--text2);letter-spacing:0.3px}
 .kpi b{display:block;font-size:16px;font-weight:800;margin-top:1px}
+.kpi i{display:block;font-size:10px;color:var(--text3);font-style:normal;margin-top:1px}
+/* 核对/官方结算合并卡片：占两列，字号略收 */
+.kpi-merge{grid-column:span 2}
+.kpi-merge b{font-size:14px}
 .tbl-box{overflow-x:auto;overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;max-height:calc(100vh - 180px);min-width:0}
 table{width:100%;min-width:1160px;table-layout:fixed;border-collapse:collapse;font-size:12.5px}
 
@@ -671,12 +675,13 @@ function renderSum(){
   rows.forEach(function(r){ var c=calcRow(r); T.chk+=c.checkAmt; T.off+=c.official; if(c.official>0)T.offCnt++; T.pay+=c.payY; T.tu+=c.tuCostY; T.tug+=c.tuGainY; T.pc+=c.profitC; });
   $('sumBox').innerHTML=
     kpi('主播人数',rows.length+' 人','')+
-    kpi('核对金额合计','$'+fmt(T.chk),'bl')+
-    kpi('官方结算合计','$'+fmt(T.off),'',T.offCnt+' 人已核对')+
+    kpi('核对金额/官方结算','$'+fmt(T.chk)+' / $'+fmt(T.off),'bl',T.offCnt+' 人已核对','kpi-merge')+
     kpi('差额合计','$'+fmt(T.chk-T.off),'orange')+
     kpi('主播薪资合计','¥'+fmt(T.pay,0),'')+
+    kpi('补豆成本合计','¥'+fmt(T.tu,0),'orange')+
+    kpi('补豆收益合计','¥'+fmt(T.tug,0),T.tug>=0?'green':'red')+
     kpi('总盈利','¥'+fmt(T.pc,0),T.pc>=0?'green':'red');
-  function kpi(t,v,cls){ return '<div class="kpi"><span>'+t+'</span><b class="'+cls+'">'+v+'</b></div>'; }
+  function kpi(t,v,cls,sub,extra){ return '<div class="kpi'+(extra?' '+extra:'')+'"><span>'+t+'</span><b class="'+cls+'">'+v+'</b>'+(sub?'<i>'+sub+'</i>':'')+'</div>'; }
 }
 
 var COLMAP={
