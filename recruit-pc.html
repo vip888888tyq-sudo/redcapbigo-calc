@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="IqOWGjMSHAlBpmbnNwxYQm">
+<head data-page-node-id="dw8ptTEEXaqF9GryeT09F2">
+<meta charset="UTF-8" data-page-node-id="kadnfsKZCmbAUORWtnxLna">
+<title>小红帽代理招商手册 · 2026</title>
+<style>
+@page { size: A4; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.7;
+  background: #fff;
+}
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 25mm 22mm;
+  margin: 0 auto 8mm;
+  background: #fff;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  page-break-after: always;
+  position: relative;
+}
+.page:last-child { page-break-after: auto; }
+.page-header {
+  position: absolute;
+  top: 12mm; left: 22mm; right: 22mm;
+  font-size: 10px; color: #999;
+  display: flex; justify-content: space-between;
+  border-bottom: 1px solid #EEE; padding-bottom: 6px;
+}
+.page-footer {
+  position: absolute;
+  bottom: 12mm; left: 22mm; right: 22mm;
+  font-size: 10px; color: #999;
+  display: flex; justify-content: space-between;
+  border-top: 1px solid #EEE; padding-top: 6px;
+}
+
+/* COVER */
+.cover {
+  background: linear-gradient(135deg, #C62828 0%, #8E0000 100%);
+  color: #fff;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 0 25mm; text-align: left;
+}
+.cover-tag {
+  display: inline-block; padding: 6px 16px;
+  background: rgba(255,255,255,0.2); border-radius: 20px;
+  font-size: 13px; letter-spacing: 1px; margin-bottom: 32px; width: fit-content;
+}
+.cover h1 {
+  font-size: 56px; font-weight: 800; line-height: 1.1;
+  margin-bottom: 16px; letter-spacing: -1px;
+}
+.cover h2 { font-size: 22px; font-weight: 300; margin-bottom: 24px; opacity: 0.95; }
+.cover-divider { width: 80px; height: 4px; background: #FFD700; margin-bottom: 32px; }
+.cover-hook { font-size: 28px; font-weight: 600; line-height: 1.4; margin-bottom: 24px; }
+.cover-desc { font-size: 15px; opacity: 0.9; line-height: 1.8; font-weight: 300; max-width: 90%; }
+.cover-bottom {
+  position: absolute; bottom: 25mm; left: 25mm; right: 25mm;
+  display: flex; justify-content: space-between; align-items: end;
+}
+.cover-bottom-left { font-size: 12px; opacity: 0.7; line-height: 1.7; }
+.cover-bottom-right { font-size: 13px; opacity: 0.8; text-align: right; }
+
+/* TOC */
+.toc h2 { font-size: 28px; margin-bottom: 32px; color: #1a1a1a; }
+.toc-list { list-style: none; }
+.toc-item {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 12px 0; border-bottom: 1px dashed #DDD; font-size: 14px;
+}
+.toc-item .num {
+  display: inline-block; width: 30px; height: 30px;
+  background: #C62828; color: #fff; border-radius: 50%;
+  text-align: center; line-height: 30px; margin-right: 12px;
+  font-size: 13px; font-weight: 700;
+}
+.toc-title { flex: 1; font-weight: 500; }
+.toc-page { color: #888; font-size: 13px; }
+
+/* Headings */
+h2.section-title {
+  font-size: 28px; font-weight: 700; color: #1a1a1a;
+  margin-bottom: 8px; position: relative; padding-bottom: 12px;
+}
+h2.section-title::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 60px; height: 3px; background: #C62828;
+}
+h3.sub-title {
+  font-size: 18px; font-weight: 700; color: #C62828;
+  margin: 24px 0 12px;
+}
+h4.mini-title {
+  font-size: 14px; font-weight: 700; color: #1a1a1a;
+  margin: 16px 0 8px;
+}
+p { margin-bottom: 12px; font-size: 13px; color: #333; }
+.lead { font-size: 14px; color: #555; margin-bottom: 24px; line-height: 1.8; }
+
+/* Boxes */
+.box {
+  border: 1px solid #E0E0E0; border-radius: 8px;
+  padding: 20px; margin: 16px 0; background: #FAFAFA;
+}
+.box.highlight {
+  background: linear-gradient(135deg, #FFEBEE 0%, #FFFFFF 100%);
+  border-color: #C62828;
+}
+.box.dark {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #fff; border: none;
+}
+.box.dark h3, .box.dark h4, .box.dark p { color: #fff; }
+.box.amber {
+  background: linear-gradient(135deg, #FAEEDA 0%, #FFF8E1 100%);
+  border-color: #BA7517;
+}
+
+.grid-2 {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;
+}
+.grid-3 {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 16px 0;
+}
+
+/* Pricing Table */
+.pricing-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 13px; }
+.pricing-table th {
+  background: #1a1a1a; color: #fff; padding: 12px 8px;
+  text-align: left; font-weight: 600;
+}
+.pricing-table td { padding: 12px 8px; border-bottom: 1px solid #E0E0E0; vertical-align: top; }
+.pricing-table tr:nth-child(even) { background: #FAFAFA; }
+.pricing-table .price { font-size: 22px; font-weight: 700; color: #C62828; }
+.pricing-table .feature { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+
+/* Stat Cards */
+.stat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0; }
+.stat-card {
+  text-align: center; padding: 20px 12px;
+  background: linear-gradient(135deg, #FFEBEE 0%, #FFFFFF 100%);
+  border-radius: 8px; border: 1px solid #FFE0E0;
+}
+.stat-num { font-size: 32px; font-weight: 800; color: #C62828; line-height: 1; }
+.stat-label { font-size: 11px; color: #666; margin-top: 6px; }
+
+/* Lists */
+ul { padding-left: 20px; margin: 12px 0; }
+li { padding: 4px 0; font-size: 13px; }
+.check-list { list-style: none; padding-left: 0; }
+.check-list li { padding-left: 24px; position: relative; }
+.check-list li::before { content: '✓'; position: absolute; left: 0; color: #C62828; font-weight: 700; }
+
+/* 16 Empowerments Grid */
+.emp-cat {
+  margin: 14px 0 6px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px; font-weight: 700; color: #fff;
+}
+.emp-cat.c1 { background: #1a1a1a; }
+.emp-cat.c2 { background: #2E7D32; }
+.emp-cat.c3 { background: #B26A00; }
+.emp-cat.c4 { background: #C62828; }
+.emp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 10px 0 4px; }
+.emp-card {
+  padding: 12px 10px; background: #FAFAFA; border-radius: 8px;
+  border: 1px solid #F0F0F0;
+}
+.emp-title { font-size: 12.5px; font-weight: 700; margin-bottom: 3px; }
+.emp-desc { font-size: 10px; color: #666; line-height: 1.4; }
+
+/* 3 Month Coaching Timeline */
+.coaching-month {
+  border-left: 4px solid #FFD700; padding: 12px 16px;
+  background: rgba(255,255,255,0.05); border-radius: 6px;
+  margin: 12px 0; color: #fff;
+}
+.coaching-month h4 { color: #FFD700; font-size: 15px; margin-bottom: 6px; }
+.coaching-month ul { list-style: none; padding-left: 0; color: rgba(255,255,255,0.9); }
+.coaching-month li { padding: 2px 0; padding-left: 16px; position: relative; }
+.coaching-month li::before { content: '→'; position: absolute; left: 0; color: #FFD700; }
+
+/* CTA Box */
+.cta-box {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #fff; padding: 32px; border-radius: 12px;
+  text-align: center; margin-top: 24px;
+}
+.cta-box h3 { color: #fff; font-size: 22px; margin-bottom: 12px; }
+.cta-box p { color: rgba(255,255,255,0.85); font-size: 14px; }
+.cta-button {
+  display: inline-block; background: #C62828; color: #fff;
+  padding: 14px 32px; border-radius: 30px;
+  font-size: 15px; font-weight: 600; text-decoration: none; margin-top: 16px;
+}
+
+.print-btn {
+  position: fixed; top: 16px; right: 16px;
+  padding: 12px 20px; background: #C62828; color: #fff;
+  border: none; border-radius: 8px; cursor: pointer;
+  font-size: 14px; font-weight: 600; z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+@media print {
+  .print-btn { display: none; }
+  .page { box-shadow: none; margin: 0; }
+}
+
+.note {
+  font-size: 11px; color: #888; margin-top: 16px;
+  padding: 12px; background: #FFF8E1;
+  border-left: 3px solid #FFA000; border-radius: 4px;
+}
+
+.qa-box { border: 1px solid #E0E0E0; border-radius: 8px; padding: 14px 18px; margin: 12px 0; background: #FAFAFA; }
+.qa-q { font-size: 13.5px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px; }
+.qa-a { font-size: 13px; color: #555; line-height: 1.7; }
+</style>
+</head>
+<body data-page-node-id="L44E2FIsDYhXwWkDG38LYK">
+
+<button class="print-btn" onclick="window.print()" data-page-node-id="ZVxEu1YCBgWdE3GyaPhmsJ">🖨 打印为 PDF</button>
+
+<!-- COVER PAGE -->
+<div class="page cover" data-page-node-id="Q4ATzA3BK4CO5KBQGUfiFR">
+  <span class="cover-tag" data-page-node-id="rkDMILKHwVHXH2n9bnmbVy">2026 限时招募 · 优化版</span>
+  <h1 data-page-node-id="TfBUcEeh6DYsJpm5YD221Y">小红帽<br data-page-node-id="ua0qzcNR2lrdJBvmot2jE1">代理招募<br data-page-node-id="CIPj5fvnsaSN9D0YwpRLEw">手册</h1>
+  <div class="cover-divider" data-page-node-id="ocv0wvvVEzaqQhoSi4XDkR"></div>
+  <h2 data-page-node-id="0Ou1J3UFhKYdnoM5wa6liH">主播创业孵化器 · 合伙人手册</h2>
+  <div class="cover-hook" data-page-node-id="Sx5hEMzCPhFtrryIOqIXw5">
+    月入十万的直播生意<br data-page-node-id="cwlzj0GgUjVUtg8cM05Kn2">
+    我们陪你走完全程
+  </div>
+  <p class="cover-desc" data-page-node-id="DjxgaDGnqjPI2OuTBxofG3">
+    两档挂靠方案 · 净返点 95-97%<br data-page-node-id="t6n4JEqH0VdRIFZM7HiM1j">
+    30 名主播分月交付 · 100 万金豆合同承诺<br data-page-node-id="f5cJIbtNyy7YxZAna9MAOa">
+    3 个月专属陪跑 · 全部写入合同
+  </p>
+  <div class="cover-bottom" data-page-node-id="qTXSp2J9B3VGEnpBoV8gh3">
+    <div class="cover-bottom-left" data-page-node-id="B11BkrwTRFKNhT5U07UdBi">香港小紅帽文化傳媒有限公司<br data-page-node-id="Ck6sRW98nl7zXGhprsQoQQ">安徽小红帽文化传媒有限公司</div>
+    <div class="cover-bottom-right" data-page-node-id="tAPyVoowAPrxfvbxUOadQB">2026年9月<br data-page-node-id="zZlL4ySYVHJE7L5GW5tEfv">仅限意向加盟商</div>
+  </div>
+</div>
+
+<!-- TOC PAGE -->
+<div class="page toc" data-page-node-id="9EC0PVzNAz9M4LdisvChT6">
+  <div class="page-header" data-page-node-id="OCx5nMFA34cusI2tKSOf8h"><span data-page-node-id="Eko5fCycnM5cmLOxEBVnZt">小红帽代理招商手册</span><span data-page-node-id="tF6rY6opdts9RG65ZA4mdh">目录</span></div>
+  <h2 data-page-node-id="1anF4n7TWsQWtRUU2OLw5q">📑 目录</h2>
+  <ul class="toc-list" data-page-node-id="hk63KqWJ1oWywBg5AjQZBh">
+    <li class="toc-item" data-page-node-id="bUOeesFeZkQWzAYTDMhmeG"><span data-page-node-id="iTYtuPdC9FGOM4r3GhrFZ3"><span class="num" data-page-node-id="8a5FLPpMQKdsij23mWx7Ms">1</span><span class="toc-title" data-page-node-id="1IPWzxM9gKMnH8aFEj3RuT">市场机会：为什么是 2026 年的 BIGO 直播？</span></span><span class="toc-page" data-page-node-id="UB7gDafRbBeQaCEbwNv2cr">P3</span></li>
+    <li class="toc-item" data-page-node-id="IdEUujwSdinzqHwOSlQOUT"><span data-page-node-id="yJVha4BKaotivznDLrye78"><span class="num" data-page-node-id="8f2u1HHlRWEV6TthRPurNI">2</span><span class="toc-title" data-page-node-id="cW9q4YGnKUa6CJNLuwnJAe">小红帽介绍：双公司主体 · BIGO 一级代理</span></span><span class="toc-page" data-page-node-id="OwcyFp8YzpTcykSnWBWkHD">P4</span></li>
+    <li class="toc-item" data-page-node-id="k9Fv90lkAsG9F4hJAY24qe"><span data-page-node-id="sjZbp1qP0LD1hAnfjHstcL"><span class="num" data-page-node-id="F2qzFd4Ms8u8Q6qaOorK0b">3</span><span class="toc-title" data-page-node-id="X74IPvYF0w3kWsFAvOaeWM">两档挂靠方案详解</span></span><span class="toc-page" data-page-node-id="hLtgQFXDF5i3A7KaeAdmwt">P5</span></li>
+    <li class="toc-item" data-page-node-id="c8AVYmYr2HchVXrbKQAfaT"><span data-page-node-id="nvVole0m9IfVFAgMQAI6q0"><span class="num" data-page-node-id="FRo1tZqtDOcQEeZyHP6BLW">4</span><span class="toc-title" data-page-node-id="AJbRt3hAn8C84FFHOeJCyI">【独家】3 个月陪跑扶持计划</span></span><span class="toc-page" data-page-node-id="NBAvoneGzsbZyJu6l2rxhI">P6</span></li>
+    <li class="toc-item" data-page-node-id="E0gh80Mq01mFZ9IIyt2aw3"><span data-page-node-id="HqYRdonh5bpy0y5ua9oQyF"><span class="num" data-page-node-id="6AoecYr9mXSBT71BqnudFE">5</span><span class="toc-title" data-page-node-id="UQaDRtE8cujGHl0vhOQoi4">16 项独家赋能（公司全维度孵化）</span></span><span class="toc-page" data-page-node-id="imce9gPmRvg7MykACCwV4y">P7</span></li>
+    <li class="toc-item" data-page-node-id="9wKaUl0mU01qTriHKEH1KJ"><span data-page-node-id="wTNxoRBNZrBsh65g7Qk6Ax"><span class="num" data-page-node-id="8Zbpwq8S0GUe91fAJM2JBF">6</span><span class="toc-title" data-page-node-id="6tj2IeHJ2BQk9051e3ExlS">老加盟商带新加盟商：推荐与孵化机制</span></span><span class="toc-page" data-page-node-id="WZUqs090ZzSjFxiC5oGwH5">P8</span></li>
+    <li class="toc-item" data-page-node-id="QE445NC3mJrG5BlNrGvXFG"><span data-page-node-id="hiAWIO9zzSXIsCDzskODCU"><span class="num" data-page-node-id="QnEWzH6Xk8ZyQJWuyDcWPn">7</span><span class="toc-title" data-page-node-id="KRHSdtN1eGHjy6mJOXC0ze">结算保障：5 大承诺写入合同</span></span><span class="toc-page" data-page-node-id="HIYSm3b5rNTvVpZSS6gkHS">P9</span></li>
+    <li class="toc-item" data-page-node-id="I5miMAdVwXKVW3eG9WNMtl"><span data-page-node-id="5wv3QCOrfGzNwYg0Bk6lQY"><span class="num" data-page-node-id="kNYzm4McuksmdgicryDBsL">8</span><span class="toc-title" data-page-node-id="3iM1KYrIbl3159vmy2xwla">常见疑问 Q&amp;A</span></span><span class="toc-page" data-page-node-id="UEB9PzxErjnXYMffwv0Kof">P10</span></li>
+    <li class="toc-item" data-page-node-id="dEsmeSPZ9q0HjrPdYDS8gF"><span data-page-node-id="4XhGIw76U8J2RKpQCzCAxo"><span class="num" data-page-node-id="jGiKZUmEQoZ5G2bun78Jjj">9</span><span class="toc-title" data-page-node-id="USGrclcb6zqqVzv5bV9m2F">结语：把承诺写进合同</span></span><span class="toc-page" data-page-node-id="NhALDe45vjxCp0yYYKZ6wy">P11</span></li>
+  </ul>
+  <div class="page-footer" data-page-node-id="c3e91m61uhs8hw6HqEGazG"><span data-page-node-id="74xxAxHG7REB4OkFXn7FtM">小红帽文化传媒 · 港皖双主体</span><span data-page-node-id="mn4VTC4OAiAhGd08DjmBa1">P2 / 11</span></div>
+</div>
+
+<!-- PAGE 3: 市场机会 -->
+<div class="page" data-page-node-id="9qovB8SHKAKJTfhJZDVYP5">
+  <div class="page-header" data-page-node-id="abQULUxff91G7RwzK7oQwf"><span data-page-node-id="iSolQOzEF22S0MxmvwsxjQ">第一章 · 市场机会</span><span data-page-node-id="aQ9DU6yXBWHQ65uPRLbLCI">小红帽代理招商手册</span></div>
+  <h2 class="section-title" data-page-node-id="q2K3f8GnGHm6YTJB7jXYPc">市场机会：为什么是 2026 年的 BIGO 直播？</h2>
+  <p class="lead" data-page-node-id="CCLwVCd0HW3wFI9Fp11ylw">国内直播已经进入存量博弈，海外直播正处红利期。BIGO Live 是全球海外直播的最大机会窗口——而 2026 年，华语区市场大扩容 + 主播资源大迁移，入场窗口已经打开。</p>
+  <div class="stat-cards" data-page-node-id="RSPqujdFAKwxhDGF6l8Ivk">
+    <div class="stat-card" data-page-node-id="W5GeE83JZRd4rkWwapSWpg"><div class="stat-num" data-page-node-id="i3AQBGsAJxy9iFYKXqrr5H">5亿+</div><div class="stat-label" data-page-node-id="7hMnA7sL1KfKqYfBStbvfL">全球月活用户</div></div>
+    <div class="stat-card" data-page-node-id="NRsPdtkBiaMGUcWeUoG3ht"><div class="stat-num" data-page-node-id="scAJlKVRHIadq6rnWCdzpx">150+</div><div class="stat-label" data-page-node-id="jJxogoXQcBVyj2TMf5YmmR">覆盖国家/地区</div></div>
+    <div class="stat-card" data-page-node-id="VP6IOLw75bqFpMtafKGcCT"><div class="stat-num" data-page-node-id="L3cJ0uG3FBsbxukGCvUlS6">16+</div><div class="stat-label" data-page-node-id="MtIUmGpVoff5uHrRZ3eOTa">华语区新增国家/地区</div></div>
+    <div class="stat-card" data-page-node-id="BVSmNpXA3hXu0rKTmRsZ9w"><div class="stat-num" data-page-node-id="aaJ0cBZjmNrRR8fZS92NgP">97%</div><div class="stat-label" data-page-node-id="ZaMI90quMKY2xRKbl4DRn5">加盟商最高净返点</div></div>
+  </div>
+  <h3 class="sub-title" data-page-node-id="OT4WDkwuGyMXBsHfaauM0t">为什么是 2026 年的最佳时机？</h3>
+  <div class="grid-2" data-page-node-id="PFO3aKmtvCICDtIil961EL">
+    <div class="box" data-page-node-id="PNy3YazzWNmTwwJpFxu25l"><h4 data-page-node-id="3jHpbsAuVzdmgnjV5bzqeZ">🌍 华语区大扩容</h4><p data-page-node-id="03gDfF8WC321mI8SAUS7Ux">新加坡、马来西亚、文莱、美国、加拿大、日本、韩国、澳大利亚、新西兰、英国、法国、德国、意大利、北欧、西班牙、葡萄牙等 <b data-page-node-id="16IEa4a9BEVZGJq8el2CJR">16+ 国家/地区纳入华语区</b>。语言零障碍、流量新蓝海，国内成熟的娱播打法可直接平移。</p></div>
+    <div class="box" data-page-node-id="ZIWRhmZ47b4JcSblDl17al"><h4 data-page-node-id="BbIiNEXBN9ZDsFsQ7IhZCD">🚀 主播红利期</h4><p data-page-node-id="DWgF4MZ8wv7rHqLRbOEslS">TK 美区封禁大陆市场，海量成熟主播转入 BIGO。<b data-page-node-id="wOdvlIYgFYNBCH8d5gYAGI">主播供给充足，招主播更容易、起量更快</b>，正是组建公会、搭建团队的最佳窗口。</p></div>
+    <div class="box" data-page-node-id="F5wvlcwAhey1PxeX1t2MmT"><h4 data-page-node-id="TDkYUGLBlfXvvO2UD7gNPS">💵 海外付费生态</h4><p data-page-node-id="6wIikyJF8pEC9wKyc01NDk">海外用户小费文化成熟、付费意识强，<b data-page-node-id="vjVeSFbouAMb8BySsLpa4b">美金结算、提成高</b>；没有熟人社交圈，"附近的人"不尴尬；市场不内卷，<b data-page-node-id="wZYMLmX1V3X2CmF9rNl4Or">新主播更好播、更容易赚到钱</b>。</p></div>
+    <div class="box" data-page-node-id="qO9CgiSVGdA6X6dNI5UrHv"><h4 data-page-node-id="RnOTiKznLNnwcRoaFygsJP">📈 平台流量扶持</h4><p data-page-node-id="iEZZpIoCv0FpQhoCUUe7KF"><b data-page-node-id="BOxo2Tkq9YpU1cNZKuR3AW">3 个月流量保护期，首月保底 20 万曝光，新人主播 300% 流量加权</b>；叠加新主播三月扶持、代理扶持等平台政策，冷启动成本大幅降低。</p></div>
+  </div>
+  <h3 class="sub-title" data-page-node-id="BvANl6pMJ5jpcydv4bmgpe">小红帽的差异化定位</h3>
+  <div class="box highlight" data-page-node-id="n0sfTjE08djADCUS6DuABF">
+    <p data-page-node-id="DOR25q9SUJZJ7Kq0nG2A4O"><b data-page-node-id="DvpN5ZiwhAfMgpuV2ZLqEb">别人卖"挂靠资格"，我们卖"能落地的结果"——</b></p>
+    <p data-page-node-id="Y686KU4CTr4XLCnylAWoKZ">30 名新主播分月交付、100 万金豆月收益承诺、3 个月运营经理 1 对 1 陪跑，<b data-page-node-id="ttfCuU86zxYcx4lUxIPA2L">做不到就追加一个月，全部白纸黑字写入合同</b>。我们不是收钱放养的公会，是陪你把一家直播公司从 0 做到盈利的孵化器。</p>
+  </div>
+  <div class="page-footer" data-page-node-id="GTWXp6ShAVZ2EJWuYjprpW"><span data-page-node-id="blInyGjVItCuTZbg0n2Ewj">小红帽文化传媒 · 港皖双主体</span><span data-page-node-id="nEO8cKXDQ57QWXGhP1cqup">P3 / 11</span></div>
+</div>
+
+<!-- PAGE 4: 小红帽介绍 -->
+<div class="page" data-page-node-id="rZWnbWL8B8braDcyRM0U2h">
+  <div class="page-header" data-page-node-id="lxHLEbPlffFhzTytkTIAFY"><span data-page-node-id="o94oYlkBRxRXRBQ7Fxj6ob">第二章 · 小红帽介绍</span><span data-page-node-id="kG5JNdKcWRyX5vZlyC5iU2">小红帽代理招商手册</span></div>
+  <h2 class="section-title" data-page-node-id="J7BqDJ1XJNrJmnpNH84Lqw">小红帽介绍：双公司主体 · BIGO 一级代理</h2>
+  <p class="lead" data-page-node-id="gy3rwh8jTGQubBc8HET0oF">小红帽文化传媒由香港、安徽双公司主体构成，是 BIGO Live 官方认证的一级代理（母公会）。以公司化、体系化方式运营海外直播业务，面向全国招募加盟代理。</p>
+  <h3 class="sub-title" data-page-node-id="sdzHqEklr7fAmhkE4Ma9C2">🏢 双公司架构</h3>
+  <div class="grid-2" data-page-node-id="Bl8LuGZM91bgtJoJTLNSx0">
+    <div class="box" data-page-node-id="IOs1BUpJKrFuWeW5MHG25q"><h4 data-page-node-id="BmRsaPhCOeZEUb55RRf6BE">香港小紅帽文化傳媒有限公司</h4><p data-page-node-id="K76CYMmMbBVH01HFrnJ1d4"><b data-page-node-id="Q5sjO2AAKjCPTwSsw7QB9x">海外业务主体</b><br data-page-node-id="0syERhhHJ9cmc20pZ5zMNA">国际结算、跨境运营、海外市场拓展</p></div>
+    <div class="box" data-page-node-id="EfpxeosefjftyjswYHBWrM"><h4 data-page-node-id="hSsqMcAcmFim5yuWreCg1X">安徽小红帽文化传媒有限公司</h4><p data-page-node-id="iwWvEkPnEChFdSXptLzTP4"><b data-page-node-id="yR9EbA5sZgOhm95G6YfgGs">国内运营主体</b><br data-page-node-id="CvmmOSCdjEwNzJCz5zItmm">主播招募、运营孵化、招商服务</p></div>
+  </div>
+  <h3 class="sub-title" data-page-node-id="JATHC45Wrj8sW18jkv2uc9">🏆 平台资质</h3>
+  <div class="box highlight" data-page-node-id="VvAFFrFNemHK1nGC9eSiIE">
+    <h4 data-page-node-id="W7AwNYDBzNs8AoVpPuNIHH">BIGO Live 一级代理 · 母公会</h4>
+    <p data-page-node-id="DF31GEDF05cCJfNUYU57Fw">直接对接平台资源，享受一级返点、流量扶持与代理扶持政策，加盟商在体系内享有母公会级别的资源调度能力。</p>
+  </div>
+  <h3 class="sub-title" data-page-node-id="OGQkl7IrW3UKcBMyq6AjG0">🏛 公司化运营体系</h3>
+  <ul class="check-list" data-page-node-id="1XhqwccRbCdCz30Kue6ABC">
+    <li data-page-node-id="kwoAuQ4eqimMCSXcA4lGwH"><b data-page-node-id="1aqNuzGI3fc1wIQVulLo1c">总经办负责制</b> —— 公司决策与资源统筹，非个人工作室模式</li>
+    <li data-page-node-id="ADA8MGLTMMw1HK1SHsXECA"><b data-page-node-id="IlUzHkODQEbMO25coClOsv">运营中心</b> —— 主播孵化、日常运营、流量增长</li>
+    <li data-page-node-id="5encYLXEM8L1Lm8fQbNszg"><b data-page-node-id="9GtYRDvJBzdZiDXPiLEtoA">法务合规部</b> —— 合同、内容合规、跨境结算支持</li>
+    <li data-page-node-id="67FTAMFHlsYOWBeq4ScCh6"><b data-page-node-id="gdlWWp4miM7GUpWfuBK0uv">数字化研发中心</b> —— 小红帽 OA 办公系统、数据看板</li>
+  </ul>
+  <h3 class="sub-title" data-page-node-id="9LbOATuexEA6xTLlS9bIMx">✅ 我们的核心优势</h3>
+  <ul class="check-list" data-page-node-id="J6XjPbqaiwxquHTVDzvvEE">
+    <li data-page-node-id="Vi75u5nP89jrC0UdzmWrF1"><b data-page-node-id="BmTIML7mBvjOnoD3vAb3D7">双公司主体</b> —— 港皖两地工商主体，长期经营、主体可查</li>
+    <li data-page-node-id="8Ou9nyIQ4vPeWYBAQW9aba"><b data-page-node-id="9bZNcXnhuiBlEEEYMo1Xb6">一级代理/母公会</b> —— 直接享受平台一级政策、流量与代理扶持</li>
+    <li data-page-node-id="amprCNK6eilyTywhw3uoDl"><b data-page-node-id="eojTcU8iXMWJrz0uFZHIyP">合同化交付</b> —— 30 名主播交付、100 万金豆目标、T+7 结算全部写入合同</li>
+    <li data-page-node-id="iwIjnJgHXiILVFdYZvxreo"><b data-page-node-id="BabXOR7rWxTU1dKCbv7AhC">公司全维度孵化</b> —— 从个体户到标准化传媒公司全流程带教</li>
+    <li data-page-node-id="4aCLehfHjkzkdvaiZJPC98"><b data-page-node-id="fMhG4WOk15N0BDpehRdPtv">数字化运营体系</b> —— OA 办公系统 + 数据看板，主播/流水/结算一体化管理</li>
+  </ul>
+  <div class="page-footer" data-page-node-id="zOpuDiBe6kTAafjykSahPk"><span data-page-node-id="uzLb9oWSDZZ8PhGhZSwWUk">小红帽文化传媒 · 港皖双主体</span><span data-page-node-id="C3N1KQFdFJ2SB0nfSHFIav">P4 / 11</span></div>
+</div>
+
+<!-- PAGE 5: 两档挂靠方案 -->
+<div class="page" data-page-node-id="BpagyFOJpBurG12D7tpbWd">
+  <div class="page-header" data-page-node-id="cCM52WSmBFiBAf2oQWAJb1"><span data-page-node-id="K8TC2Kb5Cpfw5vuitSZ3nj">第三章 · 两档挂靠方案</span><span data-page-node-id="WXhLqYpGS5ozg4xlzKzaA7">小红帽代理招商手册</span></div>
+  <h2 class="section-title" data-page-node-id="eDF1BACPQ3D02vIRO7SY9Y">两档挂靠方案详解</h2>
+  <p class="lead" data-page-node-id="GdCshyM9gf2V7mE68MYFAy">两档可选，3 个月陪跑 + 16 项赋能 + 公司孵化全部一致，核心承诺全部写入合同。</p>
+  <table class="pricing-table" data-page-node-id="RQpiqRBiRzxefzvAJsqn2k">
+    <thead data-page-node-id="qucpMyJkiWpbaPMYUfQduJ">
+      <tr data-page-node-id="Bve9ANAR2QDFaFTYhaqAbt">
+        <th style="width: 18%;" data-page-node-id="nHA6LCICrj9JM7UPxNDcPr">对比项</th>
+        <th style="width: 41%;" data-page-node-id="JxYKv8XHcah8yYoNrQ74QX">方案 A · 启航版</th>
+        <th style="width: 41%;" data-page-node-id="a4AVZmXeQhtKisU4qblJ4Y">方案 B · 旗舰版</th>
+      </tr>
+    </thead>
+    <tbody data-page-node-id="pyAcaMe5Fs3ZEAYb5qP2gE">
+      <tr data-page-node-id="j61boAeJGabO1vHSM4ZBV7">
+        <td data-page-node-id="R9T9V7us8T3Ou2lfj0nEEJ"><b data-page-node-id="RXFyOLq5PcRu7TGlsAC2zF">挂靠费</b></td>
+        <td data-page-node-id="4aIH3yOQcepIWr0vJnJDtT"><span class="price" data-page-node-id="DylXaAsXYxlqsx2CLq8IVB">¥29,800</span><br data-page-node-id="X2g0IqDp1rcPnBFZSgJY80"><small style="color:#888;" data-page-node-id="rHJJ9OkJn5CbUarpl1UrHQ">一次性</small></td>
+        <td data-page-node-id="GJ3HfDFaD6d2y816HNNx10"><span class="price" data-page-node-id="FCGkNNscGE0sNBRo88yOEe">¥49,800</span><br data-page-node-id="uHfD1cReYY57vKohHlYLIz"><small style="color:#888;" data-page-node-id="SdOiCjcPNyWFjZrkN1oX8a">一次性</small></td>
+      </tr>
+      <tr data-page-node-id="5wfmBQR0f7BV8NKOwcHA6e">
+        <td data-page-node-id="1NQMXbaF0QZFZNtJ7pXXJf"><b data-page-node-id="djulWvrWASYI7QGiStG7ju">佣金分成</b></td>
+        <td data-page-node-id="mRVDU5viWG4wWfBMYXKdU7"><span class="feature" data-page-node-id="dogyavCMK2deEmlKY0mEkU">95%</span><br data-page-node-id="y1aw8zzxUsvhH4ckNgFQ4f"><small style="color:#888;" data-page-node-id="D82iFo1w27Xnx0KmdhUUfJ">永久锁定</small></td>
+        <td data-page-node-id="SDi1gBE2jHBe6dJODhmz55"><span class="feature" data-page-node-id="8bWd2FfA0ICES6lT36KdD2">97%</span><br data-page-node-id="kN9duSONllE9Zgcsl9kZ03"><small style="color:#888;" data-page-node-id="GIGGGhH4cOOZvy8KhPUVh4">永久锁定</small></td>
+      </tr>
+      <tr data-page-node-id="38MaaDVcIqaqnIZJN9fdMC">
+        <td data-page-node-id="jmwhcVAhKMOj5ZSno6aHWA"><b data-page-node-id="eQQycrWHHzIWhPCml9EYKk">3 个月陪跑</b></td>
+        <td data-page-node-id="MhWZon1FOCazn1Bo27A1Py">✅ 全程陪跑扶持</td>
+        <td data-page-node-id="3dewy5LsLLI2kvTET7BjJd">✅ 全程陪跑扶持 + 优先资源</td>
+      </tr>
+      <tr data-page-node-id="c6A5ppWpmQLb5kjyjfiXw8">
+        <td data-page-node-id="ySdGV9C7nwJzmBrgoTBaFl"><b data-page-node-id="dqmzjqy5oVHvi40GStpnxr">16 项独家赋能</b></td>
+        <td data-page-node-id="eqPtIzPiF22HJWX5mY3nmZ">✅ 全部交付</td>
+        <td data-page-node-id="lD1Qfuf1ihpKLOPt1XEzAG">✅ 全部交付 + 优先响应</td>
+      </tr>
+      <tr data-page-node-id="eydk4cR7RmYrMjUh13OFpg">
+        <td data-page-node-id="wGfdI8vX2hdmsCL4ML7oE7"><b data-page-node-id="pM2Vvo4c5rSJn3RnFjZpln">公司全维度孵化</b></td>
+        <td data-page-node-id="ALvj2awTkef661IxNhSjQi">✅ 标准孵化</td>
+        <td data-page-node-id="1ELa7D5GjMP9pAcWCHwFhA">✅ 深度孵化（多 2 项）</td>
+      </tr>
+      <tr data-page-node-id="AHsPD18lMrg2EspcVhSC2D">
+        <td data-page-node-id="hbEArzcZKWXJqDlm5ScJG3"><b data-page-node-id="ZKFxH56mUQHtYeXI266LBe">主播交付</b></td>
+        <td data-page-node-id="j85AcgVnY9hCqlh4IvL6LP">✅ 30 名主播分月交付（写入合同）</td>
+        <td data-page-node-id="u5TawVrYfBxe2VchdFlpW7">✅ 30 名主播分月交付 + 优先调度</td>
+      </tr>
+      <tr data-page-node-id="YGVo3r6DF07EgTHPPlR6lr">
+        <td data-page-node-id="uBGVceKicFbgcwVTMddGvd"><b data-page-node-id="FCgNPFGAU4ZQbO8G2MS0Am">收益承诺</b></td>
+        <td data-page-node-id="wlcECjvWWN5ieGQ41YW3s2">✅ 100 万金豆目标（写入合同）</td>
+        <td data-page-node-id="oJgEFDOs1dze3iiZcAEoF0">✅ 100 万金豆目标（写入合同）</td>
+      </tr>
+      <tr data-page-node-id="36L2gBltBSKRgblwEyfaCb">
+        <td data-page-node-id="ENusljbvPpjJ6ydGgS2vfV"><b data-page-node-id="xJ9qP8on8zi63jALGGwDoI">适合谁</b></td>
+        <td data-page-node-id="EAFQuPcrPUlGqHaHQxP7AT">个人/初创工作室</td>
+        <td data-page-node-id="3YmUkJfa5qtv0cEQQs0Rw9">已有团队的直播公司</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="note" data-page-node-id="UDJPMcVTRfWMH6biJu95kW">💡 <b data-page-node-id="3wPSUjB61NgTsFxAFePkS3">总经办建议</b>：预算紧 → 方案 A；想放大利润 → 方案 B。两个方案的 3 个月陪跑 + 16 项赋能 + 公司孵化 <b data-page-node-id="KRWwJslldfE3m4bMubYPE6">全部一致</b>，核心承诺同样写入合同。</div>
+  <div class="page-footer" data-page-node-id="EOBp403k2pmk73E8fA1h5x"><span data-page-node-id="GnU7xNDWuMeU7r48ZHmkct">小红帽文化传媒 · 港皖双主体</span><span data-page-node-id="DS6B1f6smxxKmt3P0hhXDn">P5 / 11</span></div>
+</div>
+
+<!-- PAGE 6: 3 个月陪跑 -->
+<div class="page" data-page-node-id="nYxxKxfD3XtmNrghgnTB1U">
+  <div class="page-header" data-page-node-id="6dsHCEBriEBdiWbQbWEI32"><span data-page-node-id="ANO475mwoU9DnKYHzLSr2x">第四章 · 3 个月陪跑</span><span data-page-node-id="SIgzk1MekrXQL3v6EDbUHl">小红帽代理招商手册</span></div>
+  <h2 class="section-title" data-page-node-id="f0ZhzTCRAPzRh2nn6kZvTL">【独家】3 个月陪跑扶持计划</h2>
+  <p class="lead" data-page-node-id="5q4X38WMdK2ECbgbU2mWM1">解决你最大顾虑：交了钱赚不到收益怎么办？没人管怎么办？</p>
+  <p data-page-node-id="Cc63eNp9dvwdn2xR6yTdTA">配备 <b>专属运营经理 1 对 1 全程带教</b>，3 个月定向孵化，目标扶持加盟商做到月收益 <b data-page-node-id="GuAt0mTxZTMUncgqsaKEuu">100 万金豆</b>。承诺写入合同，未达成追加一个月陪跑。</p>
+  <div class="box dark" data-page-node-id="a3F7p9TERIZRdYfzEuFrXE">
+    <h3 data-page-node-id="8AOFKgAAvVyeft4Co3LTqS">📋 3 个月分月交付</h3>
+    <div class="coaching-month">
+      <h4>第 1 月 · 基础筑基 + 首批交付</h4>
+      <ul>
+        <li>🎯 本月目标：跑通"招聘 → 签约 → 开播"第一条完整链路</li>
+        <li>交付首批 10 名新主播（可能含老主播），签约落地</li>
+        <li>行业认知：BIGO 平台规则、海外直播生态、华语区市场打法</li>
+        <li>招聘落地：招聘渠道、招聘话术、面试筛选</li>
+        <li>签约合规：主播合约签署、后台开通、结算流程</li>
+        <li>开播实操：设备调试、场景搭建、首播带教</li>
+      </ul>
+    </div>
+    <div class="coaching-month">
+      <h4>第 2 月 · 运营管理 + 批量交付</h4>
+      <ul>
+        <li>🎯 本月目标：掌握直播公司的日常运营与团队管理体系</li>
+        <li>交付第二批 10 名新主播，累计 20 名</li>
+        <li>主播运营：开播排班、场控话术、数据复盘</li>
+        <li>团队管理：考勤奖惩、主播激励、管理制度落地</li>
+        <li>公司运营：OA 系统实操、流水核算、成本利润管理</li>
+        <li>流量方法：300% 流量加权落地 + 首月 20 万曝光打法</li>
+      </ul>
+    </div>
+    <div class="coaching-month">
+      <h4>第 3 月 · 冲刺流水 + 招商营销</h4>
+      <ul>
+        <li>🎯 本月目标：月收益冲刺 100 万金豆，具备独立运营与复制扩张能力</li>
+        <li>交付最后 10 名新主播，累计满编 30 名</li>
+        <li>流水冲刺：100 万金豆冲刺方案、付费用户运营、活动打法</li>
+        <li>网络营销：短视频/社媒引流、主播 IP 包装、私域运营</li>
+        <li>招商复制：老带新推荐机制、孵化下线加盟商的方法</li>
+        <li>财税合规：账务处理、收入报税、跨境结算合规</li>
+      </ul>
+    </div>
+    <div class="coaching-target" style="text-align:center; margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.1); font-size:14px; font-weight:500; color:#fff;" data-page-node-id="BFD8PAUXnDqjE9ZqNzgSGh">
+      🎯 目标：自签约次月起考核，3 个月陪跑期满，扶持月收益达到 <strong style="color:#FFD700;" data-page-node-id="Kxo2HLHy7V0XNy5HrUV90M">100 万金豆</strong>；未达成 <strong style="color:#FFD700;" data-page-node-id="SCSUrDOHdEu9pCR094RaEe">追加一个月陪跑</strong>（不另收费），写入合同。
+    </div>
+  </div>
+  <h3>4 大落地资源</h3>
+  <ul class="check-list">
+    <li><b>专属运营经理 1 对 1 带教</b> —— 全程跟进，每月目标拆解与复盘</li>
+    <li><b>主播批量交付保障</b> —— 3 个月 30 名分月交付，写入合同</li>
+    <li><b>流量与流水增长打法</b> —— 加权落地、曝光执行、冲刺方案</li>
+    <li><b>公司全体系孵化</b> —— 招聘、制度、财税、法务全维度（详见下页）</li>
+  </ul>
+  <div class="page-footer" data-page-node-id="NAw0DeBoDLBu8dBNZci2E8"><span data-page-node-id="9mAcR3zyPHgTRD7A1rg61S">小红帽文化传媒 · 港皖双主体</span><span data-page-node-id="dSRakjFR5wC0aU3X5Qev9y">P6 / 11</span></div>
+</div>
+
+<!-- PAGE 7: 16 项赋能 -->
+<div class="page" data-page-node-id="TcwoU8tlATUmiSsxQISGuy">
+  <div class="page-header" data-page-node-id="WIuOtsrbmHeoe88g4wyrKi"><span data-page-node-id="tO0oIcU7tvPX3oLVRgNnaz">第五章 · 16 项独家赋能</span><span data-page-node-id="nEu5tNTmunIQOnEcASvbrK">小红帽代理招商手册</span></div>
+  <h2 class="section-title" data-page-node-id="XOngxYKjKlIzt4wS936AnB">16 项独家赋能（公司全维度孵化）</h2>
+  <p class="lead" data-page-node-id="GviZ1sCrfpwnrqZ6CYKEu3">这是其他公会给不了的"创业基础设施"：教方法、给系统、做孵化。加盟后立刻生效，全程不额外收费。</p>
+
+  <div class="emp-cat c1" data-page-node-id="GsKZKLF6a3zF4iPw2G4Rxo">🟦 法务体系（4 项）</div>
+  <div class="emp-grid" data-page-node-id="G8Di8PKeElUePUQXIf37Q4">
+    <div class="emp-card" data-page-node-id="NwBjtHKF1Vknn0jB5rqqb8"><div class="emp-title" data-page-node-id="hx5dpbQQKUF9rzXYNlC12J">1 加盟合同审阅</div><div class="emp-desc" data-page-node-id="aXYNVSd3EFHhqC0BwvxpdI">法务级版本，写入合同，省 5,000+ 元律师费</div></div>
+    <div class="emp-card" data-page-node-id="g7tgMv2kY5jHDjimHRcpLC"><div class="emp-title" data-page-node-id="cS20rVxjDuOPgHq1OPl09G">2 主播合约模板</div><div class="emp-desc" data-page-node-id="52NlFs11PAoBp5yRYfpCHX">统一签约文本，解约/违约/结算条款齐备</div></div>
+    <div class="emp-card" data-page-node-id="GrCG5ID5Lxv7ciGtME10xU"><div class="emp-title" data-page-node-id="t4g2A7cG5y6kCSBiqtE1H9">3 内容合规审查</div><div class="emp-desc" data-page-node-id="XQcl7mXVal0bRQyH43o4Pf">涉政/涉黄/涉暴风险预警，开播零踩线</div></div>
+    <div class="emp-card" data-page-node-id="y50imSvzuOwQcGEgTmDik5"><div class="emp-title" data-page-node-id="x69m4n1brG1iPEf0w7cYe8">4 跨境结算合规</div><div class="emp-desc" data-page-node-id="qjaBSojztThX4fvYJB1gHe">出金/换汇/税务申报咨询，资金安全合规</div></div>
+  </div>
+
+  <div class="emp-cat c2" data-page-node-id="HvGQZQSTzwJlQxqzlo70Ej">🟩 系统与方法（4 项）</div>
+  <div class="emp-grid" data-page-node-id="DuP52p83UtBlbt5jBaLTc6">
+    <div class="emp-card" data-page-node-id="7SdZkZyiDlanbRULn6gpcV"><div class="emp-title" data-page-node-id="6oXR7CpFHGn9HSbgUIvAB1">5 小红帽 OA 办公系统</div><div class="emp-desc" data-page-node-id="dJsCE5ySM9OfK1S1e8o341">主播/流水/结算一体化管理，业内少有开放</div></div>
+    <div class="emp-card" data-page-node-id="Am4MCQS2TzAOlvU3RvfShQ"><div class="emp-title" data-page-node-id="Wh3elXXAfYp6HOJriuFIJY">6 流量运营方法论</div><div class="emp-desc" data-page-node-id="9jEr9SAaLGVbyMB09BJxFS">新主播 300% 流量加权 + 首月 20 万曝光落地打法</div></div>
+    <div class="emp-card" data-page-node-id="avl6GEwrHqT35ExLO6lXy7"><div class="emp-title" data-page-node-id="Ka548cQD2zYG5S9xfQldRD">7 数据看板</div><div class="emp-desc" data-page-node-id="QFviI012d721nD4JcqQr1O">活跃度/流水预测/留存率多维分析</div></div>
+    <div class="emp-card" data-page-node-id="nCbZTu7rAqMNl3RPlVr9Zl"><div class="emp-title" data-page-node-id="791UIHMPHKGe6LxmmEmmbV">8 运营 SOP 库</div><div class="emp-desc" data-page-node-id="pqCCFWyAxSVTefu2ZIS9Qs">开播规范/场控话术/转化技巧标准化流程</div></div>
+  </div>
+
+  <div class="emp-cat c3" data-page-node-id="79q0eCkj9Rv7hoZwvK8Rpi">🟨 公司化孵化（4 项）</div>
+  <div class="emp-grid" data-page-node-id="VuGPLCOwzXOD9yXtE1UuI9">
+    <div class="emp-card" data-page-node-id="VYIlYU90j4XXaFJfR0Dy8V"><div class="emp-title" data-page-node-id="F7wgAJpEdQCdX8mkwxISZg">9 招聘体系</div><div class="emp-desc" data-page-node-id="Lw73vlgGlaVhBA2mwfxABu">招聘话术/渠道/面试筛选 SOP</div></div>
+    <div class="emp-card" data-page-node-id="Ig0fC8uyU9zwrVmCHQOoLR"><div class="emp-title" data-page-node-id="W0XsDwTUFDTuH11eR3Ip5D">10 管理制度</div><div class="emp-desc" data-page-node-id="9zpCb6gcAanDzxtmq5YUHu">主播管理/考勤/开播规范/奖惩体系</div></div>
+    <div class="emp-card" data-page-node-id="Az8N94IIjokOdpzNftnira"><div class="emp-title" data-page-node-id="ovPNbblHZEOShu5uP1IFkd">11 财税合规</div><div class="emp-desc" data-page-node-id="7HVA9FPAcRv7wWr1UcZjMI">账务处理/收入报税/佣金发放合规</div></div>
+    <div class="emp-card" data-page-node-id="zGQ4RFUJobwsruqV1AA9yE"><div class="emp-title" data-page-node-id="pErOZ7bBsXD1ISpByrztP8">12 法务风控</div><div class="emp-desc" data-page-node-id="5AcU8uvYUN8oXrhBYgXV8c">平台纠纷/退豆争议/申诉支持</div></div>
+  </div>
+
+  <div class="emp-cat c4" data-page-node-id="bTkj4qBphgn0OFnAq1RpNa">🟥 资源与市场（4 项）</div>
+  <div class="emp-grid" data-page-node-id="d3qTDEHg02DgJcR9YDaBhO">
+    <div class="emp-card" data-page-node-id="Zb2NUViz3Oo7159G9xAGsI"><div class="emp-title" data-page-node-id="WqGQxZBpGJXz3aQhGgiCJa">13 品牌背书</div><div class="emp-desc" data-page-node-id="f1Okyk4CtzgiG0X52l4yi7">双公司主体 + BIGO 一级代理/母公会资质</div></div>
+    <div class="emp-card" data-page-node-id="HIfAKB4WkllC7obPXuWJ9w"><div class="emp-title" data-page-node-id="KAj5qWrIeePxEbBxRjpevB">14 主播人才池</div><div class="emp-desc" data-page-node-id="XAFigXWN9gFwGAu54AhE8A">公会内部主播资源互通，跨区域调配</div></div>
+    <div class="emp-card" data-page-node-id="bPCQICHlRNuR5v329mkJsU"><div class="emp-title" data-page-node-id="4nhCXiAW57th6b0JRZKGHk">15 行业培训课</div><div class="emp-desc" data-page-node-id="avkHsopQCiWFfNaGSD8jEl">直播技巧/话术/合规/管理实战课程</div></div>
+    <div class="emp-card" data-page-node-id="ELcZmN1AAYdRipMBEdykow"><div class="emp-title" data-page-node-id="z1xKclAAIpoWt7Zpo6Rnib">16 华语区多国运营支持</div><div class="emp-desc" data-page-node-id="pmqWGsdrEx6XfXrbnXHGRN">16+ 新增华语区市场的运营经验与政策解读</div></div>
+  </div>
+  <div class="page-footer" data-page-node-id="6Vj2T6SvdfGAICAYN9AURD"><span data-page-node-id="kr6IWhZ77K6lljxUi52nd1">小红帽文化传媒 · 港皖双主体</span><span data-page-node-id="sQQGn5V5dX3SwlCoBCIbyi">P7 / 11</span></div>
+</div>
+
+<!-- PAGE 8: 老带新机制 -->
+<div class="page" data-page-node-id="R9BPSqsSDGavcjBJ0qCuqD">
+  <div class="page-header" data-page-node-id="1q668gM78UXSlJm3pdYkxK"><span data-page-node-id="pjmJTGwshALaRkLcDC11ZB">第六章 · 老带新机制</span><span data-page-node-id="gTXXLApt9E6HXabKqWZtFl">小红帽代理招商手册</span></div>
+  <h2 class="section-title" data-page-node-id="oBITAMz95Yw0ZGCv8KWXgt">老加盟商带新加盟商：推荐与孵化机制</h2>
+  <p class="lead" data-page-node-id="Z2lM9UkzzUZfeXVk5uJPGg">老加盟商可以推荐并孵化新加盟商。三种合作方式，让老加盟商的资源、经验和体系持续变现。</p>
+  <table class="pricing-table" data-page-node-id="ZzfmYEMGQ93F1mpqvg6Xbh">
+    <thead data-page-node-id="2kCPxF69Hx5tlbX5mTx4ij">
+      <tr data-page-node-id="SBIaCdpq1aq5M3uChMIbV9">
+        <th style="width: 22%;" data-page-node-id="6NhZmEmkvmFdQHqNwLR3FP">合作方式</th>
+        <th style="width: 24%;" data-page-node-id="tsr4xAOrfrxLsq1kdRGEOz">签约方</th>
+        <th style="width: 24%;" data-page-node-id="CHxLzgNwUbOkm9G9nRS1hA">孵化方</th>
+        <th data-page-node-id="DlK6YNOHabg3UN9l3dTJuM">费用与奖励</th>
+      </tr>
+    </thead>
+    <tbody data-page-node-id="mIfbDrrNiywEvfA1wwHw2c">
+      <tr data-page-node-id="EP4DAyh7cGtY0jEyY2gTeR">
+        <td data-page-node-id="crELbLGFfg2gMU9K8Te5eC"><b data-page-node-id="nxbXAIpPFUar0eXAAf6Qrp">方式一</b><br data-page-node-id="GOQi9QF94bvno7HvbpN2hX">公司直签</td>
+        <td data-page-node-id="3c0Y1EqPOhoBhc9ygW0Fxq">小红帽</td>
+        <td data-page-node-id="tSo5GClY9sHsGN0G3HhIJN">小红帽</td>
+        <td data-page-node-id="AUYAd6en3M9jqPfnQpRKwd">老加盟商获 <b data-page-node-id="ImS3q3kvokKXiAkAiwHHlj">推荐奖</b>：签约 ¥3,000 + 流水达标 ¥5,000 + 陪跑达成 ¥5,000，<b data-page-node-id="inBiEih0yyoNJNmQzQ6v8v">最高 ¥13,000</b></td>
+      </tr>
+      <tr data-page-node-id="xMcVcEIAZLylQdFH8yrvhN">
+        <td data-page-node-id="aho728Fw5eHKsSWj044C6W"><b data-page-node-id="zRkBdZpdSoNfxnkZYncnKb">方式二</b><br data-page-node-id="JnSYvHP8YQ1R9UpQYBLnP8">老加盟商孵化</td>
+        <td data-page-node-id="6Lw0a9AjaDCf0nDdmX7oeg">老加盟商</td>
+        <td data-page-node-id="BCGAtITVO1eI6KvUSk4ZMZ">老加盟商</td>
+        <td data-page-node-id="eP0Q1xqTjm3TNsXAKc5YiL">小红帽收取加盟费的 <b data-page-node-id="hWnORuRVqOclHLNbx9EQ1O">20%</b>，其余收益归老加盟商</td>
+      </tr>
+      <tr data-page-node-id="LooToWQ69WVbTHX6tBVFV4">
+        <td data-page-node-id="Tf90m5BujAfuWKWorfAe87"><b data-page-node-id="l17IYXlhMyXTndVWbWdRBf">方式三</b><br data-page-node-id="LaaloiUhAHHHvm03KEqUDD">公司代孵化</td>
+        <td data-page-node-id="tewXiitsU1Zc0YJODtVAzY">老加盟商</td>
+        <td data-page-node-id="jL7gJjLh7RM20lKb4I1uMy">小红帽</td>
+        <td data-page-node-id="HF53dPJW9HAUMjhkb5cmBC">小红帽收取加盟费的 <b data-page-node-id="BOQ4nbMPCcp85PINecFXoN">50%</b>，老加盟商保留 50%</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="box highlight" data-page-node-id="fYAs2ITAt0Ope1zoacHH43">
+    <h4 data-page-node-id="rzRQB8AcqxiUFXgtiyWe2u">📌 推荐与介绍规则</h4>
+    <ul class="check-list" data-page-node-id="n157KMdEPEVozHTJUa8wf9">
+      <li data-page-node-id="AEikHmEQsRTqOp8ImLqCgB"><b data-page-node-id="Yjp8l9hatpnSL8mjPQWE5y">推荐奖仅限加盟商推荐</b> —— 老加盟商推荐新加盟商与小红帽直签，方可获得推荐奖</li>
+      <li data-page-node-id="Zy7Mbyo0AZW9FVQpSMAsmM"><b data-page-node-id="96xTCl7SRxSXKAYDcxsrcR">非加盟商转介绍</b> —— 仅享介绍费 ¥3,000（不参与推荐奖与孵化分润）</li>
+      <li data-page-node-id="WumUNmCj1b1jvQhHoEfKL1">所有合作方式均需签约备案，权益与义务写入正式合同</li>
+    </ul>
+  </div>
+  <div class="box dark" data-page-node-id="erjR0ueIbus2FTlHuPXmOR">
+    <h3 data-page-node-id="HArgS7EnIGuVUrizmEw8Ur">💡 为什么设计三种方式？</h3>
+    <p data-page-node-id="VAKRnuMdQmWAGLZsapWH8A">老加盟商有经验、有人脉，可以直接"带徒弟"赚孵化收益；也可以选择让公司代孵化，把专业的事交给专业团队。无论哪种方式，新加盟商的交付质量都由合同兜底。</p>
+  </div>
+  <div class="page-footer" data-page-node-id="NDto5fTYQ6DLD87yZUru7o"><span data-page-node-id="R1rTwHa0cE3tFu3ZEK241j">小红帽文化传媒 · 港皖双主体</span><span data-page-node-id="pD1kLK8tE6cmZbC4KCMBhV">P8 / 11</span></div>
+</div>
+
+<!-- PAGE 9: 结算保障 -->
+<div class="page" data-page-node-id="Dc95IW3LgKiTH3qUHpIcv1">
+  <div class="page-header" data-page-node-id="XcxjD0C8joxBXZimErgPol"><span data-page-node-id="RKSnusfEcUOw7Ur4XYGf7d">第七章 · 结算保障</span><span data-page-node-id="vhbALHMtMGGLbGK0Noacru">小红帽代理招商手册</span></div>
+  <h2 class="section-title" data-page-node-id="KJnwDFudvMXesuVRoYjBKQ">结算保障：5 大承诺写入合同</h2>
+  <p class="lead" data-page-node-id="MW5ZxFfXNuBxXMEYXkrg9l">很多公会最大的坑就是口头承诺不兑现、结算拖欠随意扣减。小红帽的承诺 <b data-page-node-id="ue5WQT9CY8nTiEWkibKv8Y">不拖、不欠、不克扣</b>，全部白纸黑字写入合同，实打实的陪跑孵化。</p>
+  <h3 class="sub-title" data-page-node-id="tuCKUYS0E5TLo0PmMhRuCA">⚖ 5 大承诺（写入合同）</h3>
+  <table class="pricing-table" data-page-node-id="hsTKoy86laxbgxOYjxIH0X">
+    <thead data-page-node-id="3m7vPTDtERlBO70NwMvG3c"><tr data-page-node-id="8GFQPw6ZM2V2vbtsb864Ho"><th style="width:30%;" data-page-node-id="JkPMHQIKBw8kkxzJ2bMHCZ">承诺项</th><th data-page-node-id="bL0wrsMzaJj4ymo5xS2Ryh">具体内容</th></tr></thead>
+    <tbody data-page-node-id="MAj7DQGNPUpDsCguFbwuJi">
+      <tr data-page-node-id="vanSedZ7eZvBe6uiwCJvPL"><td data-page-node-id="MyozCGSMcP7Q6uBKWitu6y"><b data-page-node-id="FLsxF9lCmSSPewAiI26F0V">30 名主播交付</b></td><td data-page-node-id="UeJ92FhC7RxnxsFUmXoVQt">签约后 3 个月分月交付 30 名新主播（每月 10 名，可能含老主播），写入合同</td></tr>
+      <tr data-page-node-id="9FWz64OCtmu3WTUMkbYHUC"><td data-page-node-id="d7TE52cLsAR0f5yGEXkgFi"><b data-page-node-id="sccuvznKPOh0oDCNYSBGG6">100 万金豆收益承诺</b></td><td data-page-node-id="evevxN4NE9AYZlfx27Giqx">陪跑期满扶持月收益达 <b data-page-node-id="WeZhQ9Z6OojG0zvTdcjoNC">100 万金豆</b>（是月收益，非累计）；未达成 <b data-page-node-id="4kD2CMAOvQ88FbC1jpOPOv">追加一个月陪跑</b>，写入合同</td></tr>
+      <tr data-page-node-id="JfUIzO6qafr9i4Dst2nQ2M"><td data-page-node-id="cY6Tz0ebhaf7kcQW37SAbs"><b data-page-node-id="eHJjADUSioUACt3rxDaifv">结算周期</b></td><td data-page-node-id="fZirHeMhSlDavlbjLY2SZ6">T+7 日结（平台到账后 7 个工作日内打款）</td></tr>
+      <tr data-page-node-id="PDcURmVOpjq65vEe9W4IZc"><td data-page-node-id="QGeAcEuYBBV9cvBJaKiGWC"><b data-page-node-id="9DgMPo7STJQw7bohzmxAP4">逾期赔付</b></td><td data-page-node-id="MZtyAyab2a2RnhPd8EI6PL">合同明确：逾期 1 天，违约赔偿 0.05%</td></tr>
+      <tr data-page-node-id="070cto2Gpt0Y4bZrjTolEp"><td data-page-node-id="nrmC8dCL6FB02dcB3QLjGd"><b data-page-node-id="u78d48pyGR9R0YvGNnwyCU">结算透明</b></td><td data-page-node-id="owna4llvlQquynKOMo4DYN">系统自动生成结算单，所有流水可溯源</td></tr>
+    </tbody>
+  </table>
+  <div class="box amber" data-page-node-id="2E3gHcT72vRDVBAGRGqpEK">
+    <h4 data-page-node-id="39k66hYGx66hbPVt0GLBjU">📌 100 万金豆考核口径</h4>
+    <p data-page-node-id="HKaRAqcDsQZ6HSxDWvasVS"><b data-page-node-id="5UPE68ZFG8nc3cVfI6HF2s">签约月不计入</b>，自签约次月起计算；3 个月陪跑期满未达成月收益 100 万金豆，公司追加 1 个月陪跑（不另收费）。</p>
+  </div>
+  <div class="box highlight" data-page-node-id="GgfXOMBGckMYRJc0ymP59b">
+    <h4 data-page-node-id="ozlIDRIBm2R7FgRFeUd0AI">⚖ 法律兜底的具体意义</h4>
+    <p data-page-node-id="6mC1sWYvxNbLZQSWdLQOJB">主播交付、收益目标、结算周期、逾期赔付 <b data-page-node-id="irQVkB5Mww74uTYybQMwdV">全部写入正式合作合同</b>。出现未兑现、逾期、克扣等情况，加盟商可依据合同主张权益。这不是口头承诺，是 <b data-page-node-id="OsImMspK5WRYr1TXmXpmTa">法律保障</b>。</p>
+  </div>
+  <div class="page-footer" data-page-node-id="zgj0oQAM7ZKVNGxfBPSWCg"><span data-page-node-id="c1mofTezyAbbSxbXUW1IEs">小红帽文化传媒 · 港皖双主体</span><span data-page-node-id="ASTYI192dzDogPHoGUlwnx">P9 / 11</span></div>
+</div>
+
+<!-- PAGE 10: FAQ -->
+<div class="page" data-page-node-id="C8eswsFjaXaJZeUqRihHzA">
+  <div class="page-header" data-page-node-id="BcSfVAfzLS7iGEtT1JnYi6"><span data-page-node-id="FSahQcHQoomamG38kimrKj">第八章 · 常见疑问</span><span data-page-node-id="RFj0ssu0PDtDDeisU2xzHp">小红帽代理招商手册</span></div>
+  <h2 class="section-title" data-page-node-id="LI8xBnmSeHjezBwu7K6zrF">常见疑问 Q&amp;A</h2>
+  <h3 class="sub-title" data-page-node-id="8CerompL45N1naonFMzH4M">💼 关于公司与资金安全</h3>
+  <div class="qa-box" data-page-node-id="qESTDheshgCkmbracWrFvi"><p class="qa-q" data-page-node-id="joNX8sfWKUIB8fAInKAgtJ">Q：交了钱你们跑了怎么办？</p><p class="qa-a" data-page-node-id="Q7wQtLpJjHAgF0uxzZGixf">A：公司为双主体架构——香港小紅帽文化傳媒有限公司（海外业务主体）+ 安徽小红帽文化传媒有限公司（国内运营主体），工商均可查；同时是 BIGO Live 一级代理（母公会），平台侧有备案。所有承诺白纸黑字写入正式合作合同，具备法律兜底。</p></div>
+  <h3 class="sub-title" data-page-node-id="ojMctc6AxCn4tPha21GLha">💰 关于分成与陪跑</h3>
+  <div class="qa-box" data-page-node-id="2RemyF1J3JClgCdCO9GRCP"><p class="qa-q" data-page-node-id="dTBFlFSEQyGmukgHh1t3Ag">Q：95-97% 分成你们赚什么？</p><p class="qa-a" data-page-node-id="lMJrY1Y1nIADcze2RdWENN">A：平台结算给公会时本身会扣约 3 个点的汇差/手续费。97% 相当于小红帽零抽点、全额返给加盟商；95% 只抽 2 个点，用于系统与孵化成本。此外我们收一次性套餐费——赚的是"扶持你成功"的钱，不是"抽你流水"的钱。</p></div>
+  <div class="qa-box" data-page-node-id="4enae9NgJKbBgGcbrAaIpr"><p class="qa-q" data-page-node-id="9pcqRwGRLgTuvouXhbziw1">Q：100 万金豆能保证吗？</p><p class="qa-a" data-page-node-id="AAQcvGmG244gVtmukmgswF">A：承诺的是"月收益 100 万金豆"，不是累计收益。签约月不计入，自签约次月起算；3 个月陪跑期满未达成，公司追加一个月陪跑（不另收费）。该承诺写入合同，具备法律效力。</p></div>
+  <div class="qa-box" data-page-node-id="ubNOyN2ubJnFpn4Ls23Wfy"><p class="qa-q" data-page-node-id="YuZFKLwiBzm8ZOtm12dOkG">Q：30 名主播都是新主播吗？</p><p class="qa-a" data-page-node-id="qy8LNId72vrF6ijvyI4FIG">A：以新主播为主，可能包含部分老主播。签约主播按每月 10 名分月交付，运营经理 1 对 1 带教招聘、签约与开播，交付进度写入合同。</p></div>
+  <h3 class="sub-title" data-page-node-id="1hJDlj4G2tDyMvWqnB2E7Y">🛡 关于保障与代理</h3>
+  <div class="qa-box" data-page-node-id="AnDJHnTGN1qWtdkUMSI8a4"><p class="qa-q" data-page-node-id="fKyn5nnn8BRHBURZmwKBos">Q：平台政策变了怎么办？</p><p class="qa-a" data-page-node-id="m3CRI5lKEgDTPXwzaCEdBW">A：合同写明"政策兜底条款"——平台净返点变化超过 10% 时，双方协商调整分成比例。</p></div>
+  <div class="qa-box" data-page-node-id="i34c6nmINlIzaYHZxMYe7B"><p class="qa-q" data-page-node-id="0zyLnFn5X0qtRgv9yDLlrO">Q：我能发展下线加盟商吗？</p><p class="qa-a" data-page-node-id="O83i3lHFdKUnbYhSTs6Nzd">A：可以，按"老带新"三种方式：推荐新加盟商与小红帽直签，获推荐奖（最高 ¥13,000）；新加盟商与老加盟商签约由老加盟商孵化，小红帽收加盟费 20%；由小红帽代孵化，收加盟费 50%。</p></div>
+  <div class="qa-box" data-page-node-id="meoUuOizSg5EsowN6p3VsY"><p class="qa-q" data-page-node-id="0ckpeA45rHcL0ht4kwFwAw">Q：非加盟商转介绍有奖励吗？</p><p class="qa-a" data-page-node-id="MpZPqtNwxqNuCan48DZkHx">A：有介绍费 ¥3,000。推荐奖仅限加盟商推荐，非加盟商转介绍只享介绍费，不参与孵化分润。</p></div>
+  <div class="page-footer" data-page-node-id="kzgEQr5sKBolzQVJye8B8r"><span data-page-node-id="5OYoxPSUXBcCqAiEN2oTTC">小红帽文化传媒 · 港皖双主体</span><span data-page-node-id="5HueiNfCOj01TxrNVY0oTo">P10 / 11</span></div>
+</div>
+
+<!-- PAGE 11: 结语 -->
+<div class="page" data-page-node-id="82jKxT9aYIoJXDv8du9xHN">
+  <div class="page-header" data-page-node-id="scZWyhFxi9resoi2DNraDi"><span data-page-node-id="ewgZJw7c01sxtBJjYONYM1">第九章 · 结语</span><span data-page-node-id="D7cv4TSTa3hdK3TuDBwK01">小红帽代理招商手册</span></div>
+  <h2 class="section-title" data-page-node-id="80O5eGGNbbovkslCGxOV4U">结语：把承诺写进合同</h2>
+  <p class="lead" data-page-node-id="bLOb3YSBeGHVAwa1TxirOl">选择小红帽，你买到的不只是一个挂靠身份，而是一套可以落地的赚钱体系。</p>
+  <div class="box highlight" data-page-node-id="OFlG9inoNQxSRT3Il4yxY7">
+    <h4 data-page-node-id="ypEi9Y2hk9vutvQVgAP7kl">📦 你拿到的核心交付</h4>
+    <ul class="check-list" data-page-node-id="pQasJhO9bAuKk9LBJYw1uo">
+      <li data-page-node-id="tLCSoGpv758HdTUus0Fpmk"><b data-page-node-id="40JxDECgkUnLwEvTuJBjBO">30 名新主播</b> —— 3 个月分月交付，每月 10 名，写入合同</li>
+      <li data-page-node-id="jpbOdk6q9c40Gv6ElbTDx3"><b data-page-node-id="OxUOElja4CgIOoJGyHHA2h">100 万金豆月收益</b> —— 陪跑期满扶持达成，未达成追加一个月，写入合同</li>
+      <li data-page-node-id="1GCItPM2XBeGrGmMtEIH2Q"><b data-page-node-id="vbAJjA4J0WYmlNPyVe2JZz">3 个月运营经理陪跑</b> —— 1 对 1 带教，每月目标拆解与复盘</li>
+      <li data-page-node-id="mGx6SXkiMxad82FymmUAgm"><b data-page-node-id="cRmDpFvGHkRh74IEzJV0E9">16 项独家赋能</b> —— 法务、系统、孵化、资源四大体系，教方法给系统</li>
+      <li data-page-node-id="i9vHUa8nRpbl6yGJQIoQzv"><b data-page-node-id="KjJldJbKqVnEPArkEQTIKJ">T+7 日结</b> —— 逾期 1 天赔 0.05%，结算透明可溯源</li>
+      <li data-page-node-id="K09I5I62gZC5X7gUO8Ae0t"><b data-page-node-id="LFvHwc7c6cNd7maGLMLRYe">双公司主体 + 一级代理</b> —— BIGO 母公会资质，长期经营有保障</li>
+    </ul>
+  </div>
+  <div class="cta-box" data-page-node-id="BkpL3hCqJG4F5Ppz3Yw4gl">
+    <h3 data-page-node-id="lawHDEApw2x1GaAfDQ10uj">🚀 现在就开启你的代理之路</h3>
+    <p data-page-node-id="sZ3Fu6KOyEZnrWjJy51Xon">扫码添加招商顾问，立即获取 1v1 咨询 + 政策文档 + 加盟合同</p>
+    <a href="#" class="cta-button" data-page-node-id="HRS0oK3GP6k3uC6YfUUgLw">立即咨询代理详情</a>
+    <p style="font-size:12px; opacity:0.7; margin-top:12px;" data-page-node-id="wcbWz7hbOlvATKQpV5QlsZ">总经办统筹 · 招商团队 7×12 小时响应</p>
+  </div>
+  <div class="page-footer" data-page-node-id="yFhwbvpS6cH9oktyrHqzce"><span data-page-node-id="ybPaEGx1NjrMrZ2FOGEEyh">香港小紅帽文化傳媒 · 安徽小红帽文化传媒 © 2026</span><span data-page-node-id="wINHUS4EUMFnIR1Gf4Wfrs">P11 / 11 · 完</span></div>
+</div>
+
+</body>
+</html>
