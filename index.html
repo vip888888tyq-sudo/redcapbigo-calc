@@ -199,6 +199,14 @@ th.left,td.left{text-align:left}
 .md-body label{font-size:12px;color:var(--text2)}
 .md-body input{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:8px 10px;font-size:13px;outline:none;cursor:pointer;width:100%}
 .md-body input:focus{border-color:var(--blue)}
+.md-body select{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:8px 10px;font-size:13px;outline:none;cursor:pointer;width:100%}
+.md-body select:focus{border-color:var(--blue)}
+.md-body label input,.md-body label select{margin-top:4px}
+.tabs .seg-btn small{display:block;font-weight:400;color:var(--text3);font-size:11px;margin-top:2px}
+.guide h3{margin:14px 0 6px;color:var(--text)}
+.guide p{margin:0 0 10px;color:var(--text2);font-size:13px;line-height:1.9}
+.guide ol{padding-left:20px}
+.guide li{margin:4px 0;color:var(--text2);font-size:13px}
 .md-foot{padding:12px 16px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:space-between}
 .seg-btn{padding:8px 12px;border-radius:7px;border:1px solid var(--line);background:var(--panel2);color:var(--text);cursor:pointer;font-size:12px;text-align:center;flex:1}
 .seg-btn.on{background:#22335e;border-color:var(--blue);color:#fff;font-weight:600}
@@ -275,6 +283,18 @@ th.left,td.left{text-align:left}
   <div class="nav-label" data-page-node-id="gfpFx3oG07rZ54D7DpeqA2">财务</div>
   <div class="nav-item" data-page="finance"><span class="ic">💳</span> 财务记账</div>
   <div class="nav-item" data-page="ops"><span class="ic">🧑‍💼</span> 运营薪资</div>
+  <div class="nav-label">数据中台</div>
+  <div class="nav-item" data-page="compare"><span class="ic">⇄</span> 数据对比</div>
+  <div class="nav-item" data-page="anchors"><span class="ic">🎤</span> 主播管理</div>
+  <div class="nav-item" data-page="operators"><span class="ic">🧑‍💻</span> 运营管理</div>
+  <div class="nav-item" data-page="branches"><span class="ic">🏢</span> 总部分公司管理</div>
+  <div class="nav-item" data-page="affiliates"><span class="ic">🔗</span> 旗下挂靠</div>
+  <div class="nav-item" data-page="users"><span class="ic">👤</span> 用户管理</div>
+  <div class="nav-item" data-page="rankings"><span class="ic">🏆</span> 数据排行榜</div>
+  <div class="nav-item" data-page="logs"><span class="ic">📋</span> 操作日志</div>
+  <div class="nav-item" data-page="settings"><span class="ic">⚙</span> 系统设置</div>
+  <div class="nav-item" data-page="subs"><span class="ic">💠</span> 订阅续费</div>
+  <div class="nav-item" data-page="guide"><span class="ic">📖</span> 使用手册</div>
 </aside>
 <main data-page-node-id="ciC7falHLezXBeaTiESuED">
   <div class="topbar" data-page-node-id="E7aecS9bNxkIj9TSw7UHCG">
@@ -458,6 +478,161 @@ th.left,td.left{text-align:left}
       <div id="platEditor" data-page-node-id="cAlmhICKTsNqhaD77e9oA7"></div>
       <div class="hint" data-page-node-id="FsNyjx4XruiqbvTuAlzzKY">平台佣金表为官方 HY-BP041（政策A）/ HY-BP042（政策F）固定规则，仅用于核对官方结算。「递增」行 = 超过最高档后每增加 100 万金豆的增量。档位判定优先用官方档位列，缺失时按 金豆+时长+天数 自动判档。</div>
       <button class="btn ghost sm" id="btnResetCfg2" style="margin-top:8px" data-page-node-id="eQ6TWb1sJAhnvdtTjigHpT">恢复默认配置</button>
+    </div>
+  </div>
+
+  <!-- ========== 数据中台：数据对比 ========== -->
+  <div class="page" id="page-compare">
+    <div class="card">
+      <h3>📊 数据对比 <span class="tag">整体概览 / 主播对比 / 运营对比 / 排行榜</span></h3>
+      <div class="tabs" id="cmpMode"></div>
+      <div class="tabs" id="cmpPeriod"></div>
+      <div id="cmpBody"></div>
+    </div>
+  </div>
+
+  <!-- ========== 数据中台：主播管理 ========== -->
+  <div class="page" id="page-anchors">
+    <div class="card">
+      <h3>🎤 主播管理 <span class="tag">同步/导入数据后自动更新</span></h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+        <button class="btn" id="ancCalcStatus">计算主播状态</button>
+        <button class="btn" id="ancSync">同步操作</button>
+        <button class="btn green" id="ancExport">导出数据</button>
+        <span class="hint" style="margin:0" id="ancCount"></span>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <input id="ancSearch" type="text" placeholder="🔍 搜索主播名称 / id / BIGO ID" style="background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 12px;font-size:13px;width:260px;outline:none">
+        <input id="ancAgent" type="text" placeholder="经纪人" style="background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 12px;font-size:13px;width:110px;outline:none">
+        <input id="ancBranch" type="text" placeholder="分公司" style="background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 12px;font-size:13px;width:110px;outline:none">
+        <select id="ancStatus" style="background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 8px;font-size:13px">
+          <option value="">全部状态</option><option>新签主播</option><option>待开播</option><option>有效主播</option><option>预警（快流失）</option><option>流失主播</option>
+        </select>
+        <button class="btn ghost sm" id="ancReset">重置</button>
+      </div>
+      <div class="tbl-box"><table id="ancTable"></table></div>
+    </div>
+  </div>
+
+  <!-- ========== 数据中台：运营管理 ========== -->
+  <div class="page" id="page-operators">
+    <div class="card">
+      <h3>🧑‍💻 运营管理 <span class="tag">运营人员档案与业绩</span></h3>
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+        <button class="btn" id="opAdd">新增运营</button>
+        <button class="btn green" id="opExport">导出数据</button>
+        <span class="hint" style="margin:0" id="opCount"></span>
+      </div>
+      <div class="tbl-box"><table id="opTable"></table></div>
+    </div>
+  </div>
+
+  <!-- ========== 数据中台：总部分公司管理 ========== -->
+  <div class="page" id="page-branches">
+    <div class="card">
+      <h3>🏢 总部分公司管理 <span class="tag">总部 → 分公司 组织架构</span></h3>
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+        <button class="btn" id="brAdd">新增总部分公司</button>
+        <span class="hint" style="margin:0" id="brCount"></span>
+      </div>
+      <div class="tbl-box"><table id="brTable"></table></div>
+    </div>
+  </div>
+
+  <!-- ========== 数据中台：旗下挂靠 ========== -->
+  <div class="page" id="page-affiliates">
+    <div class="card">
+      <h3>🔗 旗下挂靠 <span class="tag">挂靠公会层级</span></h3>
+      <div class="sum" id="afSum"></div>
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+        <button class="btn" id="afAdd">新增挂靠</button>
+        <button class="btn ghost sm" id="afRefresh">刷新</button>
+      </div>
+      <div class="tbl-box"><table id="afTable"></table></div>
+    </div>
+  </div>
+
+  <!-- ========== 数据中台：用户管理 ========== -->
+  <div class="page" id="page-users">
+    <div class="card">
+      <h3>👤 用户管理 <span class="tag">登录账号与角色权限</span></h3>
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+        <button class="btn" id="usrAdd">新增用户</button>
+        <span class="hint" style="margin:0" id="usrCount"></span>
+      </div>
+      <div class="tbl-box"><table id="usrTable"></table></div>
+    </div>
+  </div>
+
+  <!-- ========== 数据中台：数据排行榜 ========== -->
+  <div class="page" id="page-rankings">
+    <div class="card">
+      <h3>🏆 数据排行榜 <span class="tag">本月主播 / 运营 / 分公司排行</span></h3>
+      <div class="sum" id="rkSum"></div>
+      <div class="tabs" id="rkTabs"></div>
+      <div style="display:flex;gap:8px;align-items:center;margin:10px 0">
+        <span class="hint">排行维度</span>
+        <select id="rkMetric" style="background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 8px;font-size:13px">
+          <option value="beans">流水（金豆）</option><option value="hours">开播时长（h）</option><option value="days">开播天数</option><option value="ov">海外豆（%）</option>
+        </select>
+        <span class="hint">显示条数</span>
+        <select id="rkLimit" style="background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 8px;font-size:13px">
+          <option>10</option><option>20</option><option>50</option>
+        </select>
+      </div>
+      <div class="tbl-box"><table id="rkTable"></table></div>
+    </div>
+  </div>
+
+  <!-- ========== 数据中台：操作日志 ========== -->
+  <div class="page" id="page-logs">
+    <div class="card">
+      <h3>📋 操作日志 <span class="tag">自动记录系统内关键操作</span></h3>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
+        <span class="hint">操作类型</span>
+        <select id="logType" style="background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 8px;font-size:13px">
+          <option value="">全部</option><option>新增</option><option>修改</option><option>删除</option><option>计算</option><option>导入</option><option>导出</option><option>审批</option><option>入账</option>
+        </select>
+        <button class="btn ghost sm" id="logClear">清空日志</button>
+        <span class="hint" style="margin:0" id="logCount"></span>
+      </div>
+      <div class="tbl-box"><table id="logTable"></table></div>
+    </div>
+  </div>
+
+  <!-- ========== 数据中台：系统设置 ========== -->
+  <div class="page" id="page-settings">
+    <div class="card">
+      <h3>⚙️ 系统设置 <span class="tag">数据同步 / 备份 / 汇率</span></h3>
+      <div class="rule-grid" style="margin-bottom:14px">
+        <div class="rule-item"><label>官方连接（BIGO）</label><span class="hint" style="margin:0">本地版不直连 BIGO 官方接口，主播数据通过 xlsx/csv 导入（主播结算页）</span></div>
+        <div class="rule-item"><label>USD→CNY 汇率</label><input class="num" id="setFx" type="number" step="0.0001" min="0"></div>
+        <div class="rule-item"><label>当前记账人</label><select id="setUser" style="background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 8px;font-size:13px"></select></div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+        <button class="btn" id="setSnapshot">保存本月快照（供数据对比）</button>
+        <button class="btn" id="setBackup">导出全部数据备份</button>
+        <button class="btn" id="setRestore">导入备份恢复</button>
+        <input type="file" id="setFile" accept=".json" style="display:none">
+      </div>
+      <div id="setHist"></div>
+    </div>
+  </div>
+
+  <!-- ========== 数据中台：订阅续费 ========== -->
+  <div class="page" id="page-subs">
+    <div class="card">
+      <h3>💠 订阅续费 <span class="tag">本系统为自建免费版</span></h3>
+      <div class="sum" id="subSum"></div>
+      <div class="hint" style="margin-top:10px">参考 bigo.ink 订阅体系（全功能版 1200/月），小红帽结算后台为自建单机版，不收费、无到期限制。数据存储于本浏览器，如需多人云端协同、多端实时同步等企业版能力，可另行规划开发。</div>
+    </div>
+  </div>
+
+  <!-- ========== 数据中台：使用手册 ========== -->
+  <div class="page" id="page-guide">
+    <div class="card">
+      <h3>📖 使用手册 <span class="tag">快速开始（建议按顺序）</span></h3>
+      <div id="guideBody" class="guide"></div>
     </div>
   </div>
 
@@ -1269,7 +1444,18 @@ var TITLES={
   salary:['主播政策','给主播多少钱：档位薪资 + 全勤 + 无效豆'],
   platform:['平台政策','官方固定佣金表（HY-BP041/042）'],
   finance:['财务记账','人员工资 · 主播薪资 · 房租水电 · 各项开销流水'],
-  ops:['运营薪资','运营人员工资核算 · 可一键转入财务账']
+  ops:['运营薪资','运营人员工资核算 · 可一键转入财务账'],
+  compare:['数据对比','本期 vs 对比期 · 环比分析'],
+  anchors:['主播管理','主播档案 · 状态 · 流水汇总'],
+  operators:['运营管理','运营人员档案与业绩统计'],
+  branches:['总部分公司管理','总部 → 分公司 组织架构'],
+  affiliates:['旗下挂靠','挂靠公会层级结构'],
+  users:['用户管理','登录账号与角色'],
+  rankings:['数据排行榜','本月主播 / 运营 / 分公司排行'],
+  logs:['操作日志','系统关键操作自动留痕'],
+  settings:['系统设置','数据同步 · 备份 · 汇率'],
+  subs:['订阅续费','版本与授权说明'],
+  guide:['使用手册','快速开始与各模块说明']
 };
 document.querySelectorAll('.nav-item').forEach(function(item){
   item.addEventListener('click',function(){
@@ -1279,6 +1465,19 @@ document.querySelectorAll('.nav-item').forEach(function(item){
     document.querySelectorAll('.page').forEach(function(x){ x.classList.remove('on'); });
     $('page-'+p).classList.add('on');
     $('pageTitle').innerHTML=TITLES[p][0]+'<small>'+TITLES[p][1]+'</small>';
+    if(typeof mgInit==='function'){
+      if(p==='compare') cmpRender();
+      else if(p==='anchors') ancRender();
+      else if(p==='operators') opRender();
+      else if(p==='branches') brRender();
+      else if(p==='affiliates') afRender();
+      else if(p==='users') usrRender();
+      else if(p==='rankings') rkRender();
+      else if(p==='logs') logRender();
+      else if(p==='settings') setRender();
+      else if(p==='guide') guideRender();
+      else if(p==='subs') subRender();
+    }
   });
 });
 
@@ -1328,7 +1527,9 @@ function finPush(x){
   x.id=now+Math.random().toString(16).slice(2,8);
   x.status='pending'; x.createBy=finUser; x.createAt=now;
   x.checkBy=''; x.checkAt=0; x.postBy=''; x.postAt=0;
-  fin.push(x); finSave(); return x;
+  fin.push(x); finSave();
+  if(typeof logOp==='function') logOp('新增','财务',(x.type==='out'?'支出 ':'进账 ')+x.cat+' '+x.item+'（¥'+fmt(x.amt,0)+'）');
+  return x;
 }
 function shiftMonth(ym,delta){
   var p=String(ym).split('-'), y=+p[0], m=+p[1]+delta;
@@ -1477,19 +1678,19 @@ function finAcctRender(){
     var ck=e.target.closest('[data-ck]');
     if(ck){
       var x=fin.find(function(f){ return String(f.id)===ck.getAttribute('data-ck'); });
-      if(x && x.status==='pending' && x.createBy!==finUser){ x.status='checked'; x.checkBy=finUser; x.checkAt=Date.now(); finSave(); finRender(); }
+      if(x && x.status==='pending' && x.createBy!==finUser){ x.status='checked'; x.checkBy=finUser; x.checkAt=Date.now(); finSave(); finRender(); logOp('审批','财务','审批通过 '+x.cat+' '+x.item+'（¥'+fmt(x.amt,0)+'）'); }
       return;
     }
     var pt=e.target.closest('[data-pt]');
     if(pt){
       var y=fin.find(function(f){ return String(f.id)===pt.getAttribute('data-pt'); });
-      if(y && y.status==='checked' && y.createBy!==finUser){ y.status='posted'; y.postBy=finUser; y.postAt=Date.now(); finSave(); finRender(); }
+      if(y && y.status==='checked' && y.createBy!==finUser){ y.status='posted'; y.postBy=finUser; y.postAt=Date.now(); finSave(); finRender(); logOp('入账','财务','核对入账 '+y.cat+' '+y.item+'（¥'+fmt(y.amt,0)+'）'); }
       return;
     }
     var dl=e.target.closest('[data-del]');
     if(dl){
       var z=fin.find(function(f){ return String(f.id)===dl.getAttribute('data-del'); });
-      if(z && z.status!=='posted' && confirm('删除这笔'+(z.status==='pending'?'待审批':'已核对')+'账目？')){ fin.splice(fin.indexOf(z),1); finSave(); finRender(); }
+      if(z && z.status!=='posted' && confirm('删除这笔'+(z.status==='pending'?'待审批':'已核对')+'账目？')){ fin.splice(fin.indexOf(z),1); finSave(); finRender(); logOp('删除','财务','删除待处理账目 '+z.item); }
     }
   });
   $('finAcctBtn').addEventListener('click',function(){ finAcctRender(); $('finAcctMask').style.display='flex'; });
@@ -1571,6 +1772,553 @@ function opsAdd(){
     document.querySelector('.nav-item[data-page="finance"]').click();
   });
 })();
+
+/* ============================================================
+   数据中台（参考 bigo.ink 公会数据运营中台还原）
+   硬约束：不动现有主播薪资计算逻辑（calcRow/computeCommission/CFG.salary 等）
+   ============================================================ */
+var MG={operators:[],branches:[],affiliates:[],users:[],history:{},logs:[]};
+function mgLoad(){ try{ var d=JSON.parse(localStorage.getItem('xhm_mgmt_v1')); if(d){ MG.operators=d.operators||[]; MG.branches=d.branches||[]; MG.affiliates=d.affiliates||[]; MG.users=d.users||[]; MG.history=d.history||{}; MG.logs=d.logs||[]; } }catch(e){} }
+function mgSave(){ try{ localStorage.setItem('xhm_mgmt_v1', JSON.stringify(MG)); }catch(e){} }
+function pad2(x){ return String(x).padStart(2,'0'); }
+function nowStr(){ var d=new Date(); return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate())+' '+pad2(d.getHours())+':'+pad2(d.getMinutes())+':'+pad2(d.getSeconds()); }
+function curMonth(){ return ($('periodEnd').value||'').slice(0,7)||(new Date().getFullYear()+'-'+pad2(new Date().getMonth()+1)); }
+function prevMonth(m){ if(!m) m=curMonth(); var p=m.split('-'); var y=+p[0], mo=+p[1]-1; if(mo<1){ mo=12; y--; } return y+'-'+pad2(mo); }
+function logOp(type,model,desc){
+  MG.logs.unshift({t:nowStr(), user:finUser||'管理员', type:type, model:model, desc:desc, ip:'本机'});
+  if(MG.logs.length>500) MG.logs.length=500;
+  mgSave();
+  if($('logTable')) logRender();
+}
+function daysBetween(a,b){ var d1=new Date(a), d2=new Date(b); return Math.round((d2-d1)/86400000); }
+/* 主播状态判定：新签/待开播/有效/预警/流失 */
+function ancStatus(r){
+  var beans=n(r.tickets), days=n(r.days), hours=n(r.hours);
+  var m=curMonth(), signM=String(r.sign||'').slice(0,7);
+  if(signM===m && beans===0) return '新签主播';
+  if(beans===0 && days===0 && hours===0){
+    var last=String(r.lastLive||'').trim();
+    if(last){ var diff=daysBetween(last,$('periodEnd').value); if(diff>30) return '预警（快流失）'; return '待开播'; }
+    return '待开播';
+  }
+  if(beans===0) return '预警（快流失）';
+  return '有效主播';
+}
+function ancWarnLevel(r){
+  var c=calcRow(r);
+  var s=ancStatus(r);
+  if(s==='预警（快流失）') return '预警';
+  if(c.warns && c.warns.length && n(r.tickets)>0) return '预警';
+  return '正常';
+}
+function th(h){ return '<th>'+h+'</th>'; }
+function td(v,al){ return '<td'+(al?' style="text-align:'+al+'"':'')+'>'+v+'</td>'; }
+/* 快照：保存本月 rows 到历史（供数据对比环比） */
+function snapNow(){
+  var m=curMonth();
+  MG.history[m]=JSON.parse(JSON.stringify(rows));
+  mgSave();
+  logOp('计算','数据对比','保存本月快照 '+m+'（'+rows.length+' 名主播）');
+  return m;
+}
+function histRows(m){ var h=MG.history[m]; return h||null; }
+function histOrNow(m){ return m===curMonth() ? rows : histRows(m); }
+/* 从 rows 计算一组指标 */
+function aggRows(list){
+  var r={beans:0,hours:0,hoursOff:0,hoursSys:0,ovBeans:0,valid:0,warn:0,newSign:0,count:list.length};
+  list.forEach(function(x){
+    var beans=n(x.tickets), hours=n(x.hours), off=has(x.hoursOff)?n(x.hoursOff):hours;
+    r.beans+=beans; r.hours+=hours; r.hoursOff+=off; r.hoursSys+=(hours-off>0?hours-off:0);
+    r.ovBeans+=beans*n(x.ovPct);
+    if(hours>0||n(x.days)>0) r.valid++;
+    var st=ancStatus(x); if(st==='预警（快流失）') r.warn++;
+    var cm=curMonth(); if(String(x.sign||'').slice(0,7)===cm) r.newSign++;
+  });
+  return r;
+}
+function pct(a,b){ if(b===0||b===null||b===undefined) return null; return (a-b)/b*100; }
+function pctHtml(a,b){
+  var p=pct(a,b);
+  if(p===null) return '<span class="hint">--</span>';
+  var up=p>=0;
+  return '<span style="color:'+(up?'#67c23a':'#f56c6c')+'">'+fmt(Math.abs(p),1)+'%'+(up?'↑':'↓')+'</span>';
+}
+
+/* ================= 主播管理 ================= */
+var ancQ={k:'',agent:'',branch:'',status:''};
+function ancRender(){
+  var list=rows.filter(function(r){
+    if(ancQ.k){ var k=ancQ.k.toLowerCase(); if(!(String(r.name||'').toLowerCase().indexOf(k)>=0||String(r.uid||'').toLowerCase().indexOf(k)>=0||String(r.bigo||'').toLowerCase().indexOf(k)>=0)) return false; }
+    if(ancQ.agent && String(r.agent||'')!==ancQ.agent) return false;
+    if(ancQ.branch && String(r.branch||'')!==ancQ.branch) return false;
+    if(ancQ.status && ancStatus(r)!==ancQ.status) return false;
+    return true;
+  });
+  $('ancCount').textContent='当前列表范围：'+list.length+' 名主播（共 '+rows.length+' 名）';
+  var h='<tr>'+['id','名称','BIGO ID','粉丝','经纪人','分公司','政策','档位','最近开播','本月流水','开播时长(h)','开播天数','合作开始','合作结束','签约类型','状态','预警','操作'].map(th).join('')+'</tr>';
+  list.forEach(function(r){
+    var c=calcRow(r);
+    var st=ancStatus(r);
+    var stColor={ '新签主播':'#409eff','待开播':'#909399','有效主播':'#67c23a','预警（快流失）':'#e6a23c','流失主播':'#f56c6c' }[st]||'var(--text)';
+    var wl=ancWarnLevel(r);
+    h+='<tr>'
+      +td('<b>'+esc(r.uid||'-')+'</b>')
+      +td(esc(r.name||'-'),'left')
+      +td(esc(r.bigo||'-'))
+      +td(esc(r.fans||'-'))
+      +td(esc(r.agent||'-'))
+      +td(esc(r.branch||'-'))
+      +td(esc(r.policy||'-'))
+      +td(esc(r.level||'-'))
+      +td(esc(r.lastLive||'-'))
+      +td(fmt(n(r.tickets),0))
+      +td(fmt(n(r.hours),1))
+      +td(fmt(n(r.days),0))
+      +td(esc(r.startDate||'-'))
+      +td(esc(r.endDate||'-'))
+      +td(esc(r.signType||'-'))
+      +td('<span style="color:'+stColor+'">'+st+'</span>')
+      +td(wl==='预警'?'<span style="color:#f56c6c">⚠ 预警</span>':'<span style="color:#67c23a">正常</span>')
+      +td('<button class="btn ghost sm" data-ae="'+rows.indexOf(r)+'">编辑</button> <button class="btn ghost sm" data-ad="'+rows.indexOf(r)+'">删除</button>')
+      +'</tr>';
+  });
+  if(!list.length) h+='<tr><td colspan="18" class="hint">暂无主播数据，请先在「主播薪资结算」页导入官方月数据</td></tr>';
+  $('ancTable').innerHTML=h;
+  $('ancTable').querySelectorAll('[data-ae]').forEach(function(b){ b.onclick=function(){ ancEdit(+b.getAttribute('data-ae')); }; });
+  $('ancTable').querySelectorAll('[data-ad]').forEach(function(b){ b.onclick=function(){ var i=+b.getAttribute('data-ad'); if(confirm('确定删除主播 '+rows[i].name+'？仅删除管理档案，不影响结算数据')){ var r=rows.splice(i,1)[0]; saveRows(); logOp('删除','主播','删除主播 '+r.name+'（'+r.uid+'）'); ancRender(); } }; });
+}
+function ancEdit(i){
+  var r=rows[i];
+  var f=['fans','agent','branch','lastLive','signType','startDate','endDate','hoursOff'];
+  var val={}; f.forEach(function(k){ val[k]=r[k]||''; });
+  var html='<div class="md"><div class="md-head">编辑主播档案 <b style="color:var(--blue)">'+esc(r.name)+'（'+esc(r.uid)+'）</b><button class="icon-btn" id="aeX" style="margin-left:auto">✕</button></div><div class="md-body" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+    +[['粉丝','fans'],['经纪人','agent'],['分公司','branch'],['最近开播','lastLive'],['签约类型','signType'],['合作开始','startDate'],['合作结束','endDate'],['官方时长h(可选)','hoursOff']].map(function(p){
+      return '<label>'+p[0]+'<input id="ae_'+p[1]+'" type="text" value="'+esc(val[p[1]])+'" placeholder="'+(p[1]==='hoursOff'?'留空=按总时长计官方':'留空')+'"></label>';
+    }).join('')+'</div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:12px"><button class="btn ghost" id="aeC">取消</button><button class="btn" id="aeOK">保存</button></div></div>';
+  var mk=$('mgMask'); if(!mk){ mk=document.createElement('div'); mk.id='mgMask'; mk.className='mask'; mk.style.cssText='display:flex'; document.body.appendChild(mk); }
+  mk.innerHTML=html; mk.style.display='flex';
+  $('aeX').onclick=function(){ mk.style.display='none'; };
+  $('aeC').onclick=function(){ mk.style.display='none'; };
+  $('aeOK').onclick=function(){
+    f.forEach(function(k){ var inp=$('ae_'+k); if(inp){ var v=inp.value.trim(); if(v) r[k]=v; else delete r[k]; } });
+    saveRows(); logOp('修改','主播','修改主播档案 '+r.name+'（'+r.uid+'）'); ancRender(); mk.style.display='none';
+  };
+}
+
+/* ================= 运营管理 ================= */
+function opRender(){
+  var list=MG.operators;
+  $('opCount').textContent='共 '+list.length+' 名运营';
+  var h='<tr>'+['运营姓名','真实姓名','分公司','角色级别','BIGO UID','主播数量','在播','预警','流失','本月总流水','状态','操作'].map(th).join('')+'</tr>';
+  list.forEach(function(o,i){
+    var mine=rows.filter(function(r){ return String(r.agent||'')===o.name; });
+    var inLive=0,warn=0,lost=0,total=0;
+    mine.forEach(function(r){ total+=n(r.tickets); var s=ancStatus(r); if(s==='有效主播') inLive++; if(s==='预警（快流失）') warn++; if(s==='流失主播'||(s==='待开播'&&n(r.tickets)===0&&n(r.days)===0&&n(r.hours)===0)) lost++; });
+    h+='<tr>'
+      +td('<b>'+esc(o.name||'-')+'</b>')
+      +td(esc(o.real||'-'))
+      +td(esc(o.br||'-'))
+      +td(esc(o.role||'普通运营'))
+      +td(esc(o.bigo||'-'))
+      +td(mine.length)
+      +td(inLive)
+      +td('<span style="color:'+(warn?'#e6a23c':'var(--text3)')+'">'+warn+'</span>')
+      +td('<span style="color:'+(lost?'#f56c6c':'var(--text3)')+'">'+lost+'</span>')
+      +td(fmt(total,0))
+      +td(o.status==='离职'?'<span style="color:#f56c6c">离职</span>':'<span style="color:#67c23a">在职</span>')
+      +td('<button class="btn ghost sm" data-oe="'+i+'">编辑</button> <button class="btn ghost sm" data-od="'+i+'">删除</button>')
+      +'</tr>';
+  });
+  if(!list.length) h+='<tr><td colspan="12" class="hint">暂无运营数据，点击「新增运营」创建</td></tr>';
+  $('opTable').innerHTML=h;
+  $('opTable').querySelectorAll('[data-oe]').forEach(function(b){ b.onclick=function(){ opForm(+b.getAttribute('data-oe')); }; });
+  $('opTable').querySelectorAll('[data-od]').forEach(function(b){ b.onclick=function(){ var i=+b.getAttribute('data-od'); if(confirm('确定删除运营 '+MG.operators[i].name+'？')){ var o=MG.operators.splice(i,1)[0]; mgSave(); logOp('删除','运营','删除运营 '+o.name); opRender(); } }; });
+}
+function opForm(i){
+  var o=i>=0?MG.operators[i]:{name:'',real:'',br:'',role:'普通运营',bigo:'',status:'在职'};
+  var brOpts=MG.branches.map(function(b){ return '<option'+(o.br===b.name?' selected':'')+'>'+esc(b.name)+'</option>'; }).join('');
+  var html='<div class="md"><div class="md-head">'+(i>=0?'编辑运营':'新增运营')+'<button class="icon-btn" id="oeX" style="margin-left:auto">✕</button></div><div class="md-body" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+    +'<label>运营姓名<input id="of_name" value="'+esc(o.name)+'"></label>'
+    +'<label>真实姓名<input id="of_real" value="'+esc(o.real)+'"></label>'
+    +'<label>所属分公司<select id="of_br"><option value="">请选择分公司</option>'+brOpts+'</select></label>'
+    +'<label>角色级别<input id="of_role" value="'+esc(o.role)+'"></label>'
+    +'<label>BIGO UID<input id="of_bigo" value="'+esc(o.bigo)+'"></label>'
+    +'<label>状态<select id="of_status"><option'+(o.status!=='离职'?' selected':'')+'>在职</option><option'+(o.status==='离职'?' selected':'')+'>离职</option></select></label>'
+    +'</div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:12px"><button class="btn ghost" id="oeC">取消</button><button class="btn" id="oeOK">确认</button></div></div>';
+  var mk=$('mgMask'); if(!mk){ mk=document.createElement('div'); mk.id='mgMask'; mk.className='mask'; document.body.appendChild(mk); }
+  mk.innerHTML=html; mk.style.display='flex';
+  $('oeX').onclick=function(){ mk.style.display='none'; };
+  $('oeC').onclick=function(){ mk.style.display='none'; };
+  $('oeOK').onclick=function(){
+    var name=$('of_name').value.trim();
+    if(!name){ alert('请填写运营姓名'); return; }
+    var rec={name:name, real:$('of_real').value.trim(), br:$('of_br').value, role:$('of_role').value.trim()||'普通运营', bigo:$('of_bigo').value.trim(), status:$('of_status').value};
+    if(i>=0) MG.operators[i]=rec; else MG.operators.push(rec);
+    mgSave(); logOp(i>=0?'修改':'新增','运营',(i>=0?'修改运营 ':'新增运营 ')+name); opRender(); mk.style.display='none';
+  };
+}
+
+/* ================= 总部分公司管理 ================= */
+function brRender(){
+  var list=MG.branches;
+  $('brCount').textContent='共 '+list.length+' 个总部分公司';
+  var h='<tr>'+['总部分公司名称','上级挂靠','城市','运营数量','账号','操作'].map(th).join('')+'</tr>';
+  list.forEach(function(b,i){
+    var ops=MG.operators.filter(function(o){ return o.br===b.name; }).length;
+    h+='<tr>'
+      +td('<b>'+esc(b.name||'-')+'</b>')
+      +td(esc(b.parent||'总部'))
+      +td(esc(b.city||'-'))
+      +td(ops)
+      +td(esc(b.acct||'-'))
+      +td('<button class="btn ghost sm" data-be="'+i+'">编辑</button> <button class="btn ghost sm" data-bd="'+i+'">删除</button>')
+      +'</tr>';
+  });
+  if(!list.length) h+='<tr><td colspan="6" class="hint">暂无总部分公司数据，点击「新增总部分公司」创建</td></tr>';
+  $('brTable').innerHTML=h;
+  $('brTable').querySelectorAll('[data-be]').forEach(function(b){ b.onclick=function(){ brForm(+b.getAttribute('data-be')); }; });
+  $('brTable').querySelectorAll('[data-bd]').forEach(function(b){ b.onclick=function(){ var i=+b.getAttribute('data-bd'); if(confirm('确定删除 '+MG.branches[i].name+'？')){ var x=MG.branches.splice(i,1)[0]; mgSave(); logOp('删除','总部分公司','删除 '+x.name); brRender(); } }; });
+}
+function brForm(i){
+  var b=i>=0?MG.branches[i]:{name:'',city:'',note:'',acct:''};
+  var html='<div class="md"><div class="md-head">'+(i>=0?'编辑总部分公司':'新增总部分公司')+'<button class="icon-btn" id="bfX" style="margin-left:auto">✕</button></div><div class="md-body" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+    +'<label>总部分公司名称<input id="bf_name" value="'+esc(b.name)+'"></label>'
+    +'<label>城市<input id="bf_city" value="'+esc(b.city)+'"></label>'
+    +'<label>账号（可登录名）<input id="bf_acct" value="'+esc(b.acct)+'"></label>'
+    +'<label>备注<input id="bf_note" value="'+esc(b.note)+'"></label>'
+    +'</div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:12px"><button class="btn ghost" id="bfC">取消</button><button class="btn" id="bfOK">确认</button></div></div>';
+  var mk=$('mgMask'); if(!mk){ mk=document.createElement('div'); mk.id='mgMask'; mk.className='mask'; document.body.appendChild(mk); }
+  mk.innerHTML=html; mk.style.display='flex';
+  $('bfX').onclick=function(){ mk.style.display='none'; };
+  $('bfC').onclick=function(){ mk.style.display='none'; };
+  $('bfOK').onclick=function(){
+    var name=$('bf_name').value.trim();
+    if(!name){ alert('请填写名称'); return; }
+    var rec={name:name, city:$('bf_city').value.trim(), note:$('bf_note').value.trim(), acct:$('bf_acct').value.trim(), parent:'总部'};
+    if(i>=0) MG.branches[i]=rec; else MG.branches.push(rec);
+    mgSave(); logOp(i>=0?'修改':'新增','总部分公司',(i>=0?'修改 ':'新增 ')+name); brRender(); opRender(); mk.style.display='none';
+  };
+}
+
+/* ================= 旗下挂靠 ================= */
+function afRender(){
+  var total=MG.branches.length+MG.affiliates.length;
+  $('afSum').innerHTML='<div class="kpi"><span>挂靠总数</span><b>'+total+'</b></div><div class="kpi"><span>直属下级</span><b>'+MG.branches.length+'</b></div><div class="kpi"><span>主播</span><b>'+rows.length+'</b></div><div class="kpi"><span>运营</span><b>'+MG.operators.length+'</b></div>';
+  var h='<tr>'+['挂靠名称','上级挂靠','负责人','主播','运营','直属下级','操作'].map(th).join('')+'</tr>';
+  MG.branches.forEach(function(b,i){
+    var ops=MG.operators.filter(function(o){ return o.br===b.name; });
+    var mine=rows.filter(function(r){ return r.branch===b.name; });
+    h+='<tr><td><b>🏢 '+esc(b.name)+'</b></td><td>'+esc(b.parent||'总部')+'</td><td>'+esc(b.note||'-')+'</td><td>'+mine.length+'</td><td>'+ops.length+'</td><td>'+ops.filter(function(o){return o.status!=='离职';}).length+'</td><td><button class="btn ghost sm" data-be="'+i+'">编辑</button></td></tr>';
+  });
+  MG.affiliates.forEach(function(a,i){
+    h+='<tr><td>🔗 '+esc(a.name)+'</td><td>'+esc(a.parent||'总部')+'</td><td>'+esc(a.owner||'-')+'</td><td>0</td><td>0</td><td>0</td><td><button class="btn ghost sm" data-afd="'+i+'">删除</button></td></tr>';
+  });
+  if(!h.includes('</tr><tr>')) h+='<tr><td colspan="7" class="hint">暂无挂靠，可「新增挂靠」或先在总部分公司管理创建分公司</td></tr>';
+  $('afTable').innerHTML=h;
+  $('afTable').querySelectorAll('[data-be]').forEach(function(b){ b.onclick=function(){ brForm(+b.getAttribute('data-be')); }; });
+  $('afTable').querySelectorAll('[data-afd]').forEach(function(b){ b.onclick=function(){ var i=+b.getAttribute('data-afd'); if(confirm('删除挂靠 '+MG.affiliates[i].name+'？')){ var x=MG.affiliates.splice(i,1)[0]; mgSave(); logOp('删除','挂靠','删除 '+x.name); afRender(); } }; });
+}
+function afAdd(){
+  var parents=['总部'].concat(MG.branches.map(function(b){ return b.name; }));
+  var html='<div class="md"><div class="md-head">新增挂靠<button class="icon-btn" id="afX" style="margin-left:auto">✕</button></div><div class="md-body" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+    +'<label>挂靠名称<input id="af_name"></label>'
+    +'<label>上级挂靠<select id="af_parent">'+parents.map(function(p){ return '<option>'+esc(p)+'</option>'; }).join('')+'</select></label>'
+    +'<label>负责人<input id="af_owner"></label>'
+    +'</div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:12px"><button class="btn ghost" id="afC">取消</button><button class="btn" id="afOK">确认</button></div></div>';
+  var mk=$('mgMask'); if(!mk){ mk=document.createElement('div'); mk.id='mgMask'; mk.className='mask'; document.body.appendChild(mk); }
+  mk.innerHTML=html; mk.style.display='flex';
+  $('afX').onclick=function(){ mk.style.display='none'; };
+  $('afC').onclick=function(){ mk.style.display='none'; };
+  $('afOK').onclick=function(){
+    var name=$('af_name').value.trim();
+    if(!name){ alert('请填写挂靠名称'); return; }
+    MG.affiliates.push({name:name, parent:$('af_parent').value, owner:$('af_owner').value.trim()});
+    mgSave(); logOp('新增','挂靠','新增挂靠 '+name); afRender(); mk.style.display='none';
+  };
+}
+
+/* ================= 用户管理 ================= */
+function usrRender(){
+  var list=MG.users;
+  $('usrCount').textContent='当前用户数：'+list.length;
+  var h='<tr>'+['姓名','用户名','手机号','角色','关联运营','操作'].map(th).join('')+'</tr>';
+  list.forEach(function(u,i){
+    h+='<tr><td>'+esc(u.name)+'</td><td>'+esc(u.username)+'</td><td>'+esc(u.phone||'-')+'</td><td>'+esc(u.role||'运营')+'</td><td>'+esc(u.op||'-')+'</td><td><button class="btn ghost sm" data-ue="'+i+'">编辑</button> <button class="btn ghost sm" data-ud="'+i+'">删除</button></td></tr>';
+  });
+  if(!list.length) h+='<tr><td colspan="6" class="hint">暂无用户，点击「新增用户」创建登录账号</td></tr>';
+  $('usrTable').innerHTML=h;
+  $('usrTable').querySelectorAll('[data-ue]').forEach(function(b){ b.onclick=function(){ usrForm(+b.getAttribute('data-ue')); }; });
+  $('usrTable').querySelectorAll('[data-ud]').forEach(function(b){ b.onclick=function(){ var i=+b.getAttribute('data-ud'); if(confirm('确定删除用户 '+MG.users[i].name+'？')){ var x=MG.users.splice(i,1)[0]; mgSave(); logOp('删除','用户','删除用户 '+x.name); usrRender(); } }; });
+}
+function usrForm(i){
+  var u=i>=0?MG.users[i]:{name:'',username:'',phone:'',pwd:'',role:'运营',op:''};
+  var opOpts=MG.operators.map(function(o){ return '<option'+(u.op===o.name?' selected':'')+'>'+esc(o.name)+'</option>'; }).join('');
+  var html='<div class="md"><div class="md-head">'+(i>=0?'编辑用户':'新增用户')+'<button class="icon-btn" id="ufX" style="margin-left:auto">✕</button></div><div class="md-body" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+    +'<label>姓名<input id="uf_name" value="'+esc(u.name)+'"></label>'
+    +'<label>用户名<input id="uf_username" value="'+esc(u.username)+'"></label>'
+    +'<label>手机号<input id="uf_phone" value="'+esc(u.phone)+'"></label>'
+    +'<label>密码<input id="uf_pwd" type="password" value="'+esc(u.pwd)+'" placeholder="留空不改"></label>'
+    +'<label>角色<select id="uf_role"><option>总部</option><option'+(u.role!=='总部'?' selected':'')+'>运营</option></select></label>'
+    +'<label>关联运营<select id="uf_op"><option value="">不关联</option>'+opOpts+'</select></label>'
+    +'</div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:12px"><button class="btn ghost" id="ufC">取消</button><button class="btn" id="ufOK">确认</button></div></div>';
+  var mk=$('mgMask'); if(!mk){ mk=document.createElement('div'); mk.id='mgMask'; mk.className='mask'; document.body.appendChild(mk); }
+  mk.innerHTML=html; mk.style.display='flex';
+  $('ufX').onclick=function(){ mk.style.display='none'; };
+  $('ufC').onclick=function(){ mk.style.display='none'; };
+  $('ufOK').onclick=function(){
+    var name=$('uf_name').value.trim(), username=$('uf_username').value.trim();
+    if(!name||!username){ alert('姓名和用户名必填'); return; }
+    var rec={name:name, username:username, phone:$('uf_phone').value.trim(), pwd:$('uf_pwd').value||u.pwd, role:$('uf_role').value, op:$('uf_op').value};
+    if(i>=0) MG.users[i]=rec; else MG.users.push(rec);
+    mgSave(); logOp(i>=0?'修改':'新增','用户',(i>=0?'修改用户 ':'新增用户 ')+name); usrRender(); mk.style.display='none';
+  };
+}
+
+/* ================= 数据排行榜 ================= */
+var rkTab='主播排行榜', rkMetric='beans';
+function rkRender(){
+  var top=(function(list){ var m={beans:0,hours:0,days:0,ov:0}; list.forEach(function(x){ if(n(x.tickets)>m.beans){m.beans=n(x.tickets);m.bn=x.name;m.bu=x.uid;} if(n(x.hours)>m.hours){m.hours=n(x.hours);m.hn=x.name;m.hu=x.uid;} var d=n(x.days); if(d>m.days){m.days=d;m.dn=x.name;m.du=x.uid;} var o=n(x.ovPct); if(o>m.ov){m.ov=o;m.on=x.name;m.ou=x.uid;} }); return m; })(rows);
+  $('rkSum').innerHTML='<div class="kpi"><span>本月最高流水主播</span><b>'+(top.bn?esc(top.bn):'-')+'<small>'+fmt(top.beans,0)+' 金豆</small></b></div>'
+    +'<div class="kpi"><span>本月最高时长主播</span><b>'+(top.hn?esc(top.hn):'-')+'<small>'+fmt(top.hours,1)+' h</small></b></div>'
+    +'<div class="kpi"><span>本月开播天数最多</span><b>'+(top.dn?esc(top.dn):'-')+'<small>'+fmt(top.days,0)+' 天</small></b></div>'
+    +'<div class="kpi"><span>本月海外豆最高</span><b>'+(top.on?esc(top.on):'-')+'<small>'+(top.ov*100).toFixed(1)+'%</small></b></div>';
+  $('rkTabs').innerHTML=['主播排行榜','运营排行榜','分公司排行榜'].map(function(m){ return '<span class="seg-btn'+(rkTab===m?' on':'')+'" data-rt="'+m+'">'+m+'</span>'; }).join('');
+  $('rkTabs').querySelectorAll('[data-rt]').forEach(function(b){ b.onclick=function(){ rkTab=b.getAttribute('data-rt'); rkRender(); }; });
+  var h='<tr>'+['排名','名称','BIGO ID','运营','分公司','流水','开播时长'].map(th).join('')+'</tr>';
+  var metricName={beans:'流水',hours:'时长',days:'天数',ov:'海外豆'}[rkMetric];
+  var limit=+$('rkLimit').value||10;
+  if(rkTab==='主播排行榜'){
+    var list=rows.slice().sort(function(a,b){ return rkMetric==='beans'?n(b.tickets)-n(a.tickets):rkMetric==='hours'?n(b.hours)-n(a.hours):rkMetric==='days'?n(b.days)-n(a.days):n(b.ovPct)-n(a.ovPct); });
+    list.slice(0,limit).forEach(function(r,i){
+      var medal=['🥇','🥈','🥉'][i]||(i+1);
+      h+='<tr>'+td(medal)+td('<b>'+esc(r.name||'-')+'</b>')+td(esc(r.bigo||'-'))+td(esc(r.agent||'-'))+td(esc(r.branch||'-'))+td(fmt(n(r.tickets),0))+td(fmt(n(r.hours),1))+'</tr>';
+    });
+    if(!rows.length) h+='<tr><td colspan="7" class="hint">暂无数据，请先导入主播数据</td></tr>';
+  } else {
+    var groups={};
+    var keyFn=rkTab==='运营排行榜'?function(r){ return r.agent||'未分配'; } : function(r){ return r.branch||'未分配'; };
+    rows.forEach(function(r){
+      var k=keyFn(r); if(!groups[k]) groups[k]={name:k,beans:0,hours:0,days:0,count:0,bigo:'-'};
+      groups[k].beans+=n(r.tickets); groups[k].hours+=n(r.hours); groups[k].days+=n(r.days); groups[k].count++;
+    });
+    var gs=Object.keys(groups).map(function(k){ return groups[k]; }).sort(function(a,b){ return rkMetric==='beans'?b.beans-a.beans:rkMetric==='hours'?b.hours-a.hours:rkMetric==='days'?b.days-a.days:b.beans-a.beans; });
+    gs.slice(0,limit).forEach(function(g,i){
+      var medal=['🥇','🥈','🥉'][i]||(i+1);
+      var v=rkMetric==='beans'?fmt(g.beans,0)+' 金豆':rkMetric==='hours'?fmt(g.hours,1)+' h':rkMetric==='days'?fmt(g.days,0)+' 天':'-';
+      h+='<tr>'+td(medal)+td('<b>'+esc(g.name)+'</b>')+td('<span class="hint">'+g.count+' 人</span>')+td('-')+td('-')+td(v)+td(fmt(g.hours,1))+'</tr>';
+    });
+    if(!gs.length) h+='<tr><td colspan="7" class="hint">暂无数据，请先导入主播数据</td></tr>';
+  }
+  $('rkTable').innerHTML=h;
+}
+
+/* ================= 操作日志 ================= */
+var logType='';
+function logRender(){
+  var list=MG.logs.filter(function(l){ return !logType||l.type===logType; });
+  $('logCount').textContent='共 '+list.length+' 条';
+  var h='<tr>'+['时间','操作用户','操作类型','模型','描述','IP'].map(th).join('')+'</tr>';
+  list.slice(0,100).forEach(function(l){
+    h+='<tr><td>'+esc(l.t)+'</td><td>'+esc(l.user)+'</td><td><span class="tag">'+esc(l.type)+'</span></td><td>'+esc(l.model)+'</td><td style="text-align:left">'+esc(l.desc)+'</td><td>'+esc(l.ip)+'</td></tr>';
+  });
+  if(!list.length) h+='<tr><td colspan="6" class="hint">暂无操作日志</td></tr>';
+  $('logTable').innerHTML=h;
+}
+
+/* ================= 数据对比 ================= */
+var cmpMode='整体概览', cmpPeriod=0;
+function cmpRender(){
+  var modeNames=['整体概览','主播对比','运营对比','排行榜'];
+  $('cmpMode').innerHTML=modeNames.map(function(m){ return '<span class="seg-btn'+(cmpMode===m?' on':'')+'" data-cm="'+m+'">'+m+'</span>'; }).join('');
+  $('cmpMode').querySelectorAll('[data-cm]').forEach(function(b){ b.onclick=function(){ cmpMode=b.getAttribute('data-cm'); cmpRender(); }; });
+  var cur=curMonth(), pre=prevMonth(cur);
+  var periods=[['本月','本期：'+cur+'　对比期：'+pre],['上月','本期：'+pre+'　对比期：'+prevMonth(pre)],['近7天','本期：近7天（快照）　对比期：'+pre],['近30天','本期：近30天　对比期：'+pre]];
+  $('cmpPeriod').innerHTML=periods.map(function(p,i){ return '<span class="seg-btn'+(cmpPeriod===i?' on':'')+'" data-cp="'+i+'">'+p[0]+'<small>'+p[1]+'</small></span>'; }).join('');
+  $('cmpPeriod').querySelectorAll('[data-cp]').forEach(function(b){ b.onclick=function(){ cmpPeriod=+b.getAttribute('data-cp'); cmpRender(); }; });
+  var body=$('cmpBody');
+  if(!rows.length){ body.innerHTML='<div class="hint" style="padding:20px">暂无主播数据，请先在「主播薪资结算」导入官方月数据；导入后可点「系统设置 → 保存本月快照」积累历史，用于环比。</div>'; return; }
+  var thisM=cmpPeriod===0?cur:cmpPeriod===1?pre:cur;
+  var lastM=cmpPeriod===0?pre:cmpPeriod===1?prevMonth(pre):pre;
+  var A=histOrNow(thisM), B=histOrNow(lastM);
+  if(!A){ body.innerHTML='<div class="hint" style="padding:20px">本期（'+thisM+'）无快照数据。请到「系统设置」点「保存本月快照」。</div>'; return; }
+  if(cmpMode==='整体概览') body.innerHTML=cmpOverview(A,B);
+  else if(cmpMode==='主播对比') body.innerHTML=cmpPick(A,B,'anchor');
+  else if(cmpMode==='运营对比') body.innerHTML=cmpPick(A,B,'op');
+  else body.innerHTML=cmpRank(A,B);
+  bindCmpSel();
+}
+function cmpOverview(A,B){
+  var a=aggRows(A), b=B?aggRows(B):null;
+  var rowsHtml=[
+    ['总流水（金豆）',fmt(a.beans,0), b?fmt(b.beans,0):'--', pctHtml(a.beans,b?b.beans:0)],
+    ['官方总时长（h）',fmt(a.hoursOff,1), b?fmt(b.hoursOff,1):'--', pctHtml(a.hoursOff,b?b.hoursOff:0)],
+    ['系统总时长（h）',fmt(a.hoursSys,1), b?fmt(b.hoursSys,1):'--', pctHtml(a.hoursSys,b?b.hoursSys:0)],
+    ['海外豆（金豆）',fmt(a.ovBeans,0), b?fmt(b.ovBeans,0):'--', pctHtml(a.ovBeans,b?b.ovBeans:0)],
+    ['有效主播（人）',a.valid, b?b.valid:'--', pctHtml(a.valid,b?b.valid:0)],
+    ['预警主播（人）',a.warn, b?b.warn:'--', pctHtml(a.warn,b?b.warn:0)],
+    ['新签主播（人）',a.newSign, b?b.newSign:'--', pctHtml(a.newSign,b?b.newSign:0)]
+  ].map(function(r){ return '<tr>'+td('<b>'+r[0]+'</b>')+td('<b>'+r[1]+'</b>')+td(r[2])+td(r[3])+'</tr>'; }).join('');
+  return '<div class="tbl-box"><table><tr>'+['指标','本期','对比期','环比'].map(th).join('')+'</tr>'+rowsHtml+'</table></div>';
+}
+function cmpPick(A,B,kind){
+  var opts;
+  if(kind==='anchor') opts=rows.map(function(r,i){ return '<option value="'+i+'">'+esc(r.name||r.uid)+'（'+esc(r.uid)+'）</option>'; }).join('');
+  else opts=MG.operators.map(function(o,i){ return '<option value="'+i+'">'+esc(o.name)+'</option>'; }).join('');
+  var html='<div style="margin:10px 0"><select id="cmpSel" style="background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 10px;font-size:13px;min-width:240px"><option value="">请选择'+(kind==='anchor'?'主播':'运营')+'</option>'+opts+'</select></div><div id="cmpSelOut"></div>';
+  return html;
+}
+function bindCmpSel(){
+  var sel=$('cmpSel'); if(!sel) return;
+  sel.onchange=function(){
+    var idx=+sel.value, out=$('cmpSelOut');
+    if(isNaN(idx)||!sel.value){ out.innerHTML=''; return; }
+    var cur=curMonth(), pre=prevMonth(cur);
+    var thisM=cmpPeriod===0?cur:cmpPeriod===1?pre:cur;
+    var lastM=cmpPeriod===0?pre:cmpPeriod===1?prevMonth(pre):pre;
+    var A=histOrNow(thisM), B=histOrNow(lastM);
+    var kind=cmpMode==='主播对比'?'anchor':'op';
+    var a,b;
+    if(kind==='anchor'){ a=rows[idx]; b=B?B.filter(function(x){ return String(x.uid)===String(a.uid)&&String(x.name)===String(a.name); })[0]:null; }
+    else { a=MG.operators[idx]; b=null; }
+    if(!a){ out.innerHTML=''; return; }
+    if(kind==='anchor'){
+      var ra=aggRows([a]), rb=b?aggRows([b]):null;
+      out.innerHTML='<div class="tbl-box"><table><tr>'+['指标','本期','对比期','环比'].map(th).join('')+'</tr>'
+        +[['总流水',fmt(ra.beans,0),rb?fmt(rb.beans,0):'--',pctHtml(ra.beans,rb?rb.beans:0)],
+          ['官方时长',fmt(ra.hoursOff,1),rb?fmt(rb.hoursOff,1):'--',pctHtml(ra.hoursOff,rb?rb.hoursOff:0)],
+          ['海外豆',fmt(ra.ovBeans,0),rb?fmt(rb.ovBeans,0):'--',pctHtml(ra.ovBeans,rb?rb.ovBeans:0)],
+          ['开播天数',fmt(ra.count>0?n(a.days):0,0),rb?fmt(n(b.days),0):'--','--'],
+          ['状态',ancStatus(a),b?'--':'--','--']].map(function(r){ return '<tr>'+td('<b>'+r[0]+'</b>')+td(r[1])+td(r[2])+td(r[3])+'</tr>'; }).join('')
+        +'</table></div>';
+    } else {
+      var mine=A.filter(function(x){ return String(x.agent||'')===a.name; });
+      var ob=B?B.filter(function(x){ return String(x.agent||'')===a.name; }):[];
+      var ma=aggRows(mine), mb=ob.length?aggRows(ob):null;
+      out.innerHTML='<div class="tbl-box"><table><tr>'+['指标','本期','对比期','环比'].map(th).join('')+'</tr>'
+        +[['名下主播',mine.length,mb?mb.count:0,pctHtml(mine.length,mb?mb.count:0)],
+          ['总流水',fmt(ma.beans,0),mb?fmt(mb.beans,0):'--',pctHtml(ma.beans,mb?mb.beans:0)],
+          ['总时长',fmt(ma.hours,1),mb?fmt(mb.hours,1):'--',pctHtml(ma.hours,mb?mb.hours:0)],
+          ['有效主播',ma.valid,mb?mb.valid:0,pctHtml(ma.valid,mb?mb.valid:0)],
+          ['预警主播',ma.warn,mb?mb.warn:0,pctHtml(ma.warn,mb?mb.warn:0)]].map(function(r){ return '<tr>'+td('<b>'+r[0]+'</b>')+td(r[1])+td(r[2])+td(r[3])+'</tr>'; }).join('')
+        +'</table></div>';
+    }
+  };
+}
+function cmpRank(A,B){
+  var n=5;
+  var list=A.slice().sort(function(x,y){ return n(y.tickets)-n(x.tickets); }).slice(0,n);
+  var blist=B?B.slice().sort(function(x,y){ return n(y.tickets)-n(x.tickets); }):[];
+  function findB(x){ var i=blist.findIndex(function(b){ return String(b.uid)===String(x.uid)&&String(b.name)===String(x.name); }); return i>=0?i+1:null; }
+  var h='<tr>'+['本期排名','对比排名','主播名称','BIGO ID','运营','分公司','本期流水','对比期流水','变化值','环比'].map(th).join('')+'</tr>';
+  list.forEach(function(r,i){
+    var rankB=findB(r);
+    var bRec=rankB?blist[rankB-1]:null;
+    var bv=bRec?n(bRec.tickets):0;
+    h+='<tr><td>'+(i+1)+'</td><td>'+(rankB||'--')+'</td><td><b>'+esc(r.name||'-')+'</b></td><td>'+esc(r.bigo||'-')+'</td><td>'+esc(r.agent||'-')+'</td><td>'+esc(r.branch||'-')+'</td><td>'+fmt(n(r.tickets),0)+'</td><td>'+(bRec?fmt(bv,0):'--')+'</td><td>'+fmt(n(r.tickets)-bv,0)+'</td><td>'+pctHtml(n(r.tickets),bv)+'</td></tr>';
+  });
+  return '<div class="tbl-box"><table>'+h+'</table></div>';
+}
+
+/* ================= 系统设置 ================= */
+function setRender(){
+  $('setFx').value=$('fx').value;
+  $('setUser').innerHTML=FIN_USERS.map(function(u){ return '<option'+(u===finUser?' selected':'')+'>'+u+'</option>'; }).join('');
+  var hs=Object.keys(MG.history).sort().reverse();
+  $('setHist').innerHTML='<h3 style="margin:12px 0 6px">📦 已保存快照（'+hs.length+' 个月）</h3><div style="display:flex;gap:8px;flex-wrap:wrap">'
+    +(hs.length?hs.map(function(m){ return '<span class="tag">'+m+' · '+MG.history[m].length+' 人</span>'; }).join(''):'<span class="hint">暂无快照，点「保存本月快照」开始积累历史</span>')
+    +'</div>';
+}
+
+/* ================= 使用手册 ================= */
+function guideRender(){
+  $('guideBody').innerHTML=''
+    +'<h3>快速开始（建议按顺序）</h3>'
+    +'<ol style="line-height:2">'
+    +'<li>「主播薪资结算」页：导入官方月数据 xlsx/csv，自动核算主播薪资，与官方结算就地核对。</li>'
+    +'<li>「主播政策 / 平台政策」页：配置档位薪资、全勤、无效豆与官方佣金规则。</li>'
+    +'<li>「财务记账」页：记人员工资、房租水电、各项开销；付款人/垫付/多账户/审批入账留痕。</li>'
+    +'<li>「运营薪资」页：算运营工资，可一键转入财务账（待审批）。</li>'
+    +'<li>「数据中台」：数据对比（本期 vs 对比期）、主播/运营/分公司管理、排行榜、操作日志。</li>'
+    +'</ol>'
+    +'<h3>数据对比</h3><p style="line-height:1.8">整体概览：总流水、官方/系统时长、海外豆、有效/预警/新签主播的本期 vs 对比期环比。主播对比/运营对比：选中单个主播或运营看两期指标。排行榜：本期 top5 与对比期排名对比。对比期数据来自「系统设置 → 保存本月快照」，建议每月导入后保存一次。</p>'
+    +'<h3>主播管理</h3><p style="line-height:1.8">状态自动判定：新签主播（本月签约未开播）、待开播（无流水）、有效主播（有开播）、预警（快流失：本月 0 流水或超过 30 天未开播）、流失。点「编辑」可补粉丝/经纪人/分公司/最近开播/合作起止/签约类型，点「计算主播状态」刷新状态，点「导出数据」下载 CSV。</p>'
+    +'<h3>运营管理 / 总部分公司 / 旗下挂靠</h3><p style="line-height:1.8">运营管理维护运营档案，自动统计名下主播数、在播/预警/流失数与本月总流水。总部分公司管理搭建"总部→分公司"组织，分公司名称会出现在运营表单下拉里。旗下挂靠汇总挂靠总数、直属下级、主播、运营。</p>'
+    +'<h3>用户管理</h3><p style="line-height:1.8">维护登录账号与角色（总部/运营）。本系统为单机版，角色用于标识权限划分；多人协同可后续接入云端。</p>'
+    +'<h3>操作日志</h3><p style="line-height:1.8">自动记录系统内新增/修改/删除/计算/导入/导出/审批/入账等关键操作，最多保留 500 条，可按类型筛选。</p>'
+    +'<h3>系统设置</h3><p style="line-height:1.8">保存本月快照（数据对比环比用）、导出/导入全部数据备份、汇率与当前记账人。注意：本系统为本地版，不直连 BIGO 官方接口，主播数据通过 xlsx/csv 导入。</p>'
+    +'<div class="hint" style="margin-top:14px">本系统参考 bigo.ink「公会数据运营中台」结构还原，主播薪资计算逻辑保持原版不变。</div>';
+}
+
+/* ================= 订阅续费（自建免费版说明） ================= */
+function subRender(){
+  $('subSum').innerHTML='<div class="kpi"><span>当前套餐</span><b>小红帽结算后台 · 自建版<small>免费 · 无到期</small></b></div>'
+    +'<div class="kpi"><span>数据存储</span><b>本机浏览器<small>localStorage</small></b></div>'
+    +'<div class="kpi"><span>参考系统</span><b>bigo.ink 全功能版<small>¥1200/月</small></b></div>'
+    +'<div class="kpi"><span>已保存快照</span><b>'+Object.keys(MG.history).length+' 个月<small>供数据对比</small></b></div>';
+}
+
+/* ================= 数据中台初始化 ================= */
+function mgInit(){
+  mgLoad();
+  if(!MG.users.length){ MG.users.push({name:'小红帽管理员', username:'admin', phone:'', pwd:'', role:'总部', op:'-'}); mgSave(); }
+  /* 绑事件 */
+  var ancSearch=$('ancSearch'); ancSearch.oninput=function(){ ancQ.k=this.value; ancRender(); };
+  var ancAgent=$('ancAgent'); ancAgent.oninput=function(){ ancQ.agent=this.value; ancRender(); };
+  var ancBranch=$('ancBranch'); ancBranch.oninput=function(){ ancQ.branch=this.value; ancRender(); };
+  $('ancStatus').onchange=function(){ ancQ.status=this.value; ancRender(); };
+  $('ancReset').onclick=function(){ ancQ={k:'',agent:'',branch:'',status:''}; ancSearch.value=''; ancAgent.value=''; ancBranch.value=''; $('ancStatus').value=''; ancRender(); };
+  $('ancCalcStatus').onclick=function(){ ancRender(); logOp('计算','主播','计算主播状态（'+rows.length+' 名）'); };
+  $('ancSync').onclick=function(){ loadRows(); ancRender(); logOp('同步','主播','同步主播列表（'+rows.length+' 名）'); };
+  $('ancExport').onclick=function(){
+    var csv='uid,名称,BIGO ID,粉丝,经纪人,分公司,政策,档位,本月流水,开播时长,开播天数,最近开播,合作开始,合作结束,签约类型,状态,预警\n';
+    rows.forEach(function(r){ csv+=[r.uid,r.name,r.bigo,r.fans||'',r.agent||'',r.branch||'',r.policy,r.level||'',n(r.tickets),n(r.hours),n(r.days),r.lastLive||'',r.startDate||'',r.endDate||'',r.signType||'',ancStatus(r),ancWarnLevel(r)].map(function(v){ return '"'+String(v).replace(/"/g,'""')+'"'; }).join(',')+'\n'; });
+    downloadCSV('主播列表.csv',csv); logOp('导出','主播','导出主播列表（'+rows.length+' 名）');
+  };
+  $('opAdd').onclick=function(){ opForm(-1); };
+  $('opExport').onclick=function(){
+    var csv='运营姓名,真实姓名,分公司,角色级别,BIGO UID,状态,主播数量\n';
+    MG.operators.forEach(function(o){ var mine=rows.filter(function(r){ return String(r.agent||'')===o.name; }).length; csv+='"'+o.name+'","'+(o.real||'')+'","'+(o.br||'')+'","'+(o.role||'')+'","'+(o.bigo||'')+'","'+(o.status||'')+'","'+mine+'"\n'; });
+    downloadCSV('运营列表.csv',csv); logOp('导出','运营','导出运营列表');
+  };
+  $('brAdd').onclick=function(){ brForm(-1); };
+  $('afAdd').onclick=afAdd;
+  $('afRefresh').onclick=function(){ afRender(); logOp('刷新','挂靠','刷新挂靠层级'); };
+  $('usrAdd').onclick=function(){ usrForm(-1); };
+  $('rkMetric').onchange=function(){ rkMetric=this.value; rkRender(); };
+  $('rkLimit').onchange=rkRender;
+  $('logType').onchange=function(){ logType=this.value; logRender(); };
+  $('logClear').onclick=function(){ if(confirm('确定清空全部操作日志？')){ MG.logs=[]; mgSave(); logRender(); } };
+  $('setFx').oninput=function(){ var v=parseFloat(this.value); if(!isNaN(v)&&v>0){ $('fx').value=this.value; renderSettle(); } };
+  $('setUser').onchange=function(){ finUser=this.value; if($('finUser')) $('finUser').value=this.value; setRender(); };
+  $('setSnapshot').onclick=function(){ if(!rows.length){ alert('当前没有主播数据，无法保存快照'); return; } var m=snapNow(); alert('已保存 '+m+' 快照（'+rows.length+' 名主播），可到「数据对比」查看环比'); setRender(); };
+  $('setBackup').onclick=function(){
+    var data={rows:rows, CFG:CFG, MG:MG, fin:fin, ops:ops, accts:finAccts(), ver:26};
+    downloadCSV('小红帽后台备份.json',JSON.stringify(data,null,1)); logOp('导出','系统','导出全部数据备份');
+  };
+  $('setRestore').onclick=function(){ $('setFile').click(); };
+  $('setFile').onchange=function(){
+    var f=this.files[0]; if(!f) return;
+    var rd=new FileReader();
+    rd.onload=function(){
+      try{
+        var d=JSON.parse(rd.result);
+        if(d.rows&&Array.isArray(d.rows)){ rows=d.rows; saveRows(); }
+        if(d.CFG){ CFG=d.CFG; saveCfg(); }
+        if(d.MG){ MG=d.MG; mgSave(); }
+        if(d.fin&&Array.isArray(d.fin)){ fin=d.fin; finSave(); }
+        if(d.ops&&Array.isArray(d.ops)){ ops=d.ops; opsSave(); }
+        if(d.accts&&Array.isArray(d.accts)){ localStorage.setItem('xhm_accts_v1',JSON.stringify(d.accts)); }
+        renderSettle(); setRender(); logOp('导入','系统','从备份恢复全部数据');
+        alert('备份恢复成功！已覆盖当前数据。');
+      }catch(e){ alert('备份文件解析失败：'+e.message); }
+    };
+    rd.readAsText(f);
+    this.value='';
+  };
+  /* 各页首次渲染 */
+  ancRender(); opRender(); brRender(); afRender(); usrRender(); rkRender(); logRender(); setRender(); guideRender();
+}
+mgInit();
 </script>
 </body>
 </html>
