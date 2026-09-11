@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>小红帽代理招募 · 主播创业孵化器</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #FAFAFA;
+  color: #1a1a1a;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 480px; margin: 0 auto; background: #fff; }
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, #C62828 0%, #8E0000 100%);
+  color: #fff;
+  padding: 60px 24px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 240px; height: 240px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+.hero-tag {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+.hero h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+  letter-spacing: -0.5px;
+}
+.hero-sub {
+  font-size: 15px;
+  opacity: 0.95;
+  position: relative;
+  z-index: 1;
+  font-weight: 300;
+}
+.hero-divider {
+  width: 60px;
+  height: 3px;
+  background: #FFD700;
+  margin: 24px auto;
+  position: relative;
+  z-index: 1;
+}
+.hero-hook {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 8px;
+  position: relative;
+  z-index: 1;
+}
+.hero-bonus {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 10px 20px;
+  background: #FFD700;
+  color: #8E0000;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Section */
+.section { padding: 40px 24px; }
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+  text-align: center;
+}
+.section-sub {
+  font-size: 13px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.section-line {
+  width: 40px;
+  height: 3px;
+  background: #C62828;
+  margin: 0 auto 24px;
+}
+
+/* Pain Points */
+.pain-list { display: flex; flex-direction: column; gap: 12px; }
+.pain-item {
+  padding: 16px 20px;
+  background: #FFF8E1;
+  border-left: 3px solid #FFA000;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #5D4037;
+}
+
+/* Promise */
+.promise-box {
+  background: linear-gradient(135deg, #C62828 0%, #8E0000 100%);
+  color: #fff;
+  padding: 32px 24px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 24px 0;
+}
+.promise-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.promise-list {
+  text-align: left;
+  font-size: 15px;
+  font-weight: 300;
+}
+.promise-list li {
+  list-style: none;
+  padding: 6px 0;
+  padding-left: 24px;
+  position: relative;
+}
+.promise-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #FFD700;
+  font-weight: 700;
+}
+
+/* Pricing Cards */
+.pricing { padding: 0 0; }
+.pricing-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+.pricing-card {
+  border: 1.5px solid #E0E0E0;
+  border-radius: 12px;
+  padding: 20px;
+  background: #fff;
+  position: relative;
+  transition: transform 0.2s;
+}
+.pricing-card.featured {
+  border-color: #C62828;
+  border-width: 2px;
+  background: linear-gradient(135deg, #FFEBEE 0%, #FFFFFF 100%);
+  box-shadow: 0 4px 20px rgba(198,40,40,0.1);
+}
+.pricing-card.featured::before {
+  content: '★ 旗舰推荐';
+  position: absolute;
+  top: -10px;
+  right: 16px;
+  background: #C62828;
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.pricing-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+.pricing-tag {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 12px;
+}
+.pricing-price {
+  font-size: 32px;
+  font-weight: 700;
+  color: #C62828;
+  margin-bottom: 4px;
+}
+.pricing-price small { font-size: 14px; font-weight: 400; color: #666; }
+.pricing-list {
+  margin-top: 16px;
+  border-top: 1px dashed #E0E0E0;
+  padding-top: 12px;
+}
+.pricing-list-item {
+  font-size: 13px;
+  color: #444;
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+}
+.pricing-list-item::before {
+  content: '';
+  width: 4px; height: 4px;
+  background: #C62828;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.pricing-target {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #888;
+  background: #F5F5F5;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+/* 3 Month Coaching */
+.coaching {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #fff;
+  padding: 32px 24px;
+  border-radius: 12px;
+  margin: 24px 0;
+}
+.coaching-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.coaching-subtitle {
+  font-size: 13px;
+  opacity: 0.8;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.coaching-month {
+  background: rgba(255,255,255,0.05);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  border-left: 3px solid #FFD700;
+}
+.coaching-month h4 {
+  font-size: 15px;
+  color: #FFD700;
+  margin-bottom: 8px;
+}
+.coaching-month ul {
+  list-style: none;
+  font-size: 13px;
+  opacity: 0.9;
+}
+.coaching-month li {
+  padding: 3px 0;
+  padding-left: 18px;
+  position: relative;
+}
+.coaching-month li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #FFD700;
+}
+.coaching-target {
+  text-align: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+}
+.coaching-target strong { color: #FFD700; }
+
+/* 16 Empowerments */
+.emp-cat {
+  margin: 20px 0 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+.emp-cat.c1 { background: #1a1a1a; }
+.emp-cat.c2 { background: #2E7D32; }
+.emp-cat.c3 { background: #B26A00; }
+.emp-cat.c4 { background: #C62828; }
+.emp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+.emp-card {
+  padding: 14px 12px;
+  background: #FAFAFA;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #F0F0F0;
+}
+.emp-icon {
+  width: 32px; height: 32px;
+  margin: 0 auto 8px;
+  background: #C62828;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+.emp-title { font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+.emp-desc { font-size: 10px; color: #666; line-height: 1.4; }
+
+/* Settlement Box */
+.settle-box {
+  background: linear-gradient(135deg, #FAEEDA 0%, #FFF8E1 100%);
+  border: 2px solid #BA7517;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 16px;
+}
+.settle-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #854F0B;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.settle-list {
+  list-style: none;
+  font-size: 13px;
+  color: #5D4037;
+}
+.settle-list li {
+  padding: 6px 0;
+  padding-left: 24px;
+  position: relative;
+}
+.settle-list li::before {
+  content: '⚖';
+  position: absolute;
+  left: 0;
+  color: #BA7517;
+  font-weight: 700;
+}
+.settle-list li strong { color: #C62828; }
+
+/* Trust Section */
+.trust-box {
+  background: #F5F5F5;
+  padding: 24px;
+  border-radius: 12px;
+  margin-top: 24px;
+}
+.trust-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.trust-item:last-child { margin-bottom: 0; }
+.trust-num {
+  width: 24px; height: 24px;
+  background: #C62828;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+.trust-text { font-size: 13px; color: #444; line-height: 1.5; }
+.trust-text strong { color: #C62828; }
+
+/* Referral Table */
+.ref-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13px; }
+.ref-table th { background: #1a1a1a; color: #fff; padding: 10px 8px; text-align: left; font-weight: 600; }
+.ref-table td { padding: 10px 8px; border-bottom: 1px solid #E0E0E0; vertical-align: top; }
+.ref-table tr:nth-child(even) { background: #FAFAFA; }
+.ref-table .hl { color: #C62828; font-weight: 700; }
+
+/* FAQ */
+.faq-item {
+  border-bottom: 1px solid #EEE;
+  padding: 16px 0;
+}
+.faq-q {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+}
+.faq-q::before { content: 'Q'; color: #C62828; font-weight: 700; margin-right: 6px; }
+.faq-a {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+}
+.faq-a::before { content: 'A'; color: #1a1a1a; font-weight: 700; margin-right: 6px; }
+
+/* CTA Section */
+.cta-section {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #fff;
+  padding: 48px 24px;
+  text-align: center;
+}
+.cta-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.cta-sub {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+.cta-button {
+  display: inline-block;
+  background: #C62828;
+  color: #fff;
+  padding: 16px 48px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  margin: 8px 0;
+  box-shadow: 0 6px 20px rgba(198,40,40,0.4);
+  transition: transform 0.2s;
+}
+.cta-button:hover { transform: translateY(-2px); }
+.cta-qr {
+  width: 160px;
+  height: 160px;
+  background: #fff;
+  margin: 24px auto;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #999;
+}
+.cta-note {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 16px;
+}
+
+/* Footer */
+.footer {
+  background: #1a1a1a;
+  color: #999;
+  padding: 24px;
+  text-align: center;
+  font-size: 12px;
+}
+.footer div { padding: 4px 0; }
+
+/* Stats Counter */
+.stats {
+  display: flex;
+  justify-content: space-around;
+  background: #fff;
+  padding: 20px;
+  margin: -20px 24px 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 2;
+}
+.stat-item { text-align: center; }
+.stat-num { font-size: 22px; font-weight: 700; color: #C62828; }
+.stat-label { font-size: 11px; color: #888; margin-top: 4px; }
+
+/* Market Opportunity */
+.market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+.market-card {
+  padding: 16px 14px;
+  background: #FFF8F8;
+  border: 1px solid #FFE0E0;
+  border-radius: 10px;
+}
+.market-card .m-title { font-size: 14px; font-weight: 700; color: #C62828; margin-bottom: 6px; }
+.market-card .m-desc { font-size: 12px; color: #555; line-height: 1.55; }
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+  .hero h1 { font-size: 28px; }
+  .stats { margin: -20px 16px 0; }
+  .section { padding: 32px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="hero-tag">2026 限时招募 · 华语区大扩容</span>
+    <h1>小红帽代理招募</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-hook">月入十万的直播生意<br>我们教你复制</p>
+    <p class="hero-sub">主播创业孵化器 · 30 名主播交付 · 净返点 95-97%</p>
+    <div class="hero-bonus">🔥 100 万金豆承诺 + 3 个月陪跑 · 写入合同</div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-num">95-97%</div>
+      <div class="stat-label">加盟商分成</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">30名</div>
+      <div class="stat-label">主播分月交付</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100万</div>
+      <div class="stat-label">金豆收益承诺</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">合同</div>
+      <div class="stat-label">法律兜底</div>
+    </div>
+  </div>
+
+  <!-- MARKET OPPORTUNITY -->
+  <section class="section">
+    <h2 class="section-title">为什么是 2026？</h2>
+    <p class="section-sub">海外直播红利期 + 华语区大扩容，窗口已打开</p>
+    <div class="market-grid">
+      <div class="market-card">
+        <div class="m-title">🌍 华语区大扩容</div>
+        <div class="m-desc">新加坡、马来西亚、文莱、美加、日韩、澳新、英法德意、北欧、西葡等 16+ 国家/地区纳入华语区，语言零障碍、流量新蓝海</div>
+      </div>
+      <div class="market-card">
+        <div class="m-title">🚀 主播红利期</div>
+        <div class="m-desc">TK 美区封禁大陆市场，海量成熟主播转入 BIGO，招主播更容易、起量更快</div>
+      </div>
+      <div class="market-card">
+        <div class="m-title">💵 海外付费生态</div>
+        <div class="m-desc">小费文化成熟、付费意识强，美金结算、提成高；没有熟人圈不尴尬，市场不内卷更好播</div>
+      </div>
+      <div class="market-card">
+        <div class="m-title">📈 平台流量扶持</div>
+        <div class="m-desc">3 个月流量保护期，首月保底 20 万曝光，新人主播 300% 流量加权，叠加代理扶持政策</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAIN POINTS -->
+  <section class="section">
+    <h2 class="section-title">想做 BIGO 挂靠？这些坑你必须知道</h2>
+    <div class="section-line"></div>
+    <div class="pain-list">
+      <div class="pain-item">🚫 <b>口头承诺扶持</b> —— "包你月流水 100 万"，交钱后失联</div>
+      <div class="pain-item">🚫 <b>资源画饼</b> —— 许诺推主播、给扶持，实际什么都没有</div>
+      <div class="pain-item">🚫 <b>结算模糊</b> —— 结算规则含糊，随意压款克扣</div>
+      <div class="pain-item">🚫 <b>收钱放养</b> —— 收了加盟费就撒手不管，没人带教</div>
+    </div>
+    <div class="promise-box">
+      <div class="promise-title">小红帽 3 个承诺</div>
+      <ul class="promise-list">
+        <li><b>30 名新主播分月交付</b>（每月 10 名），写入合同</li>
+        <li>3 个月运营经理 1 对 1 带教，扶持月收益 <b>100 万金豆</b>，未达成追加一个月</li>
+        <li>双公司主体 + BIGO 一级代理（母公会），<b>公司化全维度孵化</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section pricing">
+    <h2 class="section-title">两档挂靠方案</h2>
+    <p class="section-sub">3 个月陪跑 + 16 项赋能 + 公司孵化全部一致</p>
+
+    <div class="pricing-grid">
+
+      <!-- Package A -->
+      <div class="pricing-card">
+        <div class="pricing-name">方案 A · 启航版</div>
+        <div class="pricing-tag">个人创业者/初创工作室首选</div>
+        <div class="pricing-price">¥29,800<small> 一次性</small></div>
+        <div style="font-size: 13px; color: #444; margin-bottom: 8px;">拿净返点的 <b style="color:#C62828; font-size:16px;">95%</b> · 永久锁定</div>
+        <div class="pricing-list">
+          <div class="pricing-list-item">3 个月陪跑 · 标准孵化</div>
+          <div class="pricing-list-item">16 项独家赋能</div>
+          <div class="pricing-list-item">30 名主播分月交付（写入合同）</div>
+          <div class="pricing-list-item">100 万金豆目标（写入合同）</div>
+        </div>
+        <div class="pricing-target">适合：想稳定试水、试错成本可控</div>
+      </div>
+
+      <!-- Package B (Featured) -->
+      <div class="pricing-card featured">
+        <div class="pricing-name">方案 B · 旗舰版</div>
+        <div class="pricing-tag">已有团队/规模型公司首选</div>
+        <div class="pricing-price">¥49,800<small> 一次性</small></div>
+        <div style="font-size: 13px; color: #444; margin-bottom: 8px;">拿净返点的 <b style="color:#C62828; font-size:16px;">97%</b> · 永久锁定</div>
+        <div class="pricing-list">
+          <div class="pricing-list-item">3 个月陪跑 + 优先资源</div>
+          <div class="pricing-list-item">16 项赋能 + 优先响应</div>
+          <div class="pricing-list-item">30 名主播交付 + 优先调度</div>
+          <div class="pricing-list-item">100 万金豆目标（写入合同）</div>
+        </div>
+        <div class="pricing-target">适合：想放大利润空间、强化竞争力</div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 20px; padding: 16px; background: #FFF8E1; border-radius: 8px; font-size: 13px; color: #5D4037;">
+      💡 <b>总经办建议</b>：预算紧 → 方案 A；想放大利润 → 方案 B。两个方案的 3 个月陪跑 + 16 项赋能 + 公司孵化 <b>全部一致</b>，核心承诺同样写入合同。
+    </div>
+  </section>
+
+  <!-- 3 MONTH COACHING -->
+  <section class="section" style="background: #F5F5F5;">
+    <h2 class="section-title">【独家】3 个月陪跑扶持</h2>
+    <div class="coaching">
+      <div class="coaching-title">🔥 解决你最大顾虑</div>
+      <div class="coaching-subtitle">交了钱赚不到收益？没人管？</div>
+
+            <div class="coaching-month">
+        <h4>第 1 月 · 基础筑基 + 首批交付</h4>
+        <ul>
+          <li>🎯 跑通招聘→签约→开播完整链路</li>
+          <li>学行业认知/招聘/签约/开播</li>
+          <li>交付首批 10 名新主播</li>
+        </ul>
+      </div>
+
+            <div class="coaching-month">
+        <h4>第 2 月 · 运营管理 + 批量交付</h4>
+        <ul>
+          <li>🎯 掌握直播公司日常运营管理</li>
+          <li>学主播运营/团队管理/公司运营</li>
+          <li>交付 10 名（累计 20）</li>
+        </ul>
+      </div>
+
+            <div class="coaching-month">
+        <h4>第 3 月 · 冲刺流水 + 招商营销</h4>
+        <ul>
+          <li>🎯 月收益冲刺 100 万金豆</li>
+          <li>学流水冲刺/网络营销/招商复制</li>
+          <li>交付 10 名（累计 30）</li>
+        </ul>
+      </div>
+
+      <div class="coaching-target">
+        🎯 自签约次月起考核，3 个月陪跑期满扶持月收益达 <strong>100 万金豆</strong>，未达成 <strong>追加一个月陪跑</strong>（写入合同）
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 EMPOWERMENTS -->
+  <section class="section">
+    <h2 class="section-title">16 项独家赋能</h2>
+    <p class="section-sub">公司全维度孵化 · 教方法、给系统、做孵化</p>
+
+    <div class="emp-cat c1">🟦 法务体系（4 项）</div>
+    <div class="emp-grid">
+      <div class="emp-card">
+        <div class="emp-icon">⚖</div>
+        <div class="emp-title">合同审阅</div>
+        <div class="emp-desc">法务级版本，写入合同</div>
+      </div>
+      <div class="emp-card">
+        <div class="emp-icon">📜</div>
+        <div class="emp-title">主播合约</div>
+        <div class="emp-desc">解约/违约/结算条款齐备</div>
+      </div>
+      <div class="emp-card">
+        <div class="emp-icon">🛡</div>
+        <div class="emp-title">内容合规</div>
+        <div class="emp-desc">涉政/涉黄/涉暴预警</div>
+      </div>
+      <div class="emp-card">
+        <div class="emp-icon">🌐</div>
+        <div class="emp-title">跨境结算</div>
+        <div class="emp-desc">出金/换汇/税务咨询</div>
+      </div>
+    </div>
+
+    <div class="emp-cat c2">🟩 系统与方法（4 项）</div>
+    <div class="emp-grid">
+      <div class="emp-card">
+        <div class="emp-icon">💻</div>
+        <div class="emp-title">OA 办公系统</div>
+        <div class="emp-desc">主播/流水/结算一体化</div>
+      </div>
+      <div class="emp-card">
+        <div class="emp-icon">📈</div>
+        <div class="emp-title">流量方法论</div>
+        <div class="emp-desc">300% 加权 + 20 万曝光打法</div>
+      </div>
+      <div class="emp-card">
+        <div class="emp-icon">📊</div>
+        <div class="emp-title">数据看板</div>
+        <div class="emp-desc">活跃度/流水/留存分析</div>
+      </div>
+      <div class="emp-card">
+        <div class="emp-icon">📋</div>
+        <div class="emp-title">运营 SOP</div>
+        <div class="emp-desc">开播/场控/转化标准流程</div>
+      </div>
+    </div>
+
+    <div class="emp-cat c3">🟨 公司化孵化（4 项）</div>
+    <div class="emp-grid">
+      <div class="emp-card">
+        <div class="emp-icon">👥</div>
+        <div class="emp-title">招聘体系</div>
+        <div class="emp-desc">话术/渠道/面试 SOP</div>
+      </div>
+      <div class="emp-card">
+        <div class="emp-icon">🗂</div>
+        <div class="emp-title">管理制度</div>
+        <div class="emp-desc">主播/考勤/奖惩模板</div>
+      </div>
+      <div class="emp-card">
+        <div class="emp-icon">💼</div>
+        <div class="emp-title">财税合规</div>
+        <div class="emp-desc">账务/报税/佣金合规</div>
+      </div>
+      <div class="emp-card">
+        <div class="emp-icon">⚖</div>
+        <div class="emp-title">法务风控</div>
+        <div class="emp-desc">纠纷/退豆/申诉支持</div>
+      </div>
+    </div>
+
+    <div class="emp-cat c4">🟥 资源与市场（4 项）</div>
+    <div class="emp-grid">
+      <div class="emp-card">
+        <div class="emp-icon">🏆</div>
+        <div class="emp-title">品牌背书</div>
+        <div class="emp-desc">双公司 + 一级代理/母公会</div>
+      </div>
+      <div class="emp-card">
+        <div class="emp-icon">🤝</div>
+        <div class="emp-title">主播人才池</div>
+        <div class="emp-desc">公会内部主播互通调配</div>
+      </div>
+      <div class="emp-card">
+        <div class="emp-icon">🎓</div>
+        <div class="emp-title">行业培训课</div>
+        <div class="emp-desc">直播/话术/合规/管理课程</div>
+      </div>
+      <div class="emp-card">
+        <div class="emp-icon">🌍</div>
+        <div class="emp-title">华语区运营</div>
+        <div class="emp-desc">16+ 新增市场经验与政策解读</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFERRAL -->
+  <section class="section" style="background: #F5F5F5;">
+    <h2 class="section-title">老加盟商带新加盟商</h2>
+    <p class="section-sub">三种合作方式，让资源和经验持续变现</p>
+    <table class="ref-table">
+      <thead>
+        <tr><th>合作方式</th><th>费用与奖励</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>小红帽直签<br>小红帽孵化</b></td>
+          <td>老加盟商获 <span class="hl">推荐奖</span>：签约 ¥3,000 + 流水达标 ¥5,000 + 陪跑达成 ¥5,000（最高 ¥13,000）</td>
+        </tr>
+        <tr>
+          <td><b>老加盟商签约<br>老加盟商孵化</b></td>
+          <td>小红帽收取加盟费的 <span class="hl">20%</span></td>
+        </tr>
+        <tr>
+          <td><b>老加盟商签约<br>小红帽代孵化</b></td>
+          <td>小红帽收取加盟费的 <span class="hl">50%</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top: 16px; padding: 14px; background: #FFF8E1; border-radius: 8px; font-size: 12px; color: #5D4037;">
+      📌 推荐奖仅限加盟商推荐；非加盟商转介绍仅享介绍费 <b>¥3,000</b>。所有合作方式签约备案，写入正式合同。
+    </div>
+  </section>
+
+  <!-- SETTLEMENT GUARANTEE -->
+  <section class="section">
+    <h2 class="section-title">5 大承诺（写入合同）</h2>
+    <p class="section-sub">不拖、不欠、不克扣 · 实打实的陪跑孵化</p>
+
+    <div class="settle-box">
+      <div class="settle-title">⚖ 5 大承诺 · 法律兜底</div>
+      <ul class="settle-list">
+        <li><strong>30 名主播交付</strong>：3 个月分月交付，每月 10 名（可能含老主播）</li>
+        <li><strong>100 万金豆承诺</strong>：月收益 100 万金豆（非累计），未达成追加一个月陪跑</li>
+        <li><strong>结算周期</strong>：T+7 日结（平台到账后 7 个工作日内打款）</li>
+        <li><strong>逾期赔付</strong>：逾期 1 天，违约赔偿 0.05%</li>
+        <li><strong>结算透明</strong>：系统自动生成结算单，所有流水可溯源</li>
+      </ul>
+    </div>
+    <div style="margin-top: 14px; padding: 12px; background: #FFEBEE; border-radius: 8px; font-size: 12px; color: #5D4037;">
+      📌 100 万金豆考核：<b>签约月不计入</b>，自签约次月起算；3 个月陪跑期满未达成，公司追加一个月陪跑（不另收费）。
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="section">
+    <h2 class="section-title">为什么选择小红帽？</h2>
+    <div class="section-line"></div>
+    <div class="trust-box">
+      <div class="trust-item">
+        <div class="trust-num">1</div>
+        <div class="trust-text"><strong>不是甩单模式</strong> —— 大公会招代理 = 扔进池子自己游；我们是 3 个月运营经理 1 对 1 带教</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-num">2</div>
+        <div class="trust-text"><strong>不是收钱放养</strong> —— 大公会收加盟费后不理你；我们是收"创业孵化服务费"后真帮你做成，30 名主播写入合同</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-num">3</div>
+        <div class="trust-text"><strong>不是压分成</strong> —— 平台扣约 3 个点汇差后，97% 全返（零抽点），95% 只抽 2 个点</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-num">4</div>
+        <div class="trust-text"><strong>不是个人工作室</strong> —— 港皖双公司主体 + BIGO 一级代理（母公会），公司化运营有保障</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <h2 class="section-title">常见疑问</h2>
+    <div class="section-line"></div>
+
+    <div class="faq-item">
+      <div class="faq-q">95-97% 分成你们赚什么？</div>
+      <div class="faq-a">平台结算给公会时本身扣约 3 个点汇差/手续费。97% 相当于零抽点全返；95% 只抽 2 个点，用于系统与孵化成本。另外收一次性套餐费。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">100 万金豆能保证吗？</div>
+      <div class="faq-a">承诺的是"月收益 100 万金豆"，不是累计收益。签约月不计入，自签约次月起算；3 个月陪跑期满未达成，追加一个月陪跑（不另收费），写入合同。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">交了钱你们跑了怎么办？</div>
+      <div class="faq-a">双公司主体（香港小紅帽文化傳媒有限公司 + 安徽小红帽文化传媒有限公司）工商可查，BIGO 一级代理（母公会）平台备案。所有承诺写入正式合同，法律兜底。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">平台政策变了怎么办？</div>
+      <div class="faq-a">合同写明"政策兜底条款"——平台净返点变化超过 10% 时，双方协商调整分成比例。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">我能发展下线加盟商吗？</div>
+      <div class="faq-a">可以。推荐新加盟商与小红帽直签 → 获推荐奖（最高 ¥13,000）；新加盟商与老加盟商签约，老加盟商孵化 → 小红帽收 20% 加盟费；小红帽代孵化 → 收 50% 加盟费。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">非加盟商转介绍有奖励吗？</div>
+      <div class="faq-a">有介绍费 ¥3,000。推荐奖仅限加盟商推荐，非加盟商转介绍只享介绍费。</div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-title">扫码 · 1v1 咨询</div>
+    <div class="cta-sub">总经办统筹 · 招商团队 7×12 小时回复<br>前 20 名咨询者享受额外 5,000 元礼包</div>
+    <div class="cta-qr">[微信二维码占位<br>扫码加好友]</div>
+    <a href="#" class="cta-button">立即咨询代理详情</a>
+    <div class="cta-note">扫码即享 1 对 1 顾问 + 招商手册 PDF + 政策文档</div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>香港小紅帽文化傳媒有限公司</div>
+    <div>安徽小红帽文化传媒有限公司 · BIGO 一级代理（母公会）</div>
+    <div>© 2026 小红帽代理生态 · 主播创业孵化器</div>
+  </div>
+
+</div>
+</body>
+</html>
