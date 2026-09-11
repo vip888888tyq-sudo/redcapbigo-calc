@@ -7,21 +7,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root{
-  --bg:#f5f6fa; --side:#c62828; --panel:#ffffff; --panel2:#faf3f3; --line:#e9e2e2;
-  --text:#23272f; --text2:#5b6472; --text3:#8b94a6;
-  --red:#c62828; --green:#1f9d63; --orange:#e08600; --blue:#2563eb; --purple:#7c5cd6;
+  --bg:#f6f7fb; --side:#ffffff; --panel:#ffffff; --panel2:#f4f6fa; --line:#e8ebf2;
+  --text:#1f2430; --text2:#5c6573; --text3:#98a1b3;
+  --red:#d63c3c; --green:#22a06b; --orange:#e8792c; --blue:#2f6fed; --purple:#7a5af8;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;line-height:1.5;display:flex;min-height:100vh}
-aside{width:160px;background:var(--side);border-right:1px solid #a01f1f;padding:18px 10px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
-.logo{font-size:15px;font-weight:700;padding:0 10px 16px;border-bottom:1px solid rgba(255,255,255,.25);margin-bottom:14px;color:#fff}
-.logo .hat{color:#ffd166}
-.nav-label{font-size:10px;color:rgba(255,255,255,.6);padding:10px 10px 4px;letter-spacing:1px}
-.nav-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:8px;color:rgba(255,255,255,.85);cursor:pointer;margin-bottom:2px;font-size:13px;transition:background .15s,color .15s}
-.nav-item:hover{background:rgba(255,255,255,.14);color:#fff}
-.nav-item.on{background:#fff;color:#c62828;font-weight:600}
-.nav-item .ic{width:16px;text-align:center;color:rgba(255,255,255,.55)}
-.nav-item.on .ic{color:#c62828}
+aside{width:168px;background:var(--side);border-right:1px solid var(--line);padding:18px 12px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.logo{font-size:14px;font-weight:800;padding:0 8px 16px;border-bottom:1px solid var(--line);margin-bottom:14px;color:var(--red);letter-spacing:.2px;white-space:nowrap}
+.logo .hat{color:var(--red)}
+.nav-label{font-size:10px;color:var(--text3);padding:10px 10px 4px;letter-spacing:1px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:8px;color:var(--text2);cursor:pointer;margin-bottom:2px;font-size:13px;transition:background .15s,color .15s;position:relative}
+.nav-item:hover{background:var(--panel2);color:var(--text)}
+.nav-item.on{background:rgba(214,60,60,.09);color:var(--red);font-weight:600}
+.nav-item.on::before{content:'';position:absolute;left:-12px;top:22%;bottom:22%;width:3px;border-radius:2px;background:var(--red)}
+.nav-item .ic{width:16px;text-align:center;color:var(--text3)}
+.nav-item.on .ic{color:var(--red)}
 main{flex:1;padding:16px 20px;min-width:0}
 .topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px}
 .topbar h1{font-size:17px;font-weight:700}
@@ -35,15 +36,15 @@ main{flex:1;padding:16px 20px;min-width:0}
 .btn.green{background:var(--green);color:#fff!important}
 .btn.sm{padding:4px 10px;font-size:12px}
 .btn{transition:filter .15s,background .15s}
-.btn:hover{filter:brightness(1.12)}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+.btn:hover{filter:brightness(.94)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 1px 3px rgba(16,24,40,.05)}
 .card h3{font-size:14px;font-weight:700;margin-bottom:4px}
 .card h3 .tag{font-size:11px;font-weight:400;color:var(--text3);margin-left:8px}
 .card .desc{font-size:11px;color:var(--text3);margin-bottom:12px;line-height:1.6}
 .page{display:none}.page.on{display:block}
 .hint{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.7}
 .sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px;margin-bottom:12px}
-.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;transition:transform .15s,border-color .15s}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;transition:transform .15s,border-color .15s,box-shadow .15s;box-shadow:0 1px 2px rgba(16,24,40,.04)}
 .kpi:hover{transform:translateY(-2px);border-color:var(--blue)}
 .kpi span{font-size:10.5px;color:var(--text2);letter-spacing:0.3px}
 .kpi b{display:block;font-size:16px;font-weight:800;margin-top:1px}
@@ -56,23 +57,23 @@ main{flex:1;padding:16px 20px;min-width:0}
 .board-sec:last-child{margin-bottom:4px}
 .board-t{display:block;font-size:10.5px;color:var(--text2);letter-spacing:1.5px;margin-bottom:8px;padding-left:10px;border-left:3px solid var(--blue);text-transform:uppercase}
 /* 主播总人数：大数字 */
-.kpi b.big{font-size:26px;color:#2563eb;line-height:1.1}
+.kpi b.big{font-size:26px;color:var(--red);line-height:1.1}
 /* 补豆数量/成本/收益 合并卡 */
 .kpi-tub b{font-size:12.5px;font-weight:700;letter-spacing:-0.2px}
 .kpi-tub .ksep{color:var(--text3);opacity:.5;margin:0 4px}
 .kpi-tub em{font-style:normal}
-.tbl-box{overflow-x:auto;overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;max-height:calc(100vh - 180px);min-width:0}
+.tbl-box{overflow-x:auto;overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;max-height:calc(100vh - 180px);min-width:0;box-shadow:0 1px 3px rgba(16,24,40,.05)}
 table{width:100%;min-width:1160px;table-layout:fixed;border-collapse:collapse;font-size:12.5px}
 
 /* 表头：统一单一深色，仅用文字颜色区分列类型（消除多色背景造成的"错综复杂"） */
-th{position:sticky;top:0;background:#f4eeee;color:var(--text2);font-weight:700;padding:10px 6px;border-bottom:2px solid var(--line);border-right:1px solid var(--line);text-align:center;white-space:nowrap;z-index:2;font-size:10.5px;letter-spacing:0.1px;line-height:1.3}
+th{position:sticky;top:0;background:#f3f5fa;color:#4a5264;font-weight:700;padding:10px 6px;border-bottom:2px solid var(--line);border-right:1px solid var(--line);text-align:center;white-space:nowrap;z-index:2;font-size:10.5px;letter-spacing:0.1px;line-height:1.3}
 th.g-sal{color:#1f9d63}
 th.g-inc{color:#7c5cd6}
 th.g-prof{color:#c0392b}
 
 /* sticky 左列：列宽与 left 采用与 min-width 1160px 对应的固定像素偏移，避免横向滚动时按容器百分比计算导致错位 */
-th:nth-child(1){position:sticky;left:0;width:7.5%;background:#f4eeee;z-index:4}
-th:nth-child(2){position:sticky;left:87px;width:11.5%;background:#f4eeee;z-index:4;border-right:1px solid var(--line)}
+th:nth-child(1){position:sticky;left:0;width:7.5%;background:#f3f5fa;z-index:4}
+th:nth-child(2){position:sticky;left:87px;width:11.5%;background:#f3f5fa;z-index:4;border-right:1px solid var(--line)}
 td:nth-child(1){position:sticky;left:0;width:7.5%;background:#ffffff;z-index:1}
 td:nth-child(2){position:sticky;left:87px;width:11.5%;background:#ffffff;z-index:1;border-right:1px solid var(--line)}
 
@@ -84,11 +85,11 @@ td:nth-child(1),td:nth-child(2){font-size:12px}
 tr.no-lvl td{padding-top:3px;padding-bottom:3px}
 
 /* 斑马纹：仅作用于可滚动列，sticky 列保持固定色 */
-tbody tr:nth-child(even) td{background:#f7f7fa}
+tbody tr:nth-child(even) td{background:#fafbfd}
 tbody tr:nth-child(even) td:nth-child(1),tbody tr:nth-child(even) td:nth-child(2){background:#ffffff}
 
 /* hover：整行微亮，sticky 列保持固定色 */
-tbody tr:hover td{background:#f2f3f7}
+tbody tr:hover td{background:#f5f7fb}
 tbody tr:hover td:nth-child(1),tbody tr:hover td:nth-child(2){background:#ffffff}
 
 td input,td select{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:3px 5px;font-size:12px;width:70px;text-align:center;outline:none;cursor:pointer}
@@ -179,7 +180,7 @@ th.left,td.left{text-align:left}
 .tabs button{background:var(--panel2);border:1px solid var(--line);color:var(--text2);padding:7px 18px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600}
 .tabs button.on{background:var(--red);border-color:var(--red);color:#fff}
 .cfg-table{width:100%;min-width:0;border-collapse:collapse}
-.cfg-table th{position:static;background:#f4eeee;color:var(--text2);font-weight:600;padding:8px 10px;border-bottom:2px solid var(--line);text-align:center;white-space:nowrap}
+.cfg-table th{position:static;background:#f3f5fa;color:var(--text2);font-weight:600;padding:8px 10px;border-bottom:2px solid var(--line);text-align:center;white-space:nowrap}
 .cfg-table td{padding:5px 6px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
 .cfg-table input{background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:5px 7px;font-size:12px;width:88px;text-align:center;outline:none;cursor:pointer}
 .cfg-table input:focus{border-color:var(--blue)}
@@ -243,7 +244,7 @@ th.left,td.left{text-align:left}
 .fin-rm,.ops-rm{background:none;border:none;color:var(--red);cursor:pointer;font-size:12px;padding:4px 8px;border-radius:6px}
 .fin-rm:hover,.ops-rm:hover{background:rgba(255,90,90,.15)}
 .fin-none{padding:30px;text-align:center;color:var(--text3)}
-.ops-total td{font-weight:800;border-top:2px solid var(--line);background:#f4eeee!important}
+.ops-total td{font-weight:800;border-top:2px solid var(--line);background:#f3f5fa!important}
 .ops-foot{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
 /* ===== 财务升级：身份/收付/审批流 ===== */
 .fin-ident{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
@@ -270,7 +271,7 @@ th.left,td.left{text-align:left}
 .fin-paid{font-size:12px}
 .fin-paid small{display:block;color:var(--text3);font-size:10.5px}
 /* ========== 招商加盟页 ========== */
-.rec-hero{background:linear-gradient(135deg,#7a1f1f 0%,#a32727 55%,#c62828 100%);border:1px solid var(--line);border-radius:14px;padding:26px 28px;margin-bottom:16px;color:#fff;position:relative;overflow:hidden}
+.rec-hero{background:linear-gradient(135deg,#8f1d1d 0%,#b02a2a 55%,#d63c3c 100%);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:26px 28px;margin-bottom:16px;color:#fff;position:relative;overflow:hidden;box-shadow:0 8px 24px rgba(182,45,45,.25)}
 .rec-hero::before{content:'';position:absolute;top:-60px;right:-40px;width:220px;height:220px;background:rgba(255,255,255,.06);border-radius:50%}
 .rec-hero::after{content:'';position:absolute;bottom:-90px;left:-70px;width:260px;height:260px;background:rgba(255,255,255,.05);border-radius:50%}
 .rec-hero-tag{display:inline-block;padding:4px 14px;background:rgba(255,255,255,.18);border-radius:20px;font-size:12px;letter-spacing:1px;margin-bottom:14px;position:relative;z-index:1}
