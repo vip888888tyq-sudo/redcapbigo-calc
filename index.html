@@ -203,6 +203,40 @@ th.left,td.left{text-align:left}
 .seg-btn{padding:8px 12px;border-radius:7px;border:1px solid var(--line);background:var(--panel2);color:var(--text);cursor:pointer;font-size:12px;text-align:center;flex:1}
 .seg-btn.on{background:#22335e;border-color:var(--blue);color:#fff;font-weight:600}
 .seg-btns{display:flex;gap:6px}
+/* ===== 财务记账页 ===== */
+.fin-tool{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.fin-month{font-size:15px;font-weight:800;min-width:120px;text-align:center;color:var(--text)}
+.fin-month-prev,.fin-month-next{padding:7px 14px;border-radius:7px;border:1px solid var(--line);background:var(--panel2);color:var(--text);cursor:pointer;font-size:12px}
+.fin-month-prev:hover,.fin-month-next:hover{border-color:var(--blue);color:#fff}
+.fin-add,.ops-add{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.fin-add input,.ops-add input,.fin-add select{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 10px;font-size:13px;outline:none;cursor:pointer}
+.fin-add input:focus,.ops-add input:focus,.fin-add select:focus{border-color:var(--blue)}
+.fin-add input[type=date]{width:140px}
+.fin-add select{width:112px}
+.fin-add input[type=number],.ops-add input[type=number]{width:100px}
+#finItem{flex:1;min-width:170px}
+#finNote{width:190px}
+#opsName{width:100px}
+#opsNote{flex:1;min-width:150px}
+.fin-table,.ops-table{min-width:0!important}
+.fin-table th:nth-child(1){width:105px}
+.fin-table th:nth-child(2){width:100px}
+.fin-table th:nth-child(4){width:110px}
+.fin-table th:nth-child(5){width:200px}
+.fin-table th:nth-child(6){width:64px}
+.ops-table th:nth-child(1){width:90px}
+.ops-table th:nth-child(8){width:200px}
+.ops-table th:nth-child(9){width:64px}
+.cat-tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.3px}
+.cat-tag.c1{background:rgba(93,202,165,.14);color:#5DCAA5}
+.cat-tag.c2{background:rgba(127,180,255,.14);color:#7FB4FF}
+.cat-tag.c3{background:rgba(240,163,94,.14);color:#F0A35E}
+.cat-tag.c4{background:rgba(175,169,236,.16);color:#AFA9EC}
+.fin-rm,.ops-rm{background:none;border:none;color:var(--red);cursor:pointer;font-size:12px;padding:4px 8px;border-radius:6px}
+.fin-rm:hover,.ops-rm:hover{background:rgba(255,90,90,.15)}
+.fin-none{padding:30px;text-align:center;color:var(--text3)}
+.ops-total td{font-weight:800;border-top:2px solid var(--line);background:#1a2234!important}
+.ops-foot{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
 @media print{aside,#btnExport,#fileBox,#fileTopup,.sum .hint,#searchBox,#importMsg,.nav-label,.toolbar-print-hide{display:none!important}body{background:#fff!important;color:#000!important;font-size:11pt}main{padding:0!important}.kpi{background:#f5f5f5!important;color:#000!important;border:1px solid #ccc!important}th{background:#ddd!important;color:#000!important}.tbl-box{max-height:none!important;overflow:visible!important;border:none!important}td{background:transparent!important;color:#000!important;border-bottom:1px solid #ccc!important}#page-settle{display:block!important}#expMask,#excMask{display:none!important}}
 </style>
 </head>
@@ -214,6 +248,9 @@ th.left,td.left{text-align:left}
   <div class="nav-label" data-page-node-id="gfpFx3oG07rZ54D7DpeqA2">政策配置</div>
   <div class="nav-item" data-page="salary" data-page-node-id="7A9Ka5sFJDiF2tsQN7LeOM"><span class="ic" data-page-node-id="IP1BVZrTOZgmknzMwrGImQ">¥</span> 主播政策</div>
   <div class="nav-item" data-page="platform" data-page-node-id="H0oAmDdHAw9uBIA8I9ZCNs"><span class="ic" data-page-node-id="BmHpiTD9j507FWNXri4TCO">$</span> 平台政策</div>
+  <div class="nav-label" data-page-node-id="gfpFx3oG07rZ54D7DpeqA2">财务</div>
+  <div class="nav-item" data-page="finance"><span class="ic">💳</span> 财务记账</div>
+  <div class="nav-item" data-page="ops"><span class="ic">🧑‍💼</span> 运营薪资</div>
 </aside>
 <main data-page-node-id="ciC7falHLezXBeaTiESuED">
   <div class="topbar" data-page-node-id="E7aecS9bNxkIj9TSw7UHCG">
@@ -270,6 +307,70 @@ th.left,td.left{text-align:left}
       </table>
     </div>
     <div class="hint" data-page-node-id="k03UmEXsyiq6SMbrMISU89">口径：核对金额$ = 政策佣金 + 总金豆÷提现率 + 奖励金豆$（官方结算$已含补豆后的档位佣金与补豆提现）。主播薪资¥ = 档位薪资(有补豆按补豆前金豆判档) + 全勤 + 无效豆。盈利¥ = 官方结算$ × 汇率 − 主播薪资¥ − 补豆成本¥。补豆收益¥ = 升档佣金增量×汇率 + 补豆提现×汇率 − 补豆成本（补豆这笔完整净盈亏，参考）。盈利/补豆收益正绿负红。</div>
+  </div>
+
+  <div class="page" id="page-finance">
+    <div class="card">
+      <h3>💳 财务记账 <span class="tag">人员工资 · 主播薪资 · 房租水电 · 各项开销</span></h3>
+      <div class="fin-tool">
+        <button class="fin-month-prev" id="finPrev">‹ 上月</button>
+        <span class="fin-month" id="finMonthLabel">—</span>
+        <button class="fin-month-next" id="finNext">下月 ›</button>
+        <span class="hint" style="margin:0">数据仅保存在本机浏览器，可随时增删</span>
+      </div>
+      <div class="sum" id="finSum"></div>
+      <div class="fin-add">
+        <input type="date" id="finDate">
+        <select id="finCat">
+          <option value="人员工资">人员工资</option>
+          <option value="主播薪资">主播薪资</option>
+          <option value="房租水电">房租水电</option>
+          <option value="杂项开销">杂项开销</option>
+        </select>
+        <input type="text" id="finItem" placeholder="项目（例：运营小杰 9月工资）">
+        <input type="number" id="finAmt" placeholder="金额 ¥">
+        <input type="text" id="finNote" placeholder="备注（可选）">
+        <button class="btn green" id="finAdd">＋ 添加支出</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📋 支出流水 <span class="tag" id="finCount"></span></h3>
+      <div class="tbl-box" style="max-height:calc(100vh - 320px)">
+        <table class="fin-table" id="finTable">
+          <thead><tr><th>日期</th><th>分类</th><th>项目</th><th>金额 ¥</th><th>备注</th><th></th></tr></thead>
+          <tbody id="finBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-ops">
+    <div class="card">
+      <h3>🧑‍💼 运营薪资结算 <span class="tag">底薪 + 绩效提成 + 补贴 − 扣款 = 实发</span></h3>
+      <div class="sum" id="opsSum"></div>
+      <div class="ops-add">
+        <input type="text" id="opsName" placeholder="姓名">
+        <input type="number" id="opsBase" placeholder="底薪">
+        <input type="number" id="opsPerf" placeholder="绩效/提成">
+        <input type="number" id="opsSubs" placeholder="补贴">
+        <input type="number" id="opsDed" placeholder="扣款">
+        <input type="text" id="opsNote" placeholder="备注（可选）">
+        <button class="btn green" id="opsAdd">＋ 添加人员</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📋 本月工资表 <span class="tag" id="opsCount"></span></h3>
+      <div class="tbl-box" style="max-height:calc(100vh - 340px)">
+        <table class="ops-table">
+          <thead><tr><th>姓名</th><th>底薪</th><th>绩效/提成</th><th>补贴</th><th>扣款</th><th>应发 ¥</th><th>实发 ¥</th><th>备注</th><th></th></tr></thead>
+          <tbody id="opsBody"></tbody>
+        </table>
+      </div>
+      <div class="ops-foot">
+        <button class="btn" id="opsToFin">💳 转入财务账（生成当月「人员工资」支出）</button>
+        <button class="btn ghost" id="opsClear">清空本月工资表</button>
+      </div>
+    </div>
   </div>
 
   <div class="page" id="page-salary" data-page-node-id="aoeDHszdeAMrEOuE8E8gli">
@@ -1111,7 +1212,9 @@ $('searchBox').addEventListener('input',function(){ searchKey=this.value; render
 var TITLES={
   settle:['主播薪资结算','导入官方月数据 · 自动核算 · 就地核对官方'],
   salary:['主播政策','给主播多少钱：档位薪资 + 全勤 + 无效豆'],
-  platform:['平台政策','官方固定佣金表（HY-BP041/042）']
+  platform:['平台政策','官方固定佣金表（HY-BP041/042）'],
+  finance:['财务记账','人员工资 · 主播薪资 · 房租水电 · 各项开销流水'],
+  ops:['运营薪资','运营人员工资核算 · 可一键转入财务账']
 };
 document.querySelectorAll('.nav-item').forEach(function(item){
   item.addEventListener('click',function(){
@@ -1140,6 +1243,128 @@ $('beansPerYuan').value=getCfg('beansPerYuan')||8.43;
 var bpr=$('beansPerYuanR'); if(bpr) bpr.value=$('beansPerYuan').value;
 loadRows();
 renderSettle(); renderSalTabs(); renderPlatTabs();
+
+/* ==================== 财务记账页 ==================== */
+var fin=[], finMonth='';
+var FIN_CATS=['人员工资','主播薪资','房租水电','杂项开销'];
+function finLoad(){ try{ var d=JSON.parse(localStorage.getItem('xhm_fin_v1')); if(Array.isArray(d)) fin=d; }catch(e){} }
+function finSave(){ try{ localStorage.setItem('xhm_fin_v1', JSON.stringify(fin)); }catch(e){} }
+function shiftMonth(ym,delta){
+  var p=String(ym).split('-'), y=+p[0], m=+p[1]+delta;
+  if(m<1){ m=12; y--; } if(m>12){ m=1; y++; }
+  return y+'-'+String(m).padStart(2,'0');
+}
+function finCatIdx(c){ var i=FIN_CATS.indexOf(c); return i<0?3:i; }
+function finRender(){
+  if(!$('finMonthLabel')) return;
+  $('finMonthLabel').textContent=finMonth.replace('-','年')+'月';
+  var list=fin.filter(function(x){ return String(x.date||'').substring(0,7)===finMonth; });
+  list.sort(function(a,b){ return String(b.date).localeCompare(String(a.date)); });
+  var tot=0, byCat={0:0,1:0,2:0,3:0};
+  list.forEach(function(x){ var a=n(x.amt); tot+=a; byCat[finCatIdx(x.cat)]+=a; });
+  var k=function(t,v,cls){ return '<div class="kpi"><span>'+t+'</span><b class="'+cls+'">'+v+'</b></div>'; };
+  $('finSum').innerHTML=
+    k('本月支出合计','¥'+fmt(tot,0),tot>0?'red':'')+
+    k('人员工资','¥'+fmt(byCat[0],0),'')+
+    k('主播薪资','¥'+fmt(byCat[1],0),'')+
+    k('房租水电','¥'+fmt(byCat[2],0),'')+
+    k('杂项开销','¥'+fmt(byCat[3],0),'');
+  $('finCount').textContent=list.length?('当月 '+list.length+' 笔'):'当月暂无记录';
+  var b=$('finBody');
+  if(!list.length){ b.innerHTML='<tr><td colspan="6" class="fin-none">该月暂无支出记录 —— 上方表单添加第一笔</td></tr>'; return; }
+  b.innerHTML=list.map(function(x,i){
+    return '<tr><td>'+esc(x.date)+'</td><td><span class="cat-tag c'+(finCatIdx(x.cat)+1)+'">'+esc(x.cat)+'</span></td>'
+      +'<td>'+esc(x.item||'')+'</td><td class="red" style="font-weight:700">¥'+fmt(n(x.amt),0)+'</td>'
+      +'<td>'+esc(x.note||'')+'</td>'
+      +'<td><button class="fin-rm" data-del="'+i+'" title="删除">✕</button></td></tr>';
+  }).join('');
+}
+function finAdd(){
+  var d=$('finDate').value, cat=$('finCat').value, item=$('finItem').value.trim(), amt=n($('finAmt').value), note=$('finNote').value.trim();
+  if(!d){ $('finDate').focus(); return; }
+  if(!item){ $('finItem').focus(); return; }
+  if(!amt){ $('finAmt').focus(); return; }
+  fin.push({date:d, cat:cat, item:item, amt:amt, note:note});
+  finSave(); finRender();
+  $('finItem').value=''; $('finAmt').value=''; $('finNote').value='';
+  finMonth=String(d).substring(0,7); finRender();
+}
+(function(){
+  var now=new Date();
+  finMonth=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  $('finDate').value=now.toISOString().substring(0,10);
+  finLoad(); finRender();
+  $('finPrev').addEventListener('click',function(){ finMonth=shiftMonth(finMonth,-1); finRender(); });
+  $('finNext').addEventListener('click',function(){ finMonth=shiftMonth(finMonth,1); finRender(); });
+  $('finAdd').addEventListener('click',finAdd);
+  $('finBody').addEventListener('click',function(e){
+    var b=e.target.closest('.fin-rm'); if(!b) return;
+    var i=+b.getAttribute('data-del');
+    var list=fin.filter(function(x){ return String(x.date||'').substring(0,7)===finMonth; });
+    list.sort(function(a,b){ return String(b.date).localeCompare(String(a.date)); });
+    var idx=fin.indexOf(list[i]);
+    if(idx>=0){ fin.splice(idx,1); finSave(); finRender(); }
+  });
+})();
+
+/* ==================== 运营薪资页 ==================== */
+var ops=[];
+function opsLoad(){ try{ var d=JSON.parse(localStorage.getItem('xhm_ops_v1')); if(Array.isArray(d)) ops=d; }catch(e){} }
+function opsSave(){ try{ localStorage.setItem('xhm_ops_v1', JSON.stringify(ops)); }catch(e){} }
+function opsRender(){
+  if(!$('opsBody')) return;
+  var pay=0, real=0;
+  ops.forEach(function(o){ var g=n(o.base)+n(o.perf)+n(o.subs); pay+=g; real+=g-n(o.ded); });
+  var k=function(t,v,cls){ return '<div class="kpi"><span>'+t+'</span><b class="'+cls+'">'+v+'</b></div>'; };
+  $('opsSum').innerHTML=
+    k('运营人数',ops.length+' 人','')+
+    k('应发合计','¥'+fmt(pay,0),'')+
+    k('实发合计','¥'+fmt(real,0),real>0?'green':'')+
+    k('扣款合计','¥'+fmt(pay-real,0),'orange');
+  $('opsCount').textContent=ops.length?('共 '+ops.length+' 人'):'暂无人员';
+  var b=$('opsBody');
+  if(!ops.length){ b.innerHTML='<tr><td colspan="9" class="fin-none">暂无运营人员 —— 上方表单添加</td></tr>'; return; }
+  b.innerHTML=ops.map(function(o,i){
+    var g=n(o.base)+n(o.perf)+n(o.subs), r=g-n(o.ded);
+    return '<tr><td>'+esc(o.name||'')+'</td><td>'+fmt(n(o.base),0)+'</td><td>'+fmt(n(o.perf),0)+'</td>'
+      +'<td>'+fmt(n(o.subs),0)+'</td><td class="orange">-'+fmt(n(o.ded),0)+'</td>'
+      +'<td style="font-weight:700">¥'+fmt(g,0)+'</td>'
+      +'<td style="font-weight:800" class="'+(r>=0?'green':'red')+'">¥'+fmt(r,0)+'</td>'
+      +'<td>'+esc(o.note||'')+'</td>'
+      +'<td><button class="ops-rm" data-del="'+i+'" title="删除">✕</button></td></tr>';
+  }).join('');
+  b.insertAdjacentHTML('beforeend','<tr class="ops-total"><td>合计</td><td>'+fmt(ops.reduce(function(s,o){return s+n(o.base);},0),0)+'</td><td>'+fmt(ops.reduce(function(s,o){return s+n(o.perf);},0),0)+'</td><td>'+fmt(ops.reduce(function(s,o){return s+n(o.subs);},0),0)+'</td><td>-'+fmt(ops.reduce(function(s,o){return s+n(o.ded);},0),0)+'</td><td>¥'+fmt(pay,0)+'</td><td class="green">¥'+fmt(real,0)+'</td><td></td><td></td></tr>');
+}
+function opsAdd(){
+  var name=$('opsName').value.trim();
+  if(!name){ $('opsName').focus(); return; }
+  ops.push({name:name, base:n($('opsBase').value), perf:n($('opsPerf').value), subs:n($('opsSubs').value), ded:n($('opsDed').value), note:$('opsNote').value.trim()});
+  opsSave(); opsRender();
+  $('opsName').value=''; $('opsBase').value=''; $('opsPerf').value=''; $('opsSubs').value=''; $('opsDed').value=''; $('opsNote').value='';
+}
+(function(){
+  opsLoad(); opsRender();
+  $('opsAdd').addEventListener('click',opsAdd);
+  $('opsBody').addEventListener('click',function(e){
+    var b=e.target.closest('.ops-rm'); if(!b) return;
+    ops.splice(+b.getAttribute('data-del'),1); opsSave(); opsRender();
+  });
+  $('opsClear').addEventListener('click',function(){
+    if(ops.length && !confirm('确定清空本月工资表全部 '+ops.length+' 人？')) return;
+    ops=[]; opsSave(); opsRender();
+  });
+  $('opsToFin').addEventListener('click',function(){
+    if(!ops.length){ alert('工资表还没有人员，先添加运营人员'); return; }
+    var pay=0; ops.forEach(function(o){ pay+=n(o.base)+n(o.perf)+n(o.subs)-n(o.ded); });
+    if(pay<=0){ alert('实发合计为 0，无需转入'); return; }
+    var now=new Date();
+    var ym=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+    fin.push({date:ym+'-01', cat:'人员工资', item:'运营薪资 实发合计', amt:pay, note:ops.length+' 人（'+ops.map(function(o){return o.name;}).join('、')+'）'});
+    finSave(); finRender();
+    finMonth=ym; finRender();
+    document.querySelector('.nav-item[data-page="finance"]').click();
+  });
+})();
 </script>
 </body>
 </html>
