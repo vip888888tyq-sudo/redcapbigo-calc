@@ -237,6 +237,30 @@ th.left,td.left{text-align:left}
 .fin-none{padding:30px;text-align:center;color:var(--text3)}
 .ops-total td{font-weight:800;border-top:2px solid var(--line);background:#1a2234!important}
 .ops-foot{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+/* ===== 财务升级：身份/收付/审批流 ===== */
+.fin-ident{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
+.fin-ident select{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:6px 8px;font-size:12px;outline:none;cursor:pointer}
+.fin-ident select:focus{border-color:var(--blue)}
+.f-tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700}
+.f-tag.out{background:rgba(255,90,90,.15);color:#FF7A7A}
+.f-tag.in{background:rgba(93,202,165,.15);color:#5DCAA5}
+.st-tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.st-tag.pending{background:rgba(240,163,94,.15);color:#F0A35E}
+.st-tag.checked{background:rgba(127,180,255,.15);color:#7FB4FF}
+.st-tag.posted{background:rgba(93,202,165,.15);color:#5DCAA5}
+.fin-ops{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.fin-ops .btn{padding:4px 10px;font-size:11px}
+.fin-ops .hint{margin:0;font-size:11px}
+#finTypeSeg{max-width:150px}
+#finStatusTabs{max-width:430px;margin-bottom:10px}
+.fin-status-hint{display:flex;align-items:center;gap:8px;margin-top:10px;padding:8px 12px;background:rgba(240,163,94,.08);border:1px solid rgba(240,163,94,.25);border-radius:8px;font-size:12px;color:var(--text2)}
+.fin-status-hint.ok{background:rgba(93,202,165,.08);border-color:rgba(93,202,165,.25)}
+.acct-item{display:flex;justify-content:space-between;align-items:center;padding:8px 4px;border-bottom:1px solid var(--line);font-size:13px}
+.acct-new{display:flex;gap:8px;margin-top:10px}
+.acct-new input{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 10px;font-size:13px;outline:none;cursor:pointer}
+.acct-new input:focus{border-color:var(--blue)}
+.fin-paid{font-size:12px}
+.fin-paid small{display:block;color:var(--text3);font-size:10.5px}
 @media print{aside,#btnExport,#fileBox,#fileTopup,.sum .hint,#searchBox,#importMsg,.nav-label,.toolbar-print-hide{display:none!important}body{background:#fff!important;color:#000!important;font-size:11pt}main{padding:0!important}.kpi{background:#f5f5f5!important;color:#000!important;border:1px solid #ccc!important}th{background:#ddd!important;color:#000!important}.tbl-box{max-height:none!important;overflow:visible!important;border:none!important}td{background:transparent!important;color:#000!important;border-bottom:1px solid #ccc!important}#page-settle{display:block!important}#expMask,#excMask{display:none!important}}
 </style>
 </head>
@@ -311,36 +335,67 @@ th.left,td.left{text-align:left}
 
   <div class="page" id="page-finance">
     <div class="card">
-      <h3>💳 财务记账 <span class="tag">人员工资 · 主播薪资 · 房租水电 · 各项开销</span></h3>
+      <h3>💳 财务账本 <span class="tag">收支分开 · 多账号 · 付款留痕 · 审批核对后入账</span></h3>
       <div class="fin-tool">
         <button class="fin-month-prev" id="finPrev">‹ 上月</button>
         <span class="fin-month" id="finMonthLabel">—</span>
         <button class="fin-month-next" id="finNext">下月 ›</button>
-        <span class="hint" style="margin:0">数据仅保存在本机浏览器，可随时增删</span>
+        <span style="flex:1"></span>
+        <label class="fin-ident">当前记账人
+          <select id="finUser">
+            <option>唐永强</option><option>许浩</option><option>朱利茵</option><option>其他</option>
+          </select>
+        </label>
+        <button class="btn ghost sm" id="finAcctBtn">🏦 账户管理</button>
       </div>
       <div class="sum" id="finSum"></div>
+      <div class="fin-status-hint" id="finStatusHint"></div>
+    </div>
+    <div class="card">
+      <h3>＋ 记一笔 <span class="tag">提交后需他人审批 → 核对 → 入账才计入报表</span></h3>
       <div class="fin-add">
+        <div class="seg-btns" id="finTypeSeg">
+          <div class="seg-btn on" data-t="out">支出</div>
+          <div class="seg-btn" data-t="in">收入</div>
+        </div>
         <input type="date" id="finDate">
-        <select id="finCat">
-          <option value="人员工资">人员工资</option>
-          <option value="主播薪资">主播薪资</option>
-          <option value="房租水电">房租水电</option>
-          <option value="杂项开销">杂项开销</option>
-        </select>
+        <select id="finCat"></select>
+        <select id="finAccount"></select>
+        <select id="finPayer" style="display:none"></select>
+        <select id="finMethod" style="display:none"></select>
         <input type="text" id="finItem" placeholder="项目（例：运营小杰 9月工资）">
         <input type="number" id="finAmt" placeholder="金额 ¥">
         <input type="text" id="finNote" placeholder="备注（可选）">
-        <button class="btn green" id="finAdd">＋ 添加支出</button>
+        <button class="btn green" id="finAdd">提交记账</button>
       </div>
+      <div class="hint">支出需选<b>付款人</b>（谁付的钱）和<b>支付方式</b>（公司支付 / 个人垫付——垫付后续可报销）。收入即进账，记入所选账户。</div>
     </div>
     <div class="card">
-      <h3>📋 支出流水 <span class="tag" id="finCount"></span></h3>
-      <div class="tbl-box" style="max-height:calc(100vh - 320px)">
+      <h3>📋 账目明细 <span class="tag" id="finCount"></span></h3>
+      <div class="seg-btns" id="finStatusTabs">
+        <div class="seg-btn on" data-s="all">全部</div>
+        <div class="seg-btn" data-s="pending">待审批</div>
+        <div class="seg-btn" data-s="checked">已核对</div>
+        <div class="seg-btn" data-s="posted">已入账</div>
+      </div>
+      <div class="tbl-box" style="max-height:calc(100vh - 360px)">
         <table class="fin-table" id="finTable">
-          <thead><tr><th>日期</th><th>分类</th><th>项目</th><th>金额 ¥</th><th>备注</th><th></th></tr></thead>
+          <thead><tr><th>日期</th><th>收/支</th><th>分类</th><th>账户</th><th>付款人/方式</th><th>项目</th><th>金额 ¥</th><th>状态</th><th>操作</th></tr></thead>
           <tbody id="finBody"></tbody>
         </table>
       </div>
+    </div>
+  </div>
+
+  <div class="mask" id="finAcctMask" style="display:none">
+    <div class="md">
+      <div class="md-head">🏦 账户管理 <button class="icon-btn" id="finAcctClose" style="margin-left:auto">✕</button></div>
+      <div class="md-body">
+        <div class="hint">资金进出记录在哪个账号，例如：对公账户、微信、支付宝、现金、主播代收等。</div>
+        <div id="finAcctList"></div>
+        <div class="acct-new"><input id="finAcctNew" placeholder="新账户名称"><button class="btn" id="finAcctAdd">添加</button></div>
+      </div>
+      <div class="md-foot"><button class="btn" id="finAcctDone">完成</button></div>
     </div>
   </div>
 
@@ -1244,66 +1299,215 @@ var bpr=$('beansPerYuanR'); if(bpr) bpr.value=$('beansPerYuan').value;
 loadRows();
 renderSettle(); renderSalTabs(); renderPlatTabs();
 
-/* ==================== 财务记账页 ==================== */
-var fin=[], finMonth='';
-var FIN_CATS=['人员工资','主播薪资','房租水电','杂项开销'];
-function finLoad(){ try{ var d=JSON.parse(localStorage.getItem('xhm_fin_v1')); if(Array.isArray(d)) fin=d; }catch(e){} }
-function finSave(){ try{ localStorage.setItem('xhm_fin_v1', JSON.stringify(fin)); }catch(e){} }
+/* ==================== 财务账本页（收支/账户/付款人/审批流） ==================== */
+var fin=[], finMonth='', finUser='唐永强', finFilter='all', finType='out';
+var FIN_USERS=['唐永强','许浩','朱利茵','其他'];
+var FIN_CATS={ out:['人员工资','主播薪资','房租水电','杂项开销'], in:['平台打款','礼物分成','其他收入'] };
+var FIN_ACCTS=['对公账户','微信','支付宝','现金'];
+function finAccts(){ try{ var d=JSON.parse(localStorage.getItem('xhm_accts_v1')); if(Array.isArray(d)&&d.length) return d; }catch(e){} return FIN_ACCTS; }
+function finAcctsSave(a){ try{ localStorage.setItem('xhm_accts_v1', JSON.stringify(a)); }catch(e){} }
+/* 旧数据结构兼容迁移：无 id/type/status 的旧支出记录 -> 直接视为已入账的公司支付 */
+function finLoad(){
+  var d=null;
+  try{ d=JSON.parse(localStorage.getItem('xhm_fin_v2')); }catch(e){}
+  if(!Array.isArray(d)){
+    try{ var old=JSON.parse(localStorage.getItem('xhm_fin_v1')); if(Array.isArray(old)) d=old; }catch(e){}
+  }
+  if(!Array.isArray(d)){ fin=[]; return; }
+  fin=d.map(function(x){
+    if(x.id) return x;
+    return {id:Date.now()+Math.random().toString(16).slice(2,8), type:x.type||'out', date:x.date||'', cat:x.cat||'杂项开销',
+      account:(x.account&&x.account!=='对公账户')?x.account:'对公账户', payer:x.payer||'公司', method:x.method||'公司支付',
+      item:x.item||'', amt:n(x.amt), note:x.note||'', status:'posted',
+      createBy:x.createBy||'—', createAt:Date.now(), checkBy:x.checkBy||'', checkAt:0, postBy:x.postBy||'—', postAt:Date.now()};
+  });
+}
+function finSave(){ try{ localStorage.setItem('xhm_fin_v2', JSON.stringify(fin)); }catch(e){} }
+function finPush(x){
+  var now=Date.now();
+  x.id=now+Math.random().toString(16).slice(2,8);
+  x.status='pending'; x.createBy=finUser; x.createAt=now;
+  x.checkBy=''; x.checkAt=0; x.postBy=''; x.postAt=0;
+  fin.push(x); finSave(); return x;
+}
 function shiftMonth(ym,delta){
   var p=String(ym).split('-'), y=+p[0], m=+p[1]+delta;
   if(m<1){ m=12; y--; } if(m>12){ m=1; y++; }
   return y+'-'+String(m).padStart(2,'0');
 }
-function finCatIdx(c){ var i=FIN_CATS.indexOf(c); return i<0?3:i; }
+function finCatIdx(c){ var i=FIN_CATS.out.indexOf(c); if(i>=0) return i; var j=FIN_CATS.in.indexOf(c); return j>=0?j:3; }
+function finCatTag(c,type){
+  var map={ '人员工资':'c1','主播薪资':'c2','房租水电':'c3','杂项开销':'c4','平台打款':'c1','礼物分成':'c2','其他收入':'c4' };
+  var col=map[c]||'c4';
+  return '<span class="cat-tag '+col+'">'+esc(c)+'</span>';
+}
+function finStatusTag(s){
+  var m={pending:'待审批',checked:'已核对',posted:'已入账'};
+  return '<span class="st-tag '+s+'">'+m[s]+'</span>';
+}
 function finRender(){
   if(!$('finMonthLabel')) return;
   $('finMonthLabel').textContent=finMonth.replace('-','年')+'月';
-  var list=fin.filter(function(x){ return String(x.date||'').substring(0,7)===finMonth; });
-  list.sort(function(a,b){ return String(b.date).localeCompare(String(a.date)); });
-  var tot=0, byCat={0:0,1:0,2:0,3:0};
-  list.forEach(function(x){ var a=n(x.amt); tot+=a; byCat[finCatIdx(x.cat)]+=a; });
+  $('finUser').value=finUser;
+  var monthRows=fin.filter(function(x){ return String(x.date||'').substring(0,7)===finMonth; });
+  var inc=0, out=0, pend=0, chk=0;
+  monthRows.forEach(function(x){
+    if(x.status==='posted'){ if(x.type==='in') inc+=n(x.amt); else out+=n(x.amt); }
+    else if(x.status==='pending') pend++;
+    else if(x.status==='checked') chk++;
+  });
   var k=function(t,v,cls){ return '<div class="kpi"><span>'+t+'</span><b class="'+cls+'">'+v+'</b></div>'; };
   $('finSum').innerHTML=
-    k('本月支出合计','¥'+fmt(tot,0),tot>0?'red':'')+
-    k('人员工资','¥'+fmt(byCat[0],0),'')+
-    k('主播薪资','¥'+fmt(byCat[1],0),'')+
-    k('房租水电','¥'+fmt(byCat[2],0),'')+
-    k('杂项开销','¥'+fmt(byCat[3],0),'');
-  $('finCount').textContent=list.length?('当月 '+list.length+' 笔'):'当月暂无记录';
+    k('本月进账（已入账）','¥'+fmt(inc,0),inc>0?'green':'')+
+    k('本月支出（已入账）','¥'+fmt(out,0),out>0?'red':'')+
+    k('结余','¥'+fmt(inc-out,0),(inc-out)>=0?'bl':'orange')+
+    k('待入账',''+pend+' 待审批 · '+chk+' 已核对','orange');
+  var hint=$('finStatusHint');
+  if(pend||chk){
+    hint.className='fin-status-hint';
+    hint.innerHTML='⏳ 本月还有 <b>'+(pend+chk)+'</b> 笔未入账（待审批 '+pend+' · 已核对 '+chk+'），不计入上方汇总，请完成审批核对后入账';
+  }else{
+    hint.className='fin-status-hint ok';
+    hint.innerHTML='✓ 本月账目已全部入账';
+  }
+  /* 列表 */
+  var list=monthRows.slice();
+  if(finFilter!=='all') list=list.filter(function(x){ return x.status===finFilter; });
+  list.sort(function(a,b){ return String(b.date).localeCompare(String(a.date)) || b.id-a.id; });
+  var cntTxt=finFilter==='all'?('当月 '+monthRows.length+' 笔'):(list.length+' 笔');
+  $('finCount').textContent=cntTxt;
   var b=$('finBody');
-  if(!list.length){ b.innerHTML='<tr><td colspan="6" class="fin-none">该月暂无支出记录 —— 上方表单添加第一笔</td></tr>'; return; }
-  b.innerHTML=list.map(function(x,i){
-    return '<tr><td>'+esc(x.date)+'</td><td><span class="cat-tag c'+(finCatIdx(x.cat)+1)+'">'+esc(x.cat)+'</span></td>'
-      +'<td>'+esc(x.item||'')+'</td><td class="red" style="font-weight:700">¥'+fmt(n(x.amt),0)+'</td>'
-      +'<td>'+esc(x.note||'')+'</td>'
-      +'<td><button class="fin-rm" data-del="'+i+'" title="删除">✕</button></td></tr>';
+  if(!list.length){
+    b.innerHTML='<tr><td colspan="9" class="fin-none">'+(finFilter==='all'?'该月暂无账目 —— 上方表单记第一笔':'该状态暂无账目')+'</td></tr>';
+    return;
+  }
+  b.innerHTML=list.map(function(x){
+    var paid='';
+    if(x.type==='out') paid=x.method==='个人垫付'
+      ? '<span class="fin-paid">'+esc(x.payer||'')+'（垫付）<small>待报销</small></span>'
+      : '<span class="fin-paid">'+esc(x.payer||'公司')+'<small>公司支付</small></span>';
+    else paid='<span class="fin-paid">进账<small>'+esc(x.account)+'</small></span>';
+    var who='<span style="font-size:11px;color:var(--text3)">记:'+esc(x.createBy||'—');
+    if(x.status==='checked'||x.status==='posted') who+=' 审:'+esc(x.checkBy||'—');
+    if(x.status==='posted') who+=' 入:'+esc(x.postBy||'—');
+    who+='</span>';
+    var ops='';
+    if(x.status==='pending'){
+      if(x.createBy===finUser) ops='<span class="hint" style="margin:0;font-size:11px">待他人审批</span>';
+      else ops='<button class="btn sm" data-ck="'+x.id+'">✅ 审批通过</button>';
+      ops+='<button class="fin-rm" data-del="'+x.id+'" title="删除草稿">✕</button>';
+    }else if(x.status==='checked'){
+      if(x.createBy===finUser) ops='<span class="hint" style="margin:0;font-size:11px">待他人入账</span>';
+      else ops='<button class="btn sm green" data-pt="'+x.id+'">✅ 核对入账</button>';
+      ops+='<button class="fin-rm" data-del="'+x.id+'" title="删除（未入账可删）">✕</button>';
+    }else{
+      ops='<span class="hint" style="margin:0;font-size:11px;color:var(--text3)">已入账不可改</span>';
+    }
+    return '<tr>'
+      +'<td>'+esc(x.date)+'</td>'
+      +'<td><span class="f-tag '+(x.type==='in'?'in':'out')+'">'+(x.type==='in'?'收':'支')+'</span></td>'
+      +'<td>'+finCatTag(x.cat,x.type)+'</td>'
+      +'<td>'+esc(x.account||'—')+'</td>'
+      +'<td>'+paid+'</td>'
+      +'<td>'+esc(x.item||'')+(x.note?'<br><small style="color:var(--text3)">'+esc(x.note)+'</small>':'')+'</td>'
+      +'<td class="'+(x.type==='in'?'green':'red')+'" style="font-weight:800">'+(x.type==='in'?'+':'−')+'¥'+fmt(n(x.amt),0)+'</td>'
+      +'<td>'+finStatusTag(x.status)+'<br>'+who+'</td>'
+      +'<td><div class="fin-ops">'+ops+'</div></td>'
+      +'</tr>';
   }).join('');
 }
+function finFillCats(){
+  var sel=$('finCat'); sel.innerHTML='';
+  FIN_CATS[finType].forEach(function(c){ sel.add(new Option(c,c)); });
+}
+function finFillAccts(){
+  var a=finAccts();
+  $('finAccount').innerHTML='';
+  a.forEach(function(x){ $('finAccount').add(new Option(x,x)); });
+  var pl=$('finPayer'); pl.innerHTML='';
+  FIN_USERS.forEach(function(u){ pl.add(new Option(u,u)); });
+  var md=$('finMethod'); md.innerHTML='';
+  md.add(new Option('公司支付','公司支付'));
+  md.add(new Option('个人垫付','个人垫付'));
+}
 function finAdd(){
-  var d=$('finDate').value, cat=$('finCat').value, item=$('finItem').value.trim(), amt=n($('finAmt').value), note=$('finNote').value.trim();
+  var d=$('finDate').value, cat=$('finCat').value, acct=$('finAccount').value, item=$('finItem').value.trim(), amt=n($('finAmt').value), note=$('finNote').value.trim();
   if(!d){ $('finDate').focus(); return; }
   if(!item){ $('finItem').focus(); return; }
   if(!amt){ $('finAmt').focus(); return; }
-  fin.push({date:d, cat:cat, item:item, amt:amt, note:note});
-  finSave(); finRender();
+  var x={type:finType, date:d, cat:cat, account:acct, item:item, amt:amt, note:note};
+  if(finType==='out'){ x.payer=$('finPayer').value; x.method=$('finMethod').value; }
+  else { x.payer='—'; x.method='—'; }
+  finPush(x); finSave(); finRender();
   $('finItem').value=''; $('finAmt').value=''; $('finNote').value='';
   finMonth=String(d).substring(0,7); finRender();
+}
+function finAcctRender(){
+  var a=finAccts();
+  $('finAcctList').innerHTML=a.map(function(x,i){
+    return '<div class="acct-item"><span>'+esc(x)+'</span><button class="fin-rm" data-acctdel="'+i+'" title="删除账户">✕</button></div>';
+  }).join('')||'<div class="hint">暂无账户，下方添加</div>';
 }
 (function(){
   var now=new Date();
   finMonth=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
-  $('finDate').value=now.toISOString().substring(0,10);
-  finLoad(); finRender();
+  var t=new Date(); t.setHours(12,0,0,0);
+  $('finDate').value=t.toISOString().substring(0,10);
+  finLoad(); finFillCats(); finFillAccts(); finRender();
+  $('finUser').addEventListener('change',function(){ finUser=this.value; finRender(); });
   $('finPrev').addEventListener('click',function(){ finMonth=shiftMonth(finMonth,-1); finRender(); });
   $('finNext').addEventListener('click',function(){ finMonth=shiftMonth(finMonth,1); finRender(); });
+  $('finTypeSeg').addEventListener('click',function(e){
+    var s=e.target.closest('.seg-btn'); if(!s) return;
+    document.querySelectorAll('#finTypeSeg .seg-btn').forEach(function(x){ x.classList.remove('on'); });
+    s.classList.add('on');
+    finType=s.getAttribute('data-t');
+    $('finPayer').style.display=finType==='out'?'':'none';
+    $('finMethod').style.display=finType==='out'?'':'none';
+    finFillCats();
+  });
   $('finAdd').addEventListener('click',finAdd);
+  $('finStatusTabs').addEventListener('click',function(e){
+    var s=e.target.closest('.seg-btn'); if(!s) return;
+    document.querySelectorAll('#finStatusTabs .seg-btn').forEach(function(x){ x.classList.remove('on'); });
+    s.classList.add('on');
+    finFilter=s.getAttribute('data-s'); finRender();
+  });
   $('finBody').addEventListener('click',function(e){
-    var b=e.target.closest('.fin-rm'); if(!b) return;
-    var i=+b.getAttribute('data-del');
-    var list=fin.filter(function(x){ return String(x.date||'').substring(0,7)===finMonth; });
-    list.sort(function(a,b){ return String(b.date).localeCompare(String(a.date)); });
-    var idx=fin.indexOf(list[i]);
-    if(idx>=0){ fin.splice(idx,1); finSave(); finRender(); }
+    var ck=e.target.closest('[data-ck]');
+    if(ck){
+      var x=fin.find(function(f){ return String(f.id)===ck.getAttribute('data-ck'); });
+      if(x && x.status==='pending' && x.createBy!==finUser){ x.status='checked'; x.checkBy=finUser; x.checkAt=Date.now(); finSave(); finRender(); }
+      return;
+    }
+    var pt=e.target.closest('[data-pt]');
+    if(pt){
+      var y=fin.find(function(f){ return String(f.id)===pt.getAttribute('data-pt'); });
+      if(y && y.status==='checked' && y.createBy!==finUser){ y.status='posted'; y.postBy=finUser; y.postAt=Date.now(); finSave(); finRender(); }
+      return;
+    }
+    var dl=e.target.closest('[data-del]');
+    if(dl){
+      var z=fin.find(function(f){ return String(f.id)===dl.getAttribute('data-del'); });
+      if(z && z.status!=='posted' && confirm('删除这笔'+(z.status==='pending'?'待审批':'已核对')+'账目？')){ fin.splice(fin.indexOf(z),1); finSave(); finRender(); }
+    }
+  });
+  $('finAcctBtn').addEventListener('click',function(){ finAcctRender(); $('finAcctMask').style.display='flex'; });
+  $('finAcctClose').addEventListener('click',function(){ $('finAcctMask').style.display='none'; });
+  $('finAcctDone').addEventListener('click',function(){ $('finAcctMask').style.display='none'; });
+  $('finAcctMask').addEventListener('click',function(e){ if(e.target===$('finAcctMask')) $('finAcctMask').style.display='none'; });
+  $('finAcctAdd').addEventListener('click',function(){
+    var v=$('finAcctNew').value.trim();
+    if(!v) return;
+    var a=finAccts();
+    if(a.indexOf(v)>=0){ $('finAcctNew').value=''; return; }
+    a.push(v); finAcctsSave(a); finAcctRender(); finFillAccts(); $('finAcctNew').value='';
+  });
+  $('finAcctNew').addEventListener('keydown',function(e){ if(e.key==='Enter') $('finAcctAdd').click(); });
+  $('finAcctList').addEventListener('click',function(e){
+    var b=e.target.closest('[data-acctdel]'); if(!b) return;
+    var a=finAccts(), i=+b.getAttribute('data-acctdel');
+    if(a[i] && confirm('删除账户「'+a[i]+'」？历史账目不受影响')){ a.splice(i,1); finAcctsSave(a); finAcctRender(); finFillAccts(); }
   });
 })();
 
@@ -1359,9 +1563,11 @@ function opsAdd(){
     if(pay<=0){ alert('实发合计为 0，无需转入'); return; }
     var now=new Date();
     var ym=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
-    fin.push({date:ym+'-01', cat:'人员工资', item:'运营薪资 实发合计', amt:pay, note:ops.length+' 人（'+ops.map(function(o){return o.name;}).join('、')+'）'});
+    finPush({type:'out', date:ym+'-01', cat:'人员工资', account:'对公账户', payer:'公司', method:'公司支付',
+      item:'运营薪资 实发合计', amt:pay, note:ops.length+' 人（'+ops.map(function(o){return o.name;}).join('、')+'）'});
     finSave(); finRender();
     finMonth=ym; finRender();
+    alert('已提交一笔「人员工资 · 运营薪资实发 ¥'+fmt(pay,0)+'」到财务账，状态：待审批（需他人审批入账）');
     document.querySelector('.nav-item[data-page="finance"]').click();
   });
 })();
